@@ -39,6 +39,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Actions\BookingActionBase.cs" />
+    <Compile Include="Actions\CancelSubscriotion.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Actions\ConfirmSubscription.cs" />
+    <Compile Include="Actions\LeaveAMessage.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Actions\SubscribeResource.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="BookingAction.cs" />
     <Compile Include="BookingState.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
