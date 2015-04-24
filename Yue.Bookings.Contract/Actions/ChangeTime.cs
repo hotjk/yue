@@ -6,13 +6,12 @@ using System.Threading.Tasks;
 
 namespace Yue.Bookings.Contract.Actions
 {
-    public class SubscribeResource : BookingActionBase
+    public class ChangeTime : BookingActionBase
     {
-        public SubscribeResource()
+        public ChangeTime()
         {
-            this.Type = BookingAction.SubscribeResource;
+            this.Type = BookingAction.ChangeTime;
         }
-
         public TimeSlot TimeSlot { get; set; }
     }
 }

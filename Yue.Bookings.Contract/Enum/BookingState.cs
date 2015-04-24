@@ -8,8 +8,9 @@ namespace Yue.Bookings.Contract
 {
     public enum BookingState
     {
-        Subscribed = 0,
-        Confirmed = 1,
+        Initial = 0,
+        Subscribed = 1,
+        Confirmed = 2,
         Canceled = 9,
     }
 }

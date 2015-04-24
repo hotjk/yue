@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Yue.Bookings.Model
+namespace Yue.Bookings.Contract
 {
     public class TimeSlot
     {
