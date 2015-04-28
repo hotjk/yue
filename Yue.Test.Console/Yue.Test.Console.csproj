@@ -4,15 +4,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{F9C983EE-2E26-4B5E-8CE4-B3BCC7074CE2}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{4671D79E-BEDB-46DB-9D15-2A588A4C53FA}</ProjectGuid>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Yue.Bookings.Model</RootNamespace>
-    <AssemblyName>Yue.Bookings.Model</AssemblyName>
+    <RootNamespace>Yue.Test.Console</RootNamespace>
+    <AssemblyName>Yue.Test.Console</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -22,6 +23,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -30,12 +32,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AutoMapper">
-      <HintPath>..\packages\AutoMapper.3.3.1\lib\net40\AutoMapper.dll</HintPath>
-    </Reference>
-    <Reference Include="AutoMapper.Net4">
-      <HintPath>..\packages\AutoMapper.3.3.1\lib\net40\AutoMapper.Net4.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -45,33 +41,27 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Booking.cs" />
-    <Compile Include="BookingService.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="IBookingRepository.cs" />
-    <Compile Include="IBookingService.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\ace\ACE.Contracts\ACE.Contracts.csproj">
       <Project>{82f70b71-71ab-49b1-9e3f-5197abbfd1aa}</Project>
       <Name>ACE.Contracts</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Infrastructures\Grit.Pattern.FSM\Grit.Pattern.FSM.csproj">
-      <Project>{86f1d884-2c69-45a7-ac5a-f3f374060f3c}</Project>
-      <Name>Grit.Pattern.FSM</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Yue.Bookings.Contract\Yue.Bookings.Contract.csproj">
       <Project>{c904450f-f057-4f44-b7a0-e7227ccb3869}</Project>
       <Name>Yue.Bookings.Contract</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
+    <ProjectReference Include="..\Yue.Bookings.Model\Yue.Bookings.Model.csproj">
+      <Project>{f9c983ee-2e26-4b5e-8ce4-b3bcc7074ce2}</Project>
+      <Name>Yue.Bookings.Model</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets" Condition="Exists('..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

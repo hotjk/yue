@@ -45,7 +45,6 @@ namespace Yue.Bookings.Model.Write
         {
             EnsoureBookingNotExisted(command.BookingId);
             Booking booking = Booking.Create(command);
-            booking.EnsoureAndUpdateState(command);
 
             _repository.Add(booking);
             _repository.AddAction(command);

@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Yue.Bookings.Contract;
-using Yue.Bookings.Contract.Actions;
 
 namespace Yue.Bookings.Model
 {
-    public interface IBookingRepository
+    public interface IBookingService
     {
         Booking Get(int bookingId, bool withActions);
         IEnumerable<Booking> BookingsByResource(TimeSlot timeSlot, int resourceId);

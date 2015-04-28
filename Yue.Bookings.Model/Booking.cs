@@ -22,10 +22,35 @@ namespace Yue.Bookings.Model
         public int UpdateBy { get; private set; }
         public DateTime UpdateAt { get; private set; }
 
-        public ICollection<BookingActionBase> Actions { get; set; }
+        public IEnumerable<BookingActionBase> Actions { get; private set; }
 
         private static StateMachine<BookingState, BookingAction> _stateMachine;
+        private static IDictionary<BookingAction, Type> _bookingActionTypes;
+        
         static Booking()
+        {
+            InitStateMachine();
+            InitMap();
+        }
+
+        private static void InitMap()
+        {
+            var ns = typeof(BookingActionBase).Namespace;
+            _bookingActionTypes = new Dictionary<BookingAction, Type>();
+
+            foreach (BookingAction value in Enum.GetValues(typeof(BookingAction)))
+            {
+                string name = Enum.GetName(typeof(BookingAction), value);
+                _bookingActionTypes.Add(value, typeof(BookingAction).Assembly.GetType(ns + "." + name));
+            }
+
+            foreach (var value in _bookingActionTypes.Values)
+            {
+                AutoMapper.Mapper.CreateMap(typeof(BookingActionBase), value);
+            }
+        }
+
+        private static void InitStateMachine()
         {
             _stateMachine = new StateMachine<BookingState, BookingAction>();
             _stateMachine.Configure(BookingState.Initial)
@@ -70,6 +95,14 @@ namespace Yue.Bookings.Model
         public void ChangeTime(TimeSlot timeSlot)
         {
             this.TimeSlot = TimeSlot;
+        }
+
+        public void InitalActions(IEnumerable<BookingActionBase> actions)
+        {
+            Actions = actions.Select(n =>
+            {
+                return (AutoMapper.Mapper.Map(n, typeof(BookingActionBase), _bookingActionTypes[n.Type]) as BookingActionBase);
+            });
         }
     }
 }
