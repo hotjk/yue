@@ -12,21 +12,21 @@ namespace Yue.Test.Console
     {
         static void Main(string[] args)
         {
-            Booking booking = new Booking();
+            //Booking booking = new Booking();
 
-            BookingActionBase action = new BookingActionBase
-            {
-                Type = Bookings.Contract.BookingAction.ConfirmSubscription,
-                BookingId = 1,
-                CreateAt = DateTime.Now,
-                CreateBy = 1,
-                Message = "test",
-                ResourceId = 123
-            };
-            System.Console.WriteLine(action);
+            //BookingActionBase action = new BookingActionBase
+            //{
+            //    Type = Bookings.Contract.BookingAction.ConfirmSubscription,
+            //    BookingId = 1,
+            //    CreateAt = DateTime.Now,
+            //    CreateBy = 1,
+            //    Message = "test",
+            //    ResourceId = 123
+            //};
+            //System.Console.WriteLine(action);
 
-            booking.InitalActions(new BookingActionBase[] { action });
-            System.Console.WriteLine(booking.Actions.First());
+            //booking.InitalActions(new BookingActionBase[] { action });
+            //System.Console.WriteLine(booking.Actions.First());
         }
     }
 }

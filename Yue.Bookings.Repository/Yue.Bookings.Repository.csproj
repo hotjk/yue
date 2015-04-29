@@ -65,6 +65,10 @@
       <Project>{f9c983ee-2e26-4b5e-8ce4-b3bcc7074ce2}</Project>
       <Name>Yue.Bookings.Model</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Yue.Common.Contract\Yue.Common.Contract.csproj">
+      <Project>{ef8dd186-9fbf-4069-9654-1cffe049d12c}</Project>
+      <Name>Yue.Common.Contract</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Yue.Common.Repository\Yue.Common.Repository.csproj">
       <Project>{c942a050-9103-4934-93d7-4290f488adcf}</Project>
       <Name>Yue.Common.Repository</Name>

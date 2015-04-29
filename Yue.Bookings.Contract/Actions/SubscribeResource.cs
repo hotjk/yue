@@ -12,7 +12,5 @@ namespace Yue.Bookings.Contract.Actions
         {
             this.Type = BookingAction.SubscribeResource;
         }
-
-        public TimeSlot TimeSlot { get; set; }
     }
 }

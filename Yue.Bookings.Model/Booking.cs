@@ -7,14 +7,15 @@ using System.Text;
 using System.Threading.Tasks;
 using Yue.Bookings.Contract;
 using Yue.Bookings.Contract.Actions;
+using Yue.Common.Contract;
 
 namespace Yue.Bookings.Model
 {
-    public class Booking
+    public class Booking : IAggregateRoot
     {
         public int ResourceId { get; private set; }
         public int BookingId { get; private set; }
-        public TimeSlot TimeSlot { get; private set; }
+        public TimeSlot TimeSlot { get; protected set; }
         public BookingState State { get; private set; }
 
         public int CreateBy { get; private set; }
@@ -22,32 +23,13 @@ namespace Yue.Bookings.Model
         public int UpdateBy { get; private set; }
         public DateTime UpdateAt { get; private set; }
 
-        public IEnumerable<BookingActionBase> Actions { get; private set; }
+        public IEnumerable<BookingActionBase> Actions { get; protected set; }
 
         private static StateMachine<BookingState, BookingAction> _stateMachine;
-        private static IDictionary<BookingAction, Type> _bookingActionTypes;
         
         static Booking()
         {
             InitStateMachine();
-            InitMap();
-        }
-
-        private static void InitMap()
-        {
-            var ns = typeof(BookingActionBase).Namespace;
-            _bookingActionTypes = new Dictionary<BookingAction, Type>();
-
-            foreach (BookingAction value in Enum.GetValues(typeof(BookingAction)))
-            {
-                string name = Enum.GetName(typeof(BookingAction), value);
-                _bookingActionTypes.Add(value, typeof(BookingAction).Assembly.GetType(ns + "." + name));
-            }
-
-            foreach (var value in _bookingActionTypes.Values)
-            {
-                AutoMapper.Mapper.CreateMap(typeof(BookingActionBase), value);
-            }
         }
 
         private static void InitStateMachine()
@@ -95,14 +77,6 @@ namespace Yue.Bookings.Model
         public void ChangeTime(TimeSlot timeSlot)
         {
             this.TimeSlot = TimeSlot;
-        }
-
-        public void InitalActions(IEnumerable<BookingActionBase> actions)
-        {
-            Actions = actions.Select(n =>
-            {
-                return (AutoMapper.Mapper.Map(n, typeof(BookingActionBase), _bookingActionTypes[n.Type]) as BookingActionBase);
-            });
         }
     }
 }

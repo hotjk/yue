@@ -16,31 +16,31 @@ namespace Yue.Bookings.Repository
     {
         public BookingRepository(SqlOption option) : base(option) { }
 
-        private const string[] _bookingColumns = new string[] {
+        private static readonly string[] _bookingColumns = new string[] {
 "BookingId", "ResourceId", "State", "From", "To", "Minutes", "CreateBy", "UpdateBy", "CreateAt", "UpdateAt" };
-        private const string[] _actionColumns = new string[] {
+        private static readonly string[] _actionColumns = new string[] {
 "ActionId", "ResourceId", "BookingId", "CreateBy", "CreateAt", "Type", "From", "To", "Minutes", "Message" };
 
         public Booking Get(int bookingId, bool withActions)
         {
             using (IDbConnection connection = OpenConnection())
             {
-                Booking booking = connection.Query<Booking, TimeSlot, Booking>(
+                BookingPM booking = connection.Query<BookingPM>(
                     string.Format(
 @"SELECT {0} FROM `bookings` 
 WHERE `BookingId` = @BookingId;", SqlHelper.Columns(_bookingColumns)),
-                    (b, t) => { b.ChangeTime(t); return b; },
                     new { BookingId = bookingId }).SingleOrDefault();
 
                 if (booking == null) return null;
 
+                booking.Rehydrate();
+
                 if (withActions)
                 {
-                    booking.InitalActions(connection.Query<BookingActionPM, TimeSlot, BookingActionBase>(
+                    booking.InitalActions(connection.Query<BookingActionPM>(
                         string.Format(
 @"SELECT {0} FROM `booking_actions` 
 WHERE `BookingId` = @BookingId;", SqlHelper.Columns(_actionColumns)),
-                        (a, t) => { a.TimeSlot = t; return a; },
                         new { BookingId = bookingId }));
                 }
                 return booking;
@@ -51,13 +51,17 @@ WHERE `BookingId` = @BookingId;", SqlHelper.Columns(_actionColumns)),
         {
             using (IDbConnection connection = OpenConnection())
             {
-                return connection.Query<Booking, TimeSlot, Booking>(
+                var bookings = connection.Query<BookingPM>(
                     string.Format(
 @"SELECT {0} FROM `bookings` 
 WHERE `ResourceId` = @ResourceId
 AND From <= @To AND To >=From;", SqlHelper.Columns(_bookingColumns)),
-                    (b, t) => { b.ChangeTime(t); return b; },
                     new { ResourceId = resourceId });
+                foreach (var booking in bookings)
+                {
+                    booking.Rehydrate();
+                }
+                return bookings;
             }
         }
 
@@ -65,13 +69,17 @@ AND From <= @To AND To >=From;", SqlHelper.Columns(_bookingColumns)),
         {
             using (IDbConnection connection = OpenConnection())
             {
-                return connection.Query<Booking, TimeSlot, Booking>(
+                var bookings = connection.Query<BookingPM>(
                      string.Format(
 @"SELECT {0} FROM `bookings` 
 WHERE `CreateBy` = @CreateBy 
 AND From <= @To AND To >=From;", SqlHelper.Columns(_bookingColumns)),
-                    (b, t) => { b.ChangeTime(t); return b; },
                     new { CreateBy = userId, From = timeSlot.From, To = timeSlot.To });
+                foreach (var booking in bookings)
+                {
+                    booking.Rehydrate();
+                }
+                return bookings;
             }
         }
     }

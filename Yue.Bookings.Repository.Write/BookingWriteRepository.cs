@@ -17,9 +17,9 @@ namespace Yue.Bookings.Repository.Write
     {
         public BookingWriteRepository(SqlOption option) : base(option) { }
 
-        private const string[] _bookingColumns = new string[] {
+        private static readonly string[] _bookingColumns = new string[] {
 "BookingId", "ResourceId", "State", "From", "To", "Minutes", "CreateBy", "UpdateBy", "CreateAt", "UpdateAt" };
-        private const string[] _actionColumns = new string[] {
+        private static readonly string[] _actionColumns = new string[] {
 "ActionId", "ResourceId", "BookingId", "CreateBy", "CreateAt", "Type", "From", "To", "Minutes", "Message" };
 
         public Model.Booking GetForUpdate(int bookingId)

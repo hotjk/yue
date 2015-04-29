@@ -12,6 +12,5 @@ namespace Yue.Bookings.Contract.Actions
         {
             this.Type = BookingAction.ChangeTime;
         }
-        public TimeSlot TimeSlot { get; set; }
     }
 }
