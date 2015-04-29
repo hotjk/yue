@@ -65,9 +65,9 @@
       <Project>{f9c983ee-2e26-4b5e-8ce4-b3bcc7074ce2}</Project>
       <Name>Yue.Bookings.Model</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Yue.Common.Infrastructure\Yue.Common.Infrastructure.csproj">
-      <Project>{02d7664c-630b-45bd-a21a-19c6a0c37740}</Project>
-      <Name>Yue.Common.Infrastructure</Name>
+    <ProjectReference Include="..\Yue.Common.Repository\Yue.Common.Repository.csproj">
+      <Project>{c942a050-9103-4934-93d7-4290f488adcf}</Project>
+      <Name>Yue.Common.Repository</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

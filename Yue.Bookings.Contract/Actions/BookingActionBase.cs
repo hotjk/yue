@@ -14,6 +14,5 @@ namespace Yue.Bookings.Contract.Actions
         public string Message { get; set; }
         public int CreateBy { get; set; }
         public DateTime CreateAt { get; set; }
-        public TimeSlot TimeSlot { get; set; }
     }
 }
