@@ -9,6 +9,7 @@ using Yue.Bookings.Model;
 using Dapper;
 using Yue.Bookings.Contract;
 using Yue.Common.Repository;
+using Yue.Bookings.Repository.Model;
 
 namespace Yue.Bookings.Repository
 {
@@ -33,17 +34,17 @@ WHERE `BookingId` = @BookingId;", SqlHelper.Columns(_bookingColumns)),
 
                 if (booking == null) return null;
 
-                booking.Rehydrate();
-
                 if (withActions)
                 {
-                    booking.InitalActions(connection.Query<BookingActionPM>(
+                    var actions = connection.Query<BookingActionPM>(
                         string.Format(
 @"SELECT {0} FROM `booking_actions` 
 WHERE `BookingId` = @BookingId;", SqlHelper.Columns(_actionColumns)),
-                        new { BookingId = bookingId }));
+                        new { BookingId = bookingId });
+
+                    return BookingPM.FromPM(booking, actions);
                 }
-                return booking;
+                return BookingPM.FromPM(booking);
             }
         }
 
@@ -57,11 +58,7 @@ WHERE `BookingId` = @BookingId;", SqlHelper.Columns(_actionColumns)),
 WHERE `ResourceId` = @ResourceId
 AND From <= @To AND To >=From;", SqlHelper.Columns(_bookingColumns)),
                     new { ResourceId = resourceId });
-                foreach (var booking in bookings)
-                {
-                    booking.Rehydrate();
-                }
-                return bookings;
+                return bookings.Select(n => BookingPM.FromPM(n));
             }
         }
 
@@ -75,11 +72,8 @@ AND From <= @To AND To >=From;", SqlHelper.Columns(_bookingColumns)),
 WHERE `CreateBy` = @CreateBy 
 AND From <= @To AND To >=From;", SqlHelper.Columns(_bookingColumns)),
                     new { CreateBy = userId, From = timeSlot.From, To = timeSlot.To });
-                foreach (var booking in bookings)
-                {
-                    booking.Rehydrate();
-                }
-                return bookings;
+
+                return bookings.Select(n => BookingPM.FromPM(n));
             }
         }
     }

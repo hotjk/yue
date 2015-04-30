@@ -11,7 +11,7 @@ using Yue.Common.Contract;
 
 namespace Yue.Bookings.Model
 {
-    public class Booking : IAggregateRoot
+    public class Booking
     {
         public int ResourceId { get; private set; }
         public int BookingId { get; private set; }

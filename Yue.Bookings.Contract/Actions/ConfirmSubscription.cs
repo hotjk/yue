@@ -8,9 +8,7 @@ namespace Yue.Bookings.Contract.Actions
 {
     public class ConfirmSubscription : BookingActionBase
     {
-        public ConfirmSubscription()
-        {
-            this.Type = BookingAction.ConfirmSubscription;
-        }
+        public ConfirmSubscription(int actionId, int resourceId, int bookingId, string message, int createBy, DateTime createAt)
+            : base(actionId, resourceId, bookingId, BookingAction.ConfirmSubscription, message, createBy, createAt) { }
     }
 }

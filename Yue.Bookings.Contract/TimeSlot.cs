@@ -26,7 +26,7 @@ namespace Yue.Bookings.Contract
         {
             get
             {
-                return (To - From).Minutes;
+                return (int)((To - From).TotalMinutes);
             }
         }
 

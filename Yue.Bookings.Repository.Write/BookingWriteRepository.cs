@@ -7,9 +7,10 @@ using System.Threading.Tasks;
 using Yue.Bookings.Contract;
 using Yue.Bookings.Contract.Actions;
 using Yue.Bookings.Model;
-using Yue.Bookings.Model.Write;
 using Yue.Common.Repository;
 using Dapper;
+using Yue.Bookings.Model.Write;
+using Yue.Bookings.Repository.Model;
 
 namespace Yue.Bookings.Repository.Write
 {
@@ -22,38 +23,39 @@ namespace Yue.Bookings.Repository.Write
         private static readonly string[] _actionColumns = new string[] {
 "ActionId", "ResourceId", "BookingId", "CreateBy", "CreateAt", "Type", "From", "To", "Minutes", "Message" };
 
-        public Model.Booking GetForUpdate(int bookingId)
+        public Booking GetForUpdate(int bookingId)
         {
             using (IDbConnection connection = OpenConnection())
             {
-                return connection.Query<Booking, TimeSlot, Booking>(
+                var booking = connection.Query<BookingPM>(
                      string.Format(@"SELECT {0} FROM `bookings` WHERE `BookingId` = @BookingId FOR UPDATE;", 
                      SqlHelper.Columns(_bookingColumns)),
-                     (b, t) => { b.ChangeTime(t); return b; },
                      new { BookingId = bookingId }).SingleOrDefault();
+                if (booking == null) return null;
+                return BookingPM.FromPM(booking);
             }
         }
 
-        public bool Add(Model.Booking booking)
+        public bool Add(Booking booking)
         {
             using (IDbConnection connection = OpenConnection())
             {
                 return 1 == connection.Execute(
                     string.Format(@"INSERT INTO `bookings` ({0}) VALUES ({1});", 
                     SqlHelper.Columns(_bookingColumns), 
-                    SqlHelper.Params(_bookingColumns)), 
-                    booking);
+                    SqlHelper.Params(_bookingColumns)),
+                    BookingPM.ToPM(booking));
             }
         }
 
-        public bool Update(Model.Booking booking)
+        public bool Update(Booking booking)
         {
             using (IDbConnection connection = OpenConnection())
             {
                 return 1 == connection.Execute(
                     string.Format(@"UPDATE `bookings` SET {0} WHERE `BookingId` = @BookingId;",
                     SqlHelper.Sets(_bookingColumns)),
-                    booking);
+                    BookingPM.ToPM(booking));
             }
         }
 
@@ -65,7 +67,7 @@ namespace Yue.Bookings.Repository.Write
                     string.Format(@"INSERT INTO `booking_actions` ({0}) VALUES ({1});",
                     SqlHelper.Columns(_actionColumns),
                     SqlHelper.Params(_actionColumns)),
-                    action);
+                    BookingActionPM.ToPM(action));
             }
         }
     }

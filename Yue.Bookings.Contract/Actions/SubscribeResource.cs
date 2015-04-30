@@ -8,9 +8,12 @@ namespace Yue.Bookings.Contract.Actions
 {
     public class SubscribeResource : BookingActionBase
     {
-        public SubscribeResource()
+        public SubscribeResource(int actionId, int resourceId, int bookingId, string message, int createBy, DateTime createAt, TimeSlot timeSlot)
+            : base(actionId, resourceId, bookingId, BookingAction.SubscribeResource, message, createBy, createAt) 
         {
-            this.Type = BookingAction.SubscribeResource;
+            this.TimeSlot = timeSlot;
         }
+
+        public TimeSlot TimeSlot { get; private set; }
     }
 }

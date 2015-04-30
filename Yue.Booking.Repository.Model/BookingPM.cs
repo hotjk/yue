@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AutoMapper;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,20 +8,22 @@ using Yue.Bookings.Contract;
 using Yue.Bookings.Contract.Actions;
 using Yue.Common.Contract;
 
-namespace Yue.Bookings.Model
+namespace Yue.Booking.Repository.Model
 {
-    public class BookingPM : Booking, IPersistenceModel
+    public class BookingPM : Booking
     {
         private static IDictionary<BookingAction, Type> _bookingActionTypes;
 
         static BookingPM()
         {
-            InitMap();
+            InitMapper();
         }
 
-        private static void InitMap()
+        private static void InitMapper()
         {
-            var ns = typeof(BookingActionPM).Namespace;
+            Mapper.CreateMap<BookingPM, Booking>();
+
+            var ns = typeof(BookingActionBase).Namespace;
             _bookingActionTypes = new Dictionary<BookingAction, Type>();
 
             foreach (BookingAction value in Enum.GetValues(typeof(BookingAction)))
@@ -31,7 +34,7 @@ namespace Yue.Bookings.Model
 
             foreach (var value in _bookingActionTypes.Values)
             {
-                AutoMapper.Mapper.CreateMap(typeof(BookingActionPM), value);
+                Mapper.CreateMap(typeof(BookingActionPM), value);
             }
         }
 
@@ -39,23 +42,19 @@ namespace Yue.Bookings.Model
         public DateTime To { get; private set; }
         public int Minutes { get; private set; }
 
-        public void Persist()
-        {
-            From = TimeSlot.From;
-            To = TimeSlot.To;
-            Minutes = TimeSlot.Minutes;
-        }
-
-        public void Rehydrate()
+        public Booking Refine()
         {
             this.TimeSlot = new Contract.TimeSlot(From, To);
+            Booking booking =  Mapper.Map<Booking>(this);
+            booking.ChangeTime(new TimeSlot(From, To));
+            return booking;
         }
 
-        public void InitalActions(IEnumerable<BookingActionBase> actions)
+        public void RefineActions(IEnumerable<BookingActionPM> actions)
         {
             Actions = actions.Select(n =>
             {
-                return (AutoMapper.Mapper.Map(n, typeof(BookingActionBase), _bookingActionTypes[n.Type]) as BookingActionBase);
+                return (Mapper.Map(n, typeof(BookingActionPM), _bookingActionTypes[n.Type]) as BookingActionBase);
             });
         }
     }

@@ -8,9 +8,7 @@ namespace Yue.Bookings.Contract.Actions
 {
     public class CancelSubscriotion : BookingActionBase
     {
-        public CancelSubscriotion()
-        {
-            this.Type = BookingAction.CancelSubscriotion;
-        }
+        public CancelSubscriotion(int actionId, int resourceId, int bookingId, string message, int createBy, DateTime createAt)
+            : base(actionId, resourceId, bookingId, BookingAction.CancelSubscriotion, message, createBy, createAt) { }
     }
 }

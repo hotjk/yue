@@ -8,9 +8,12 @@ namespace Yue.Bookings.Contract.Actions
 {
     public class ChangeTime : BookingActionBase
     {
-        public ChangeTime()
+        public ChangeTime(int actionId, int resourceId, int bookingId, string message, int createBy, DateTime createAt, TimeSlot timeSlot)
+            : base(actionId,resourceId, bookingId, BookingAction.ChangeTime, message, createBy, createAt)
         {
-            this.Type = BookingAction.ChangeTime;
+            this.TimeSlot = timeSlot;
         }
+
+        public TimeSlot TimeSlot { get; private set; }
     }
 }
