@@ -39,8 +39,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BusinessStatusCode.cs" />
     <Compile Include="IAggregateRoot.cs" />
-    <Compile Include="IPersistenceModel.cs" />
     <Compile Include="PagedRequestParams.cs" />
     <Compile Include="PagedResponseParams.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

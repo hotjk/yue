@@ -1,0 +1,137 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{860FAC0D-2EC6-49DF-A326-8F03C4B15EDC}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Yue.Bookings.MicroServices</RootNamespace>
+    <AssemblyName>Yue.Bookings.MicroServices</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EasyNetQ">
+      <HintPath>..\packages\EasyNetQ.0.47.10.381\lib\net40\EasyNetQ.dll</HintPath>
+    </Reference>
+    <Reference Include="EasyNetQ.DI.Ninject">
+      <HintPath>..\packages\EasyNetQ.DI.Ninject.0.47.10.381\lib\net40\EasyNetQ.DI.Ninject.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net">
+      <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject">
+      <HintPath>..\packages\Ninject.3.2.2.0\lib\net45-full\Ninject.dll</HintPath>
+    </Reference>
+    <Reference Include="RabbitMQ.Client">
+      <HintPath>..\packages\RabbitMQ.Client.3.4.3\lib\net35\RabbitMQ.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BootStrapper.cs" />
+    <Compile Include="Log4NetBusLogger.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="log4net.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\ace\ACE.Contracts\ACE.Contracts.csproj">
+      <Project>{82f70b71-71ab-49b1-9e3f-5197abbfd1aa}</Project>
+      <Name>ACE.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\ace\ACE\ACE.csproj">
+      <Project>{81569f0a-133a-4e07-a66b-9efc8b5f7411}</Project>
+      <Name>ACE</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Infrastructures\Grit.Sequence.Repository.Mysql\Grit.Sequence.Repository.MySql.csproj">
+      <Project>{c8223ccd-75f4-4b9e-813b-b8a5a83ff758}</Project>
+      <Name>Grit.Sequence.Repository.MySql</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Infrastructures\Grit.Sequence\Grit.Sequence.csproj">
+      <Project>{0161cd61-4221-47c3-9567-1695c06de101}</Project>
+      <Name>Grit.Sequence</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Yue.Bookings.Application\Yue.Bookings.Application.csproj">
+      <Project>{736e9241-fb2c-45b3-9ad5-e200b0e9bcfb}</Project>
+      <Name>Yue.Bookings.Application</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Yue.Bookings.Contract\Yue.Bookings.Contract.csproj">
+      <Project>{c904450f-f057-4f44-b7a0-e7227ccb3869}</Project>
+      <Name>Yue.Bookings.Contract</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Yue.Bookings.Model.Write\Yue.Bookings.Model.Write.csproj">
+      <Project>{cefbf04d-913e-4e0d-8103-17114bbd02fb}</Project>
+      <Name>Yue.Bookings.Model.Write</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Yue.Bookings.Model\Yue.Bookings.Model.csproj">
+      <Project>{f9c983ee-2e26-4b5e-8ce4-b3bcc7074ce2}</Project>
+      <Name>Yue.Bookings.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Yue.Bookings.Repository.Model\Yue.Bookings.Repository.Model.csproj">
+      <Project>{3053de0f-8e0c-448e-b2b2-689596353dcb}</Project>
+      <Name>Yue.Bookings.Repository.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Yue.Bookings.Repository.Write\Yue.Bookings.Repository.Write.csproj">
+      <Project>{6d81753e-fb46-4bff-b649-f28d0f924020}</Project>
+      <Name>Yue.Bookings.Repository.Write</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Yue.Bookings.Repository\Yue.Bookings.Repository.csproj">
+      <Project>{8740c79f-7e92-4e2f-906b-359a068f8843}</Project>
+      <Name>Yue.Bookings.Repository</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Yue.Common.Contract\Yue.Common.Contract.csproj">
+      <Project>{ef8dd186-9fbf-4069-9654-1cffe049d12c}</Project>
+      <Name>Yue.Common.Contract</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Yue.Common.Repository\Yue.Common.Repository.csproj">
+      <Project>{c942a050-9103-4934-93d7-4290f488adcf}</Project>
+      <Name>Yue.Common.Repository</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

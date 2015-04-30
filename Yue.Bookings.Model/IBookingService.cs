@@ -9,7 +9,7 @@ namespace Yue.Bookings.Model
 {
     public interface IBookingService
     {
-        Booking Get(int bookingId, bool withActions);
+        Booking Get(int bookingId, bool withActions = false);
         IEnumerable<Booking> BookingsByResource(TimeSlot timeSlot, int resourceId);
         IEnumerable<Booking> BookingsByUser(TimeSlot timeSlot, int userId);
     }

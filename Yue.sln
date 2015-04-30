@@ -43,6 +43,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yue.Common.Repository", "Yu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yue.Bookings.Repository.Model", "Yue.Bookings.Repository.Model\Yue.Bookings.Repository.Model.csproj", "{3053DE0F-8E0C-448E-B2B2-689596353DCB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yue.WebApi", "Yue.WebApi\Yue.WebApi.csproj", "{10BB4BFB-6196-42F4-88AE-07311E4FAAC4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yue.Bookings.MicroServices", "Yue.Bookings.MicroServices\Yue.Bookings.MicroServices.csproj", "{860FAC0D-2EC6-49DF-A326-8F03C4B15EDC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -113,6 +117,14 @@ Global
 		{3053DE0F-8E0C-448E-B2B2-689596353DCB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3053DE0F-8E0C-448E-B2B2-689596353DCB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3053DE0F-8E0C-448E-B2B2-689596353DCB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{10BB4BFB-6196-42F4-88AE-07311E4FAAC4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{10BB4BFB-6196-42F4-88AE-07311E4FAAC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{10BB4BFB-6196-42F4-88AE-07311E4FAAC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{10BB4BFB-6196-42F4-88AE-07311E4FAAC4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{860FAC0D-2EC6-49DF-A326-8F03C4B15EDC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{860FAC0D-2EC6-49DF-A326-8F03C4B15EDC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{860FAC0D-2EC6-49DF-A326-8F03C4B15EDC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{860FAC0D-2EC6-49DF-A326-8F03C4B15EDC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -133,5 +145,6 @@ Global
 		{C8223CCD-75F4-4B9E-813B-B8A5A83FF758} = {2E1CF9DD-177F-4F81-BE3B-2DB154462231}
 		{C942A050-9103-4934-93D7-4290F488ADCF} = {8098B626-8D7C-4576-9C52-C958E3A9DDBB}
 		{3053DE0F-8E0C-448E-B2B2-689596353DCB} = {4BB4E507-F12B-4512-BC12-A8B0A557B43D}
+		{860FAC0D-2EC6-49DF-A326-8F03C4B15EDC} = {4BB4E507-F12B-4512-BC12-A8B0A557B43D}
 	EndGlobalSection
 EndGlobal

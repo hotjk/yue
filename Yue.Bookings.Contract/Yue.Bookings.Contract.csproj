@@ -51,7 +51,6 @@
     <Compile Include="Actions\SubscribeResource.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="BusinessStatusCode.cs" />
     <Compile Include="Enum\BookingAction.cs" />
     <Compile Include="Enum\BookingState.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

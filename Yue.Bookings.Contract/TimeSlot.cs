@@ -19,6 +19,12 @@ namespace Yue.Bookings.Contract
             this.To = to;
         }
 
+        public TimeSlot(DateTime from, int minutes)
+        {
+            this.From = from;
+            this.To = this.From.AddMinutes(minutes);
+        }
+
         public DateTime From { get; private set; }
         public DateTime To { get; private set; }
 

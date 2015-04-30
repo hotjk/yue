@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Yue.Bookings.Contract;
 using Yue.Bookings.Contract.Actions;
+using Yue.Common.Contract;
 
 namespace Yue.Bookings.Model.Write
 {

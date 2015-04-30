@@ -29,7 +29,8 @@ namespace Yue.Test.Console
 
         private static void Subscribe()
         {
-            SubscribeResource sr = new SubscribeResource(1, 1, 100, "test", 1000, DateTime.Now, new Bookings.Contract.TimeSlot(DateTime.Now, DateTime.Now.AddHours(4).AddSeconds(32)));
+            SubscribeResource sr = new SubscribeResource(1, 1, 100, "test", 1000, DateTime.Now, 
+                new Bookings.Contract.TimeSlot(DateTime.Now, DateTime.Now.AddHours(4).AddSeconds(32)));
 
             SqlOption option = new SqlOption { ConnectionString = "Server=localhost;Port=3306;Database=yue;Uid=root;Pwd=123456;" };
             BookingWriteRepository bookingWriteRepository = new BookingWriteRepository(option);
