@@ -148,6 +148,10 @@
       <Project>{8740c79f-7e92-4e2f-906b-359a068f8843}</Project>
       <Name>Yue.Bookings.Repository</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Yue.Bookings.View.Model\Yue.Bookings.View.Model.csproj">
+      <Project>{5767c7c6-9de4-43d4-8183-c57c6bf4d616}</Project>
+      <Name>Yue.Bookings.View.Model</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Yue.Common.Contract\Yue.Common.Contract.csproj">
       <Project>{ef8dd186-9fbf-4069-9654-1cffe049d12c}</Project>
       <Name>Yue.Common.Contract</Name>
@@ -161,10 +165,10 @@
     <Compile Include="App_Start\BootStrapper.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\NinjectDependencyResolver.cs" />
-    <Compile Include="App_Start\NinjectDependencyResolver4API.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\NinjectServiceActivator.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\ValuesController.cs" />
+    <Compile Include="Controllers\BookingController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -189,6 +193,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Views\Default\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

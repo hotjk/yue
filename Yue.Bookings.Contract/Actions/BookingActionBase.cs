@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Yue.Bookings.Contract.Actions
 {
-    public class BookingActionBase : ACE.Action, ACE.ICommand
+    public class BookingActionBase : ACE.Action
     {
         public BookingActionBase() { }
         public BookingActionBase(int actionId, int resourceId, int bookingId, BookingAction type, string message, int createBy, DateTime createAt)

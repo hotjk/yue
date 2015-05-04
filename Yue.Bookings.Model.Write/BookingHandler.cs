@@ -15,7 +15,8 @@ namespace Yue.Bookings.Model.Write
         ICommandHandler<SubscribeResource>,
         ICommandHandler<ConfirmSubscription>,
         ICommandHandler<CancelSubscriotion>,
-        ICommandHandler<LeaveAMessage>
+        ICommandHandler<LeaveAMessage>,
+        ICommandHandler<ChangeTime>
     {
         private IBookingWriteRepository _repository;
 

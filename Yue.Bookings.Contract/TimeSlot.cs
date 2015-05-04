@@ -9,6 +9,7 @@ namespace Yue.Bookings.Contract
 {
     public class TimeSlot
     {
+        public TimeSlot() { }
         public TimeSlot(DateTime from, DateTime to)
         {
             if (from > to)
@@ -25,8 +26,8 @@ namespace Yue.Bookings.Contract
             this.To = this.From.AddMinutes(minutes);
         }
 
-        public DateTime From { get; private set; }
-        public DateTime To { get; private set; }
+        public DateTime From { get; set; }
+        public DateTime To { get; set; }
 
         public int Minutes
         {

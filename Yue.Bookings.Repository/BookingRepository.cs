@@ -39,7 +39,7 @@ WHERE `BookingId` = @BookingId;", SqlHelper.Columns(_bookingColumns)),
                     var actions = connection.Query<BookingActionPM>(
                         string.Format(
 @"SELECT {0} FROM `booking_actions` 
-WHERE `BookingId` = @BookingId;", SqlHelper.Columns(_actionColumns)),
+WHERE `BookingId` = @BookingId ORDER BY ActionId DESC;", SqlHelper.Columns(_actionColumns)),
                         new { BookingId = bookingId });
 
                     return BookingPM.FromPM(booking, actions);

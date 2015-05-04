@@ -12,7 +12,8 @@ namespace Yue.Bookings.Application
         IActionHandler<SubscribeResource>,
         IActionHandler<ConfirmSubscription>,
         IActionHandler<CancelSubscriotion>,
-        IActionHandler<LeaveAMessage>
+        IActionHandler<LeaveAMessage>,
+        IActionHandler<ChangeTime>
     {
         protected ICommandBus CommandBus { get; private set; }
         protected IEventBus EventBus { get; private set; }
@@ -51,6 +52,15 @@ namespace Yue.Bookings.Application
         }
 
         public void Invoke(LeaveAMessage action)
+        {
+            using (UnitOfWork unitOfwork = new UnitOfWork(EventBus))
+            {
+                CommandBus.Send(action);
+                unitOfwork.Complete();
+            }
+        }
+
+        public void Invoke(ChangeTime action)
         {
             using (UnitOfWork unitOfwork = new UnitOfWork(EventBus))
             {
