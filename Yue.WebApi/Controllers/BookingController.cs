@@ -13,7 +13,14 @@ using Yue.Bookings.Contract.Actions;
 using Yue.Bookings.Model;
 using Yue.Bookings.View.Model;
 using Yue.Common.Contract;
-
+/*
+curl --data "message=hello&from=2015-01-01T01%3A01%3A01&to=2015-01-01T02%3A01%3A01&resource=1" "http://localhost:64777/api/booking"
+curl "http://localhost:64777/api/booking/12"
+curl -X PUT --data "message=hello" "http://localhost:64777/api/booking/12/confirm"
+curl -X PUT --data "message=hello" "http://localhost:64777/api/booking/12/message"
+curl -X PUT --data "message=hello&from=2015-01-01T01%3A01%3A01&to=2015-01-01T02%3A01%3A01" "http://localhost:64777/api/booking/12/time"
+curl -X DELETE --data "message=hello" "http://localhost:64777/api/booking/11"
+*/
 namespace Yue.WebApi.Controllers
 {
     [RoutePrefix("api/booking")]
@@ -57,7 +64,8 @@ namespace Yue.WebApi.Controllers
             ActionResponse actionResponse = await _actionBus.SendAsync<BookingActionBase, SubscribeResource>(action);
 
             var booking = _bookingService.Get(action.BookingId);
-            return Created<BookingVM>("", BookingVM.ToVM(booking));
+            return Created<BookingVM>(Url.Link("", new { controller = "Booking", id = booking.BookingId }), 
+                BookingVM.ToVM(booking));
         }
 
         [HttpDelete]
