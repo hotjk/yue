@@ -48,7 +48,7 @@ namespace Yue.Common.Repository
         {
             return columns.Aggregate(
                 new StringBuilder(),
-                (sb, s) => sb.AppendFormat(sb.Length == 0 ? "@{0}{1}{2}=@{1}" : "{3}@{0}{1}{2}=@{1}",
+                (sb, s) => sb.AppendFormat(sb.Length == 0 ? "{0}{1}{2}=@{1}" : "{3}{0}{1}{2}=@{1}",
                     OpenQuote, s, CloseQuote, Seperator),
                 sb => sb.ToString());
         }

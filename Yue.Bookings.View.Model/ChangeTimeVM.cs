@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace Yue.Bookings.View.Model
 {
-    public class SubscribeResourceVM
+    public class ChangeTimeVM
     {
-        public int Resource { get; set; }
         public string Message { get; set; }
         public DateTime From { get; set; }
         public DateTime To { get; set; }

@@ -30,6 +30,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper">
+      <HintPath>..\packages\AutoMapper.3.3.1\lib\net40\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="AutoMapper.Net4">
+      <HintPath>..\packages\AutoMapper.3.3.1\lib\net40\AutoMapper.Net4.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -39,10 +45,32 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="SubscribeResourceVM.cs" />
+    <Compile Include="BookingVM.cs" />
+    <Compile Include="BookingActionVM.cs" />
+    <Compile Include="LeaveAMessageVM.cs" />
+    <Compile Include="ChangeTimeVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SubscribeResourceVM.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\ace\ACE.Contracts\ACE.Contracts.csproj">
+      <Project>{82f70b71-71ab-49b1-9e3f-5197abbfd1aa}</Project>
+      <Name>ACE.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Yue.Bookings.Contract\Yue.Bookings.Contract.csproj">
+      <Project>{c904450f-f057-4f44-b7a0-e7227ccb3869}</Project>
+      <Name>Yue.Bookings.Contract</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Yue.Bookings.Model\Yue.Bookings.Model.csproj">
+      <Project>{f9c983ee-2e26-4b5e-8ce4-b3bcc7074ce2}</Project>
+      <Name>Yue.Bookings.Model</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets" Condition="Exists('..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

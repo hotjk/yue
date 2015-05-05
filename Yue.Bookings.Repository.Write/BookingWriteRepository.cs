@@ -20,6 +20,9 @@ namespace Yue.Bookings.Repository.Write
 
         private static readonly string[] _bookingColumns = new string[] {
 "BookingId", "ResourceId", "State", "From", "To", "Minutes", "CreateBy", "UpdateBy", "CreateAt", "UpdateAt" };
+        private static readonly string[] _bookingColumnsUpdate = new string[] {
+            "State", "From", "To", "Minutes", "UpdateBy", "UpdateAt" };
+
         private static readonly string[] _actionColumns = new string[] {
 "ActionId", "ResourceId", "BookingId", "CreateBy", "CreateAt", "Type", "From", "To", "Minutes", "Message" };
 
@@ -54,7 +57,7 @@ namespace Yue.Bookings.Repository.Write
             {
                 return 1 == connection.Execute(
                     string.Format(@"UPDATE `bookings` SET {0} WHERE `BookingId` = @BookingId;",
-                    SqlHelper.Sets(_bookingColumns)),
+                    SqlHelper.Sets(_bookingColumnsUpdate)),
                     BookingPM.ToPM(booking));
             }
         }

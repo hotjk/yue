@@ -50,12 +50,19 @@ namespace Yue.Bookings.Model
                 .Permit(BookingAction.LeaveAMessage, BookingState.Canceled);
         }
 
+        public bool EnsoureState(BookingAction bookingAction)
+        {
+            return _stateMachine.Instance(this.State).CanFire(bookingAction);
+        }
+
         public void EnsoureAndUpdateState(BookingActionBase action)
         {
-            if (!_stateMachine.Instance(this.State).Fire(action.Type))
+            var instance = _stateMachine.Instance(this.State);
+            if (!instance.Fire(action.Type))
             {
                 throw new BusinessException(BusinessStatusCode.Forbidden, "Invalid booking state.");
             }
+            this.State = instance.State;
             this.UpdateBy = action.CreateBy;
             this.UpdateAt = action.CreateAt;
         }

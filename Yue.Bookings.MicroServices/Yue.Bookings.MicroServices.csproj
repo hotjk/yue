@@ -101,10 +101,6 @@
       <Project>{cefbf04d-913e-4e0d-8103-17114bbd02fb}</Project>
       <Name>Yue.Bookings.Model.Write</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Yue.Bookings.Model\Yue.Bookings.Model.csproj">
-      <Project>{f9c983ee-2e26-4b5e-8ce4-b3bcc7074ce2}</Project>
-      <Name>Yue.Bookings.Model</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Yue.Bookings.Repository.Model\Yue.Bookings.Repository.Model.csproj">
       <Project>{3053de0f-8e0c-448e-b2b2-689596353dcb}</Project>
       <Name>Yue.Bookings.Repository.Model</Name>
@@ -112,10 +108,6 @@
     <ProjectReference Include="..\Yue.Bookings.Repository.Write\Yue.Bookings.Repository.Write.csproj">
       <Project>{6d81753e-fb46-4bff-b649-f28d0f924020}</Project>
       <Name>Yue.Bookings.Repository.Write</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Yue.Bookings.Repository\Yue.Bookings.Repository.csproj">
-      <Project>{8740c79f-7e92-4e2f-906b-359a068f8843}</Project>
-      <Name>Yue.Bookings.Repository</Name>
     </ProjectReference>
     <ProjectReference Include="..\Yue.Common.Contract\Yue.Common.Contract.csproj">
       <Project>{ef8dd186-9fbf-4069-9654-1cffe049d12c}</Project>
