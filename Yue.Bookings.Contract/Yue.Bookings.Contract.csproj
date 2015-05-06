@@ -54,6 +54,8 @@
     <Compile Include="Enum\BookingAction.cs" />
     <Compile Include="Enum\BookingState.cs" />
     <Compile Include="Events\BookingInstanceCreated.cs" />
+    <Compile Include="Events\BookingStateChanged.cs" />
+    <Compile Include="Events\BookingTimeChanged.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TimeSlot.cs" />
   </ItemGroup>

@@ -10,6 +10,8 @@ namespace Yue.Bookings.Contract.Events
     {
         public int ResourceId { get; set; }
         public int BookingId { get; set; }
+        public BookingState State { get; set; }
+        public TimeSlot TimeSlot { get; set; }
         public int CreateBy { get; set; }
         public DateTime CreateAt { get; set; }
     }

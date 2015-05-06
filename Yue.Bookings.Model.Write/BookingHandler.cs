@@ -19,6 +19,13 @@ namespace Yue.Bookings.Model.Write
         ICommandHandler<LeaveAMessage>,
         ICommandHandler<ChangeTime>
     {
+        static BookingHandler()
+        {
+            AutoMapper.Mapper.CreateMap<Booking, BookingInstanceCreated>();
+            AutoMapper.Mapper.CreateMap<Booking, BookingStateChanged>();
+            AutoMapper.Mapper.CreateMap<Booking, BookingTimeChanged>();
+        }
+
         private IEventBus _eventBus;
         private IBookingWriteRepository _repository;
 
@@ -54,31 +61,35 @@ namespace Yue.Bookings.Model.Write
             _repository.Add(booking);
             _repository.AddAction(command);
 
-            _eventBus.Publish(new BookingInstanceCreated
-            {
-                BookingId = command.BookingId,
-                ResourceId = command.ResourceId,
-                CreateAt = command.CreateAt,
-                CreateBy = command.CreateBy
-            }.ToExternalQueue());
+            _eventBus.Publish(AutoMapper.Mapper.Map<BookingInstanceCreated>(booking).ToExternalQueue());
         }
 
         public void Execute(ConfirmSubscription command)
         {
             Booking booking = EnsourceBookingExisted(command.BookingId);
+            var orignalState = booking.State;
             booking.EnsoureAndUpdateState(command);
 
             _repository.Update(booking);
             _repository.AddAction(command);
+
+            var evt = AutoMapper.Mapper.Map<BookingStateChanged>(booking);;
+            evt.OrignalState = orignalState;
+            _eventBus.Publish(evt.ToExternalQueue());
         }
 
         public void Execute(CancelSubscriotion command)
         {
             Booking booking = EnsourceBookingExisted(command.BookingId);
+            var orignalState = booking.State;
             booking.EnsoureAndUpdateState(command);
 
             _repository.Update(booking);
             _repository.AddAction(command);
+
+            var evt = AutoMapper.Mapper.Map<BookingStateChanged>(booking);
+            evt.OrignalState = orignalState;
+            _eventBus.Publish(evt.ToExternalQueue());
         }
 
         public void Execute(LeaveAMessage command)
@@ -92,11 +103,16 @@ namespace Yue.Bookings.Model.Write
         public void Execute(ChangeTime command)
         {
             Booking booking = _repository.GetForUpdate(command.BookingId);
+            var orignalTimeSlot = booking.TimeSlot.Clone();
             booking.EnsoureAndUpdateState(command);
             booking.ChangeTime(command.TimeSlot);
 
             _repository.Update(booking);
             _repository.AddAction(command);
+
+            var evt = AutoMapper.Mapper.Map<BookingTimeChanged>(booking);
+            evt.OrignalTimeSlot = orignalTimeSlot;
+            _eventBus.Publish(evt.ToExternalQueue());
         }
     }
 }
