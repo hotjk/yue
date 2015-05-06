@@ -14,16 +14,18 @@ using Yue.Bookings.Model;
 using Yue.Bookings.View.Model;
 using Yue.Common.Contract;
 /*
-curl --data "message=hello&from=2015-01-01T01%3A01%3A01&to=2015-01-01T02%3A01%3A01&resource=1" "http://localhost:64777/api/booking"
+curl --data "message=hello&from=2015-01-01T01%3A01%3A01&to=2015-01-01T02%3A01%3A01&resource=1" "http://localhost:64777/api/bookings"
 curl "http://localhost:64777/api/booking/12"
-curl -X PUT --data "message=hello" "http://localhost:64777/api/booking/12/confirm"
-curl -X PUT --data "message=hello" "http://localhost:64777/api/booking/12/message"
-curl -X PUT --data "message=hello&from=2015-01-01T01%3A01%3A01&to=2015-01-01T02%3A01%3A01" "http://localhost:64777/api/booking/12/time"
-curl -X DELETE --data "message=hello" "http://localhost:64777/api/booking/11"
+curl -X PUT --data "message=hello" "http://localhost:64777/api/bookings/12/actions/confirm"
+curl -X PUT --data "message=hello" "http://localhost:64777/api/bookings/12/actions/message"
+curl -X PUT --data "message=hello&from=2015-01-01T01%3A01%3A01&to=2015-01-01T02%3A01%3A01" "http://localhost:64777/api/bookings/12/actions/time"
+curl -X DELETE --data "message=hello" "http://localhost:64777/api/bookings/11"
+curl "http://localhost:64777/api/bookings?resource=1&from=2015-01-01T01%3A01%3A01&to=2015-01-01T02%3A01%3A01"
+curl "http://localhost:64777/api/bookings?user=1&from=2015-01-01T01%3A01%3A01&to=2015-01-01T02%3A01%3A01"
 */
 namespace Yue.WebApi.Controllers
 {
-    [RoutePrefix("api/booking")]
+    [RoutePrefix("api/bookings")]
     public class BookingController : ApiController
     {
         private IActionBus _actionBus;
@@ -49,6 +51,22 @@ namespace Yue.WebApi.Controllers
             return Ok(BookingVM.ToVM(booking));
         }
 
+        [HttpGet]
+        [Route("")]
+        public IHttpActionResult BookingsByResource(DateTime from, DateTime to, int resource)
+        {
+            var bookings = _bookingService.BookingsByResource(new TimeSlot(from, to), resource);
+            return Ok(BookingVM.ToVM(bookings));
+        }
+
+        [HttpGet]
+        [Route("")]
+        public IHttpActionResult BookingsByUser(DateTime from, DateTime to, int user)
+        {
+            var bookings = _bookingService.BookingsByUser(new TimeSlot(from, to), user);
+            return Ok(BookingVM.ToVM(bookings));
+        }
+
         [HttpPost]
         [Route("")]
         public async Task<IHttpActionResult> SubscribeResource([FromBody]SubscribeResourceVM vm)
@@ -64,7 +82,8 @@ namespace Yue.WebApi.Controllers
             ActionResponse actionResponse = await _actionBus.SendAsync<BookingActionBase, SubscribeResource>(action);
 
             var booking = _bookingService.Get(action.BookingId);
-            return Created<BookingVM>(Url.Link("", new { controller = "Booking", id = booking.BookingId }), 
+            return Created<BookingVM>(
+                Url.Link("", new { controller = "Booking", id = booking.BookingId }), 
                 BookingVM.ToVM(booking));
         }
 
@@ -95,7 +114,7 @@ namespace Yue.WebApi.Controllers
         }
 
         [HttpPut]
-        [Route("{id}/confirm")]
+        [Route("{id}/actions/confirm")]
         public async Task<IHttpActionResult> ConfirmSubscription(int id, [FromBody]LeaveAMessageVM vm)
         {
             Booking booking = _bookingService.Get(id);
@@ -121,7 +140,7 @@ namespace Yue.WebApi.Controllers
         }
 
         [HttpPut]
-        [Route("{id}/message")]
+        [Route("{id}/actions/message")]
         public async Task<IHttpActionResult> LeaveAMessage(int id, [FromBody]LeaveAMessageVM vm)
         {
             Booking booking = _bookingService.Get(id);
@@ -146,7 +165,7 @@ namespace Yue.WebApi.Controllers
         }
 
         [HttpPut]
-        [Route("{id}/time")]
+        [Route("{id}/actions/time")]
         public async Task<IHttpActionResult> ChangeTime(int id, [FromBody]ChangeTimeVM vm)
         {
             Booking booking = _bookingService.Get(id);

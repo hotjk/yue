@@ -56,8 +56,8 @@ WHERE `BookingId` = @BookingId ORDER BY ActionId DESC;", SqlHelper.Columns(_acti
                     string.Format(
 @"SELECT {0} FROM `bookings` 
 WHERE `ResourceId` = @ResourceId
-AND From <= @To AND To >=From;", SqlHelper.Columns(_bookingColumns)),
-                    new { ResourceId = resourceId });
+AND `From` <= @To AND `To` >= @From;", SqlHelper.Columns(_bookingColumns)),
+                    new { ResourceId = resourceId, From = timeSlot.From, To = timeSlot.To });
                 return bookings.Select(n => BookingPM.FromPM(n));
             }
         }
@@ -70,7 +70,7 @@ AND From <= @To AND To >=From;", SqlHelper.Columns(_bookingColumns)),
                      string.Format(
 @"SELECT {0} FROM `bookings` 
 WHERE `CreateBy` = @CreateBy 
-AND From <= @To AND To >=From;", SqlHelper.Columns(_bookingColumns)),
+AND `From` <= @To AND `To` >= @From;", SqlHelper.Columns(_bookingColumns)),
                     new { CreateBy = userId, From = timeSlot.From, To = timeSlot.To });
 
                 return bookings.Select(n => BookingPM.FromPM(n));

@@ -22,12 +22,12 @@ namespace Yue.Bookings.Model
 
         public IEnumerable<Booking> BookingsByResource(Contract.TimeSlot timeSlot, int resourceId)
         {
-            throw new NotImplementedException();
+            return _repository.BookingsByResource(timeSlot, resourceId);
         }
 
         public IEnumerable<Booking> BookingsByUser(Contract.TimeSlot timeSlot, int userId)
         {
-            throw new NotImplementedException();
+            return _repository.BookingsByUser(timeSlot, userId);
         }
     }
 }

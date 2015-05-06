@@ -38,5 +38,18 @@ namespace Yue.Bookings.Model
             }
             return vm;
         }
+
+        public static IEnumerable<BookingVM> ToVM(IEnumerable<Booking> bookings)
+        {
+            IEnumerable<BookingVM> vms = Mapper.Map<IEnumerable<BookingVM>>(bookings);
+            foreach(var vm in vms)
+            {
+                if (!vm.Actions.Any())
+                {
+                    vm.Actions = null;
+                }
+            }
+            return vms;
+        }
     }
 }
