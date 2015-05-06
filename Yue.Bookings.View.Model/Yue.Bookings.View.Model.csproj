@@ -67,6 +67,10 @@
       <Project>{f9c983ee-2e26-4b5e-8ce4-b3bcc7074ce2}</Project>
       <Name>Yue.Bookings.Model</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Yue.Common.Contract\Yue.Common.Contract.csproj">
+      <Project>{ef8dd186-9fbf-4069-9654-1cffe049d12c}</Project>
+      <Name>Yue.Common.Contract</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
