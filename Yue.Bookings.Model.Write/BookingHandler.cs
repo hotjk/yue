@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Yue.Bookings.Contract;
 using Yue.Bookings.Contract.Actions;
+using Yue.Bookings.Contract.Events;
 using Yue.Common.Contract;
 
 namespace Yue.Bookings.Model.Write
@@ -18,10 +19,12 @@ namespace Yue.Bookings.Model.Write
         ICommandHandler<LeaveAMessage>,
         ICommandHandler<ChangeTime>
     {
+        private IEventBus _eventBus;
         private IBookingWriteRepository _repository;
 
-        public BookingHandler(IBookingWriteRepository repository)
+        public BookingHandler(IEventBus eventBus, IBookingWriteRepository repository)
         {
+            _eventBus = eventBus;
             _repository = repository;
         }
 
@@ -50,6 +53,14 @@ namespace Yue.Bookings.Model.Write
 
             _repository.Add(booking);
             _repository.AddAction(command);
+
+            _eventBus.Publish(new BookingInstanceCreated
+            {
+                BookingId = command.BookingId,
+                ResourceId = command.ResourceId,
+                CreateAt = command.CreateAt,
+                CreateBy = command.CreateBy
+            }.ToExternalQueue());
         }
 
         public void Execute(ConfirmSubscription command)
