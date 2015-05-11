@@ -11,5 +11,8 @@ namespace Yue.Users.Contract
         Create = 0,
         Activate = 1,
         ChangeProfile = 2,
+        Block = 20,
+        Destory = 21,
+        Restore = 22,
     }
 }

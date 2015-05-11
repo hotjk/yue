@@ -15,5 +15,10 @@ namespace Yue.Users.Model
         {
             this._repository = repository;
         }
+
+        public UserSecurity Get(int userId)
+        {
+            return _repository.Get(userId);
+        }
     }
 }

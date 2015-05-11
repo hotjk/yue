@@ -39,10 +39,17 @@ namespace Yue.Users.Model
 
             _stateMachine.Configure(UserState.Inactive)
                 .Permit(UserCommand.Activate, UserState.Normal)
-                .Permit(UserCommand.ChangeProfile, UserState.Initial);
+                .Permit(UserCommand.ChangeProfile, UserState.Initial)
+                .Permit(UserCommand.Destory, UserState.Destroyed);
 
             _stateMachine.Configure(UserState.Normal)
-                .Permit(UserCommand.ChangeProfile, UserState.Normal);
+                .Permit(UserCommand.ChangeProfile, UserState.Normal)
+                .Permit(UserCommand.Block, UserState.Blocked)
+                .Permit(UserCommand.Destory, UserState.Destroyed);
+
+            _stateMachine.Configure(UserState.Blocked)
+                .Permit(UserCommand.Destory, UserState.Destroyed)
+                .Permit(UserCommand.Restore, UserState.Normal);
         }
 
         public bool EnsoureState(UserCommand action)

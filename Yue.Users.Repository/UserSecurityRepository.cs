@@ -15,7 +15,7 @@ namespace Yue.Users.Repository
         public UserSecurityRepository(SqlOption option) : base(option) { }
 
         private static readonly string[] _userSecurityColumns = new string[] {
-"UserId", "PasswordHash", "PasswordChangeAt", "PasswordChangeBy" };
+"UserId", "PasswordHash", "CreateBy", "UpdateBy", "CreateAt", "UpdateAt" };
 
         public UserSecurity Get(int userId)
         {

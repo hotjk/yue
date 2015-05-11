@@ -8,6 +8,7 @@ using Yue.Common.Repository;
 using Yue.Users.Model;
 using Yue.Users.Model.Write;
 using Dapper;
+using Yue.Users.Contract.Commands;
 
 namespace Yue.Users.Repository.Write
 {
@@ -16,18 +17,31 @@ namespace Yue.Users.Repository.Write
         public UserSecurityWriteRepository(SqlOption option) : base(option) { }
 
         private static readonly string[] _userSecurityColumns = new string[] {
-"UserId", "PasswordHash", "PasswordChangeAt", "PasswordChangeBy" };
+"UserId", "PasswordHash", "CreateBy", "UpdateBy", "CreateAt", "UpdateAt" };
         private static readonly string[] _userSecurityUpdateColumns = new string[] {
-"PasswordHash", "PasswordChangeAt", "PasswordChangeBy" };
+"PasswordHash", "CreateBy", "UpdateBy" };
+        private static readonly string[] _userSecurityLogsColumns = new string[] {
+"UserId", "Type", "PasswordHash", "CreateBy", "CreateAt" };
 
-        public UserSecurity UserSecurityByEmail(string email)
+        public UserSecurity Get(int userId)
         {
             using (IDbConnection connection = OpenConnection())
             {
                 return connection.Query<UserSecurity>(
-                     string.Format(@"SELECT {0} FROM `user_security` WHERE `Email` = @Email;",
+                     string.Format(@"SELECT {0} FROM `user_security` WHERE `UserId` = @UserId;",
                      SqlHelper.Columns(_userSecurityColumns)),
-                     new { Email = email }).SingleOrDefault();
+                     new { UserId = userId }).SingleOrDefault();
+            }
+        }
+
+        public UserSecurity GetForUpdate(int userId)
+        {
+            using (IDbConnection connection = OpenConnection())
+            {
+                return connection.Query<UserSecurity>(
+                     string.Format(@"SELECT {0} FROM `user_security` WHERE `UserId` = @UserId FOR UPDATE;",
+                     SqlHelper.Columns(_userSecurityColumns)),
+                     new { UserId = userId }).SingleOrDefault();
             }
         }
 
@@ -43,26 +57,26 @@ namespace Yue.Users.Repository.Write
             }
         }
 
-        public bool Update(User user)
+        public bool Update(UserSecurity userSecurity)
         {
             using (IDbConnection connection = OpenConnection())
             {
                 return 1 == connection.Execute(
                     string.Format(@"UPDATE `user_security` SET {0} WHERE `UserId` = @UserId;",
                     SqlHelper.Sets(_userSecurityUpdateColumns)),
-                    user);
+                    userSecurity);
             }
         }
 
-        public bool AddLog(UserSecurity userSecurity)
+        public bool Log(UserSecurityCommandBase command)
         {
             using (IDbConnection connection = OpenConnection())
             {
                 return 1 == connection.Execute(
                     string.Format(@"INSERT INTO `user_security_logs` ({0}) VALUES ({1});",
-                    SqlHelper.Columns(_userSecurityColumns),
-                    SqlHelper.Params(_userSecurityColumns)),
-                    userSecurity);
+                    SqlHelper.Columns(_userSecurityLogsColumns),
+                    SqlHelper.Params(_userSecurityLogsColumns)),
+                    command);
             }
         }
     }

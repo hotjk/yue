@@ -13,7 +13,9 @@ namespace Yue.Users.Model.Write
 {
     public class UserSecurityHandler :
         ICommandHandler<CreateUserSecurity>,
-        ICommandHandler<VerifyUserPassword>
+        ICommandHandler<VerifyPassword>,
+        ICommandHandler<ChangePassword>,
+        ICommandHandler<ResetPassword>
     {
         private IEventBus _eventBus;
         private IUserSecurityWriteRepository _repository;
@@ -31,9 +33,9 @@ namespace Yue.Users.Model.Write
             _repository.Add(userSecurity);
         }
 
-        public void Execute(VerifyUserPassword command)
+        public void Execute(VerifyPassword command)
         {
-            UserSecurity userSecurity = _repository.UserSecurityByEmail(command.Email);
+            UserSecurity userSecurity = _repository.Get(command.UserId);
             bool match = false;
             if (userSecurity != null)
             {
@@ -49,6 +51,23 @@ namespace Yue.Users.Model.Write
             {
                 throw new BusinessException(BusinessStatusCode.Forbidden, "Invalid user password.");
             }
+        }
+
+        public void Execute(ChangePassword command)
+        {
+            UserSecurity userSecurity = _repository.GetForUpdate(command.UserId);
+            if (userSecurity == null)
+            {
+                throw new BusinessException(BusinessStatusCode.NotFound, "User not found.");
+            }
+            userSecurity.ChangePassword(command);
+            _repository.Update(userSecurity);
+            _repository.Log(command);
+        }
+
+        public void Execute(ResetPassword command)
+        {
+            throw new NotImplementedException();
         }
     }
 }

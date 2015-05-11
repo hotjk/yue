@@ -1,44 +1,72 @@
 ﻿using ACE;
+using ACE.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Yue.Common.Contract;
 using Yue.Users.Contract.Actions;
 using Yue.Users.Contract.Commands;
+using Yue.Users.Model;
 
 namespace Yue.Users.Application
 {
     public class UserApplication : 
-        IActionHandler<Register>
+        IActionHandler<Register>,
+        IActionHandler<Login>
     {
-        protected ICommandBus CommandBus { get; private set; }
-        protected IEventBus EventBus { get; private set; }
+        protected ICommandBus _commandBus;
+        protected IEventBus _eventBus;
+        private IUserService _userService;
 
-        public UserApplication(ICommandBus commandBus, IEventBus eventBus)
+        public UserApplication(ICommandBus commandBus, IEventBus eventBus,
+            IUserService userService)
         {
-            this.CommandBus = commandBus;
-            this.EventBus = eventBus;
+            this._commandBus = commandBus;
+            this._eventBus = eventBus;
+            _userService = userService;
         }
 
         public void Invoke(Register action)
         {
-            using (UnitOfWork unitOfwork = new UnitOfWork(EventBus))
+            using (UnitOfWork unitOfwork = new UnitOfWork(_eventBus))
             {
                 CreateUser createUser = new CreateUser(
                     action.UserId, 
                     action.Email,
                     action.Name, 
-                    action.RegisterAt,
+                    action.CreateAt,
                     action.UserId);
-                CommandBus.Send(createUser);
+                _commandBus.Send(createUser);
 
                 CreateUserSecurity createUserSecurity = new CreateUserSecurity(
                     action.UserId,
                     action.PasswordHash,
-                    action.RegisterAt,
+                    action.CreateAt,
                     action.UserId);
-                CommandBus.Send(createUserSecurity);
+                _commandBus.Send(createUserSecurity);
+
+                unitOfwork.Complete();
+            }
+        }
+
+        public void Invoke(Login action)
+        {
+            User user = _userService.UserByEmail(action.Email);
+            if(user == null)
+            {
+                throw new BusinessException(BusinessStatusCode.NotFound, "User not found.");
+            }
+
+            using (UnitOfWork unitOfwork = new UnitOfWork(_eventBus))
+            {
+                VerifyPassword verifyUserPassword = new VerifyPassword(
+                    user.UserId,
+                    action.PasswordHash,
+                    action.CreateAt,
+                    user.UserId);
+                _commandBus.Send(verifyUserPassword);
 
                 unitOfwork.Complete();
             }

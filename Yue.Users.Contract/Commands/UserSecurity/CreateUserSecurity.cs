@@ -11,12 +11,8 @@ namespace Yue.Users.Contract.Commands
         public CreateUserSecurity(int userId,
             string passwordHash,
             DateTime createAt,
-            int createBy) : base(UserSecurityCommand.Create, createAt, createBy)
+            int createBy) : base(userId, UserSecurityCommand.Create, passwordHash, createAt, createBy)
         {
-            this.UserId = userId;
-            this.PasswordHash = passwordHash;
         }
-        public int UserId { get; private set; }
-        public string PasswordHash { get; private set; }
     }
 }

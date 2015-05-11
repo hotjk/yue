@@ -19,6 +19,11 @@ namespace Yue.Users.Model
             return _repository.Get(userId);
         }
 
+        public User UserByEmail(string email)
+        {
+            return _repository.UserByEmail(email);
+        }
+
         public IEnumerable<User> Users(IEnumerable<int> ids)
         {
             return _repository.Users(ids);

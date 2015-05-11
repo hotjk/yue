@@ -8,5 +8,6 @@ namespace Yue.Users.Model
 {
     public interface IUserSecurityService
     {
+        UserSecurity Get(int userId);
     }
 }

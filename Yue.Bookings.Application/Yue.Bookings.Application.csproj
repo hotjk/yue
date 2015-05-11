@@ -54,6 +54,10 @@
       <Project>{c904450f-f057-4f44-b7a0-e7227ccb3869}</Project>
       <Name>Yue.Bookings.Contract</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Yue.Common.Contract\Yue.Common.Contract.csproj">
+      <Project>{ef8dd186-9fbf-4069-9654-1cffe049d12c}</Project>
+      <Name>Yue.Common.Contract</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -12,7 +12,6 @@ namespace Yue.Users.Contract.Actions
         public string Email { get; private set; }
         public string Name { get; private set; }
         public string PasswordHash { get; private set; }
-
-        public DateTime RegisterAt { get; set; }
+        public DateTime CreateAt { get; set; }
     }
 }

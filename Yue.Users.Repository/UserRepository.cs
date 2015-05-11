@@ -29,6 +29,18 @@ namespace Yue.Users.Repository
             }
         }
 
+        public User UserByEmail(string email)
+        {
+            using (IDbConnection connection = OpenConnection())
+            {
+                var user = connection.Query<User>(
+                     string.Format(@"SELECT {0} FROM `users` WHERE `UserId` = @UserId;",
+                     SqlHelper.Columns(_userColumns)),
+                     new { Email = email }).SingleOrDefault();
+                return user;
+            }
+        }
+
         public IEnumerable<User> Users(IEnumerable<int> ids)
         {
             using (IDbConnection connection = OpenConnection())
