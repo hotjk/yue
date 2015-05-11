@@ -51,9 +51,9 @@
     <Compile Include="Actions\SubscribeResource.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Enum\BookingAction.cs" />
+    <Compile Include="Enum\BookingCommand.cs" />
     <Compile Include="Enum\BookingState.cs" />
-    <Compile Include="Events\BookingInstanceCreated.cs" />
+    <Compile Include="Events\BookingIsCreated.cs" />
     <Compile Include="Events\BookingStateChanged.cs" />
     <Compile Include="Events\BookingTimeChanged.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

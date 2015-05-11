@@ -17,16 +17,16 @@ namespace Yue.Bookings.Repository.Model
         public DateTime? To { get; private set; }
         public int? Minutes { get; private set; }
 
-        private static IDictionary<BookingAction, Type> _bookingActionTypes;
+        private static IDictionary<BookingCommand, Type> _bookingActionTypes;
         static BookingActionPM()
         {
-            _bookingActionTypes = new Dictionary<BookingAction, Type>();
+            _bookingActionTypes = new Dictionary<BookingCommand, Type>();
             var ns = typeof(BookingActionBase).Namespace;
-            foreach (BookingAction value in Enum.GetValues(typeof(BookingAction)))
+            foreach (BookingCommand value in Enum.GetValues(typeof(BookingCommand)))
             {
-                string name = Enum.GetName(typeof(BookingAction), value);
+                string name = Enum.GetName(typeof(BookingCommand), value);
                 // Assumed that BookingActionBase and concrete class in the same directory. 
-                _bookingActionTypes.Add(value, typeof(BookingAction).Assembly.GetType(ns + "." + name));
+                _bookingActionTypes.Add(value, typeof(BookingCommand).Assembly.GetType(ns + "." + name));
             }
             foreach (var value in _bookingActionTypes.Values)
             {

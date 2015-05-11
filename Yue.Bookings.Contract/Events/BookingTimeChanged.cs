@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Yue.Bookings.Contract.Events
 {
-    public class BookingTimeChanged : BookingInstanceCreated
+    public class BookingTimeChanged : BookingIsCreated
     {
         public TimeSlot OrignalTimeSlot { get; set; }
         public int UpdateBy { get; set; }

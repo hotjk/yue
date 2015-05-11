@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Yue.Bookings.Contract
 {
-    public enum BookingAction
+    public enum BookingCommand
     {
         SubscribeResource = 0,
         ConfirmSubscription = 1,

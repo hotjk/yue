@@ -21,7 +21,7 @@ namespace Yue.Bookings.Model.Write
     {
         static BookingHandler()
         {
-            AutoMapper.Mapper.CreateMap<Booking, BookingInstanceCreated>();
+            AutoMapper.Mapper.CreateMap<Booking, BookingIsCreated>();
             AutoMapper.Mapper.CreateMap<Booking, BookingStateChanged>();
             AutoMapper.Mapper.CreateMap<Booking, BookingTimeChanged>();
         }
@@ -61,7 +61,7 @@ namespace Yue.Bookings.Model.Write
             _repository.Add(booking);
             _repository.AddAction(command);
 
-            _eventBus.Publish(AutoMapper.Mapper.Map<BookingInstanceCreated>(booking).ToExternalQueue());
+            _eventBus.Publish(AutoMapper.Mapper.Map<BookingIsCreated>(booking).ToExternalQueue());
         }
 
         public void Execute(ConfirmSubscription command)

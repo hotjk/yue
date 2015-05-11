@@ -9,7 +9,7 @@ namespace Yue.Bookings.Contract.Actions
     public class BookingActionBase : ACE.Action
     {
         public BookingActionBase() { }
-        public BookingActionBase(int actionId, int resourceId, int bookingId, BookingAction type, string message, int createBy, DateTime createAt)
+        public BookingActionBase(int actionId, int resourceId, int bookingId, BookingCommand type, string message, int createBy, DateTime createAt)
         {
             this.ActionId = actionId;
             this.ResourceId = resourceId;
@@ -22,7 +22,7 @@ namespace Yue.Bookings.Contract.Actions
         public int ActionId { get; private set; }
         public int ResourceId { get; private set; }
         public int BookingId { get; private set; }
-        public BookingAction Type { get; protected set; }
+        public BookingCommand Type { get; protected set; }
         public string Message { get; private set; }
         public int CreateBy { get; private set; }
         public DateTime CreateAt { get; private set; }

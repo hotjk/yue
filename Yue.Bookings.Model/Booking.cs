@@ -25,7 +25,7 @@ namespace Yue.Bookings.Model
 
         public IEnumerable<BookingActionBase> Actions { get; protected set; }
 
-        private static StateMachine<BookingState, BookingAction> _stateMachine;
+        private static StateMachine<BookingState, BookingCommand> _stateMachine;
         
         static Booking()
         {
@@ -34,23 +34,23 @@ namespace Yue.Bookings.Model
 
         private static void InitStateMachine()
         {
-            _stateMachine = new StateMachine<BookingState, BookingAction>();
+            _stateMachine = new StateMachine<BookingState, BookingCommand>();
             _stateMachine.Configure(BookingState.Initial)
-                .Permit(BookingAction.SubscribeResource, BookingState.Subscribed);
+                .Permit(BookingCommand.SubscribeResource, BookingState.Subscribed);
             _stateMachine.Configure(BookingState.Subscribed)
-                .Permit(BookingAction.CancelSubscriotion, BookingState.Canceled)
-                .Permit(BookingAction.ChangeTime, BookingState.Subscribed)
-                .Permit(BookingAction.ConfirmSubscription, BookingState.Confirmed)
-                .Permit(BookingAction.LeaveAMessage, BookingState.Subscribed);
+                .Permit(BookingCommand.CancelSubscriotion, BookingState.Canceled)
+                .Permit(BookingCommand.ChangeTime, BookingState.Subscribed)
+                .Permit(BookingCommand.ConfirmSubscription, BookingState.Confirmed)
+                .Permit(BookingCommand.LeaveAMessage, BookingState.Subscribed);
             _stateMachine.Configure(BookingState.Confirmed)
-                .Permit(BookingAction.CancelSubscriotion, BookingState.Canceled)
-                .Permit(BookingAction.ChangeTime, BookingState.Subscribed)
-                .Permit(BookingAction.LeaveAMessage, BookingState.Confirmed);
+                .Permit(BookingCommand.CancelSubscriotion, BookingState.Canceled)
+                .Permit(BookingCommand.ChangeTime, BookingState.Subscribed)
+                .Permit(BookingCommand.LeaveAMessage, BookingState.Confirmed);
             _stateMachine.Configure(BookingState.Canceled)
-                .Permit(BookingAction.LeaveAMessage, BookingState.Canceled);
+                .Permit(BookingCommand.LeaveAMessage, BookingState.Canceled);
         }
 
-        public bool EnsoureState(BookingAction bookingAction)
+        public bool EnsoureState(BookingCommand bookingAction)
         {
             return _stateMachine.Instance(this.State).CanFire(bookingAction);
         }

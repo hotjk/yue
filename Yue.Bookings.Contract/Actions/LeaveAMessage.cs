@@ -9,6 +9,6 @@ namespace Yue.Bookings.Contract.Actions
     public class LeaveAMessage : BookingActionBase, ACE.ICommand
     {
         public LeaveAMessage(int actionId, int resourceId, int bookingId, string message, int createBy, DateTime createAt)
-            : base(actionId, resourceId, bookingId, BookingAction.LeaveAMessage, message, createBy, createAt) { }
+            : base(actionId, resourceId, bookingId, BookingCommand.LeaveAMessage, message, createBy, createAt) { }
     }
 }

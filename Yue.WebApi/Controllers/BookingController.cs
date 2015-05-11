@@ -97,7 +97,7 @@ namespace Yue.WebApi.Controllers
                 return NotFound();
             }
 
-            if (!booking.EnsoureState(BookingAction.CancelSubscriotion))
+            if (!booking.EnsoureState(BookingCommand.CancelSubscriotion))
             {
                 return BadRequest("Invalid booking state.");
             }
@@ -123,7 +123,7 @@ namespace Yue.WebApi.Controllers
                 return NotFound();
             }
 
-            if (!booking.EnsoureState(BookingAction.ConfirmSubscription))
+            if (!booking.EnsoureState(BookingCommand.ConfirmSubscription))
             {
                 return BadRequest("Invalid booking state.");
             }
@@ -149,7 +149,7 @@ namespace Yue.WebApi.Controllers
                 return NotFound();
             }
 
-            if (!booking.EnsoureState(BookingAction.LeaveAMessage))
+            if (!booking.EnsoureState(BookingCommand.LeaveAMessage))
             {
                 return BadRequest("Invalid booking state.");
             }
@@ -174,7 +174,7 @@ namespace Yue.WebApi.Controllers
                 return NotFound();
             }
 
-            if (!booking.EnsoureState(BookingAction.ChangeTime))
+            if (!booking.EnsoureState(BookingCommand.ChangeTime))
             {
                 return BadRequest("Invalid booking state.");
             }

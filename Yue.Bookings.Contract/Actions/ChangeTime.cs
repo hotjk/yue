@@ -9,7 +9,7 @@ namespace Yue.Bookings.Contract.Actions
     public class ChangeTime : BookingActionBase, ACE.ICommand
     {
         public ChangeTime(int actionId, int resourceId, int bookingId, string message, int createBy, DateTime createAt, TimeSlot timeSlot)
-            : base(actionId,resourceId, bookingId, BookingAction.ChangeTime, message, createBy, createAt)
+            : base(actionId,resourceId, bookingId, BookingCommand.ChangeTime, message, createBy, createAt)
         {
             this.TimeSlot = timeSlot;
         }
