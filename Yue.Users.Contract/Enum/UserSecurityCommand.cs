@@ -9,11 +9,12 @@ namespace Yue.Users.Contract
     public enum UserSecurityCommand
     {
         Create = 0,
-        ChangePassword = 1,
-        ResetPassword = 2,
-        VerifyUserPassword = 3,
-        Block = 10,
-        Destory = 11,
-        Restore = 20,
+        Activate = 1,
+        ChangePassword = 11,
+        ResetPassword = 12,
+        VerifyUserPassword = 13,
+        Block = 20,
+        Destory = 21,
+        Restore = 22,
     }
 }

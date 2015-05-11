@@ -52,7 +52,6 @@
     <Compile Include="Enum\UserSecurityCommand.cs" />
     <Compile Include="Enum\UserCommand.cs" />
     <Compile Include="Enum\UserRole.cs" />
-    <Compile Include="Enum\UserSecurityState.cs" />
     <Compile Include="Enum\UserState.cs" />
     <Compile Include="Events\UserPasswordVerified.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

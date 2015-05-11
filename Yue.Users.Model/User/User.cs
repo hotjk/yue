@@ -35,14 +35,14 @@ namespace Yue.Users.Model
             _stateMachine = new StateMachine<UserState, UserCommand>();
 
             _stateMachine.Configure(UserState.Initial)
-                .Permit(UserCommand.Create, UserState.Registered);
+                .Permit(UserCommand.Create, UserState.Inactive);
 
-            _stateMachine.Configure(UserState.Registered)
-                .Permit(UserCommand.Activate, UserState.Activated)
+            _stateMachine.Configure(UserState.Inactive)
+                .Permit(UserCommand.Activate, UserState.Normal)
                 .Permit(UserCommand.ChangeProfile, UserState.Initial);
 
-            _stateMachine.Configure(UserState.Activated)
-                .Permit(UserCommand.ChangeProfile, UserState.Activated);
+            _stateMachine.Configure(UserState.Normal)
+                .Permit(UserCommand.ChangeProfile, UserState.Normal);
         }
 
         public bool EnsoureState(UserCommand action)

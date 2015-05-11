@@ -9,7 +9,9 @@ namespace Yue.Users.Contract
     public enum UserState
     {
         Initial = 0,
-        Registered = 1,
-        Activated = 2,
+        Inactive = 1,
+        Normal = 2,
+        Blocked = 10,
+        Destroyed = 11
     }
 }

@@ -14,7 +14,7 @@ namespace Yue.Users.Model
     public class UserSecurity : IAggregateRoot
     {
         public int UserId { get; private set; }
-        public UserSecurityState State { get; private set; }
+        public UserState State { get; private set; }
         private string PasswordHash { get; set; }
         public DateTime PasswordChangeAt { get; private set; }
         public int PasswordChangeBy { get; private set; }
@@ -29,7 +29,7 @@ namespace Yue.Users.Model
             return userSecurity;
         }
 
-        private static StateMachine<UserSecurityState, UserSecurityCommand> _stateMachine;
+        private static StateMachine<UserState, UserSecurityCommand> _stateMachine;
 
         static UserSecurity()
         {
@@ -38,24 +38,28 @@ namespace Yue.Users.Model
 
         private static void InitStateMachine()
         {
-            _stateMachine = new StateMachine<UserSecurityState, UserSecurityCommand>();
+            _stateMachine = new StateMachine<UserState, UserSecurityCommand>();
 
-            _stateMachine.Configure(UserSecurityState.Initial)
-                .Permit(UserSecurityCommand.Create, UserSecurityState.Normal);
+            _stateMachine.Configure(UserState.Initial)
+                .Permit(UserSecurityCommand.Create, UserState.Inactive);
 
-            _stateMachine.Configure(UserSecurityState.Normal)
-                .Permit(UserSecurityCommand.ChangePassword, UserSecurityState.Normal)
-                .Permit(UserSecurityCommand.ResetPassword, UserSecurityState.Normal)
-                .Permit(UserSecurityCommand.VerifyUserPassword, UserSecurityState.Normal)
-                .Permit(UserSecurityCommand.Block, UserSecurityState.Blocked)
-                .Permit(UserSecurityCommand.Destory, UserSecurityState.Destroyed);
+            _stateMachine.Configure(UserState.Inactive)
+                .Permit(UserSecurityCommand.Activate, UserState.Normal)
+                .Permit(UserSecurityCommand.ChangePassword, UserState.Inactive)
+                .Permit(UserSecurityCommand.ResetPassword, UserState.Inactive)
+                .Permit(UserSecurityCommand.VerifyUserPassword, UserState.Inactive)
+                .Permit(UserSecurityCommand.Destory, UserState.Destroyed);
 
-            _stateMachine.Configure(UserSecurityState.Blocked)
-                .Permit(UserSecurityCommand.Destory, UserSecurityState.Destroyed)
-                .Permit(UserSecurityCommand.Restore, UserSecurityState.Normal);
+            _stateMachine.Configure(UserState.Normal)
+                .Permit(UserSecurityCommand.ChangePassword, UserState.Normal)
+                .Permit(UserSecurityCommand.ResetPassword, UserState.Normal)
+                .Permit(UserSecurityCommand.VerifyUserPassword, UserState.Normal)
+                .Permit(UserSecurityCommand.Block, UserState.Blocked)
+                .Permit(UserSecurityCommand.Destory, UserState.Destroyed);
 
-            _stateMachine.Configure(UserSecurityState.Destroyed)
-                .Permit(UserSecurityCommand.Restore, UserSecurityState.Normal);
+            _stateMachine.Configure(UserState.Blocked)
+                .Permit(UserSecurityCommand.Destory, UserState.Destroyed)
+                .Permit(UserSecurityCommand.Restore, UserState.Normal);
         }
 
         public bool EnsoureState(UserSecurityCommand action)
