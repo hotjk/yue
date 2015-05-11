@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Yue.Bookings.Contract.Actions;
+using Yue.Users.Contract.Actions;
 
-namespace Yue.Bookings.MicroServices
+namespace Yue.Users.MicroServices
 {
     class Program
     {
@@ -15,7 +15,7 @@ namespace Yue.Bookings.MicroServices
             log4net.Config.XmlConfigurator.Configure();
             BootStrapper.BootStrap();
 
-            BootStrapper.ActionBus.SubscribeInParallel<BookingActionBase>(10);
+            BootStrapper.ActionBus.SubscribeInParallel<UserActionBase>(10);
 
             Console.WriteLine("Ctrl-C to exit");
             Console.CancelKeyPress += (source, cancelKeyPressArgs) =>

@@ -9,13 +9,11 @@ using System.Configuration;
 using EasyNetQ.Loggers;
 using Grit.Sequence;
 using Grit.Sequence.Repository.MySql;
-using Yue.Bookings.Model;
-using Yue.Bookings.Repository;
-using Yue.Bookings.Model.Write;
-using Yue.Bookings.Repository.Write;
+using Yue.Users.Model.Write;
+using Yue.Users.Repository.Write;
 using Yue.Common.Log;
 
-namespace Yue.Bookings.MicroServices
+namespace Yue.Users.MicroServices
 {
     public class BootStrapper
     {
@@ -42,21 +40,21 @@ namespace Yue.Bookings.MicroServices
             Container.Bind<ACE.Loggers.IBusLogger>().To<Log4NetBusLogger>().InSingletonScope();
             Container.Bind<ICommandHandlerFactory>().To<CommandHandlerFactory>()
                 .InSingletonScope()
-                .WithConstructorArgument(Constants.ParamCommandAssmblies, new string[] { "Yue.Bookings.Contract" })
-                .WithConstructorArgument(Constants.ParamHandlerAssmblies, new string[] { "Yue.Bookings.Model.Write" });
+                .WithConstructorArgument(Constants.ParamCommandAssmblies, new string[] { "Yue.Users.Contract" })
+                .WithConstructorArgument(Constants.ParamHandlerAssmblies, new string[] { "Yue.Users.Model.Write" });
             Container.Bind<ICommandBus>().To<CommandBus>().InSingletonScope();
             Container.Bind<IEventHandlerFactory>().To<EventHandlerFactory>()
                 .InSingletonScope()
-                .WithConstructorArgument(Constants.ParamEventAssmblies, new string[] { "Yue.Bookings.Contract" })
-                .WithConstructorArgument(Constants.ParamHandlerAssmblies, new string[] { "Yue.Bookings.Model.Write" });
+                .WithConstructorArgument(Constants.ParamEventAssmblies, new string[] { "Yue.Users.Contract" })
+                .WithConstructorArgument(Constants.ParamHandlerAssmblies, new string[] { "Yue.Users.Model.Write" });
             // EventBus must be thread scope, published events will be saved in thread EventBus._events, until Flush/Clear.
             Container.Bind<IEventBus>().To<EventBus>()
                 .InThreadScope()
                 .WithConstructorArgument(Constants.ParamEventDistributionOptions, ACE.Event.EventDistributionOptions.Queue);
             Container.Bind<IActionHandlerFactory>().To<ActionHandlerFactory>()
                 .InSingletonScope()
-                .WithConstructorArgument(Constants.ParamActionAssmblies, new string[] { "Yue.Bookings.Contract" })
-                .WithConstructorArgument(Constants.ParamHandlerAssmblies, new string[] { "Yue.Bookings.Application" });
+                .WithConstructorArgument(Constants.ParamActionAssmblies, new string[] { "Yue.Users.Contract" })
+                .WithConstructorArgument(Constants.ParamHandlerAssmblies, new string[] { "Yue.Users.Application" });
             // ActionBus must be thread scope, single thread bind to use single anonymous RabbitMQ queue for reply.
             Container.Bind<IActionBus>().To<ActionBus>().InThreadScope();
         }
@@ -66,10 +64,10 @@ namespace Yue.Bookings.MicroServices
             Yue.Common.Repository.SqlOption sqlOptionWrite =
                 new Common.Repository.SqlOption
                 {
-                    ConnectionString = ConfigurationManager.ConnectionStrings["Booking.Write"].ConnectionString
+                    ConnectionString = ConfigurationManager.ConnectionStrings["Users.Write"].ConnectionString
                 };
 
-            Container.Bind<IBookingWriteRepository>().To<BookingWriteRepository>().InSingletonScope()
+            Container.Bind<IUserWriteRepository>().To<UserWriteRepository>().InSingletonScope()
                 .WithConstructorArgument("option", sqlOptionWrite);
         }
 

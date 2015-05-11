@@ -46,7 +46,6 @@ namespace Yue.Users.Model.Write
                 UserPasswordVerified evt = new UserPasswordVerified(userSecurity.UserId, match, command.CreateAt, command.CreateBy);
                 _eventBus.Publish(evt.ToExternalQueue());
             }
-            
             if (!match)
             {
                 throw new BusinessException(BusinessStatusCode.Forbidden, "Invalid user password.");
@@ -60,14 +59,35 @@ namespace Yue.Users.Model.Write
             {
                 throw new BusinessException(BusinessStatusCode.NotFound, "User not found.");
             }
+            if (userSecurity.PasswordMatchWith(command.PasswordHash))
+            {
+                throw new BusinessException(BusinessStatusCode.Forbidden, "The new password can not be the same as the old password.");
+            }
             userSecurity.ChangePassword(command);
             _repository.Update(userSecurity);
             _repository.Log(command);
+
+            UserPasswordChanged evt = new UserPasswordChanged(userSecurity.UserId, command.CreateAt, command.CreateBy);
+            _eventBus.Publish(evt.ToExternalQueue());
         }
 
         public void Execute(ResetPassword command)
         {
-            throw new NotImplementedException();
+            UserSecurity userSecurity = _repository.GetForUpdate(command.UserId);
+            if (userSecurity == null)
+            {
+                throw new BusinessException(BusinessStatusCode.NotFound, "User not found.");
+            }
+            if (userSecurity.PasswordMatchWith(command.PasswordHash))
+            {
+                throw new BusinessException(BusinessStatusCode.Forbidden, "The new password can not be the same as the old password.");
+            }
+            userSecurity.ChangePassword(command);
+            _repository.Update(userSecurity);
+            _repository.Log(command);
+
+            UserPasswordChanged evt = new UserPasswordChanged(userSecurity.UserId, command.CreateAt, command.CreateBy);
+            _eventBus.Publish(evt.ToExternalQueue());
         }
     }
 }

@@ -14,7 +14,9 @@ namespace Yue.Users.Application
 {
     public class UserApplication : 
         IActionHandler<Register>,
-        IActionHandler<Login>
+        IActionHandler<Login>,
+        IActionHandler<Yue.Users.Contract.Actions.ChangePassword>,
+        IActionHandler<Yue.Users.Contract.Actions.ResetPassword>
     {
         protected ICommandBus _commandBus;
         protected IEventBus _eventBus;
@@ -69,6 +71,26 @@ namespace Yue.Users.Application
                 _commandBus.Send(verifyUserPassword);
 
                 unitOfwork.Complete();
+            }
+        }
+
+        public void Invoke(Contract.Actions.ChangePassword action)
+        {
+            using (UnitOfWork unitOfwork = new UnitOfWork(_eventBus))
+            {
+                Yue.Users.Contract.Commands.ChangePassword cmd = new Contract.Commands.ChangePassword
+                (action.UserId, action.PasswordHash, action.CreateAt, action.CreateBy);
+                _commandBus.Send(cmd);
+            }
+        }
+
+        public void Invoke(Contract.Actions.ResetPassword action)
+        {
+            using (UnitOfWork unitOfwork = new UnitOfWork(_eventBus))
+            {
+                Yue.Users.Contract.Commands.ResetPassword cmd = new Contract.Commands.ResetPassword
+                (action.UserId, action.PasswordHash, action.CreateAt, action.CreateBy);
+                _commandBus.Send(cmd);
             }
         }
     }

@@ -10,7 +10,7 @@ namespace Yue.Users.Contract.Commands
     {
         public ResetPassword(int userId, string passwordHash,
             DateTime createAt, int createBy)
-            : base(userId, UserSecurityCommand.VerifyPassword, passwordHash, createAt, createBy)
+            : base(userId, UserSecurityCommand.ResetPassword, passwordHash, createAt, createBy)
         {
         }
     }
