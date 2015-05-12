@@ -113,6 +113,10 @@
       <Project>{d9c3d164-b6ae-46c7-909b-649c3b78a8e4}</Project>
       <Name>Yue.Users.Model.Write</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Yue.Users.Model\Yue.Users.Model.csproj">
+      <Project>{cb72e1fb-035d-4bf4-8492-4897869ec2eb}</Project>
+      <Name>Yue.Users.Model</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Yue.Users.Repository.Write\Yue.Users.Repository.Write.csproj">
       <Project>{a0fff3ae-d8b8-4239-ac8c-90c3bf48f475}</Project>
       <Name>Yue.Users.Repository.Write</Name>

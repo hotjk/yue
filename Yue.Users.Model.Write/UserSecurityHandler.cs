@@ -13,7 +13,6 @@ namespace Yue.Users.Model.Write
 {
     public class UserSecurityHandler :
         ICommandHandler<CreateUserSecurity>,
-        ICommandHandler<VerifyPassword>,
         ICommandHandler<ChangePassword>,
         ICommandHandler<ResetPassword>
     {
@@ -31,25 +30,7 @@ namespace Yue.Users.Model.Write
         {
             UserSecurity userSecurity = UserSecurity.Create(command);
             _repository.Add(userSecurity);
-        }
-
-        public void Execute(VerifyPassword command)
-        {
-            UserSecurity userSecurity = _repository.Get(command.UserId);
-            bool match = false;
-            if (userSecurity != null)
-            {
-                if (userSecurity.PasswordMatchWith(command.PasswordHash))
-                {
-                    match = true;
-                }
-                UserPasswordVerified evt = new UserPasswordVerified(userSecurity.UserId, match, command.CreateAt, command.CreateBy);
-                _eventBus.Publish(evt.ToExternalQueue());
-            }
-            if (!match)
-            {
-                throw new BusinessException(BusinessStatusCode.Forbidden, "Invalid user password.");
-            }
+            _repository.Log(command);
         }
 
         public void Execute(ChangePassword command)
@@ -59,10 +40,7 @@ namespace Yue.Users.Model.Write
             {
                 throw new BusinessException(BusinessStatusCode.NotFound, "User not found.");
             }
-            if (userSecurity.PasswordMatchWith(command.PasswordHash))
-            {
-                throw new BusinessException(BusinessStatusCode.Forbidden, "The new password can not be the same as the old password.");
-            }
+            
             userSecurity.ChangePassword(command);
             _repository.Update(userSecurity);
             _repository.Log(command);
@@ -78,10 +56,7 @@ namespace Yue.Users.Model.Write
             {
                 throw new BusinessException(BusinessStatusCode.NotFound, "User not found.");
             }
-            if (userSecurity.PasswordMatchWith(command.PasswordHash))
-            {
-                throw new BusinessException(BusinessStatusCode.Forbidden, "The new password can not be the same as the old password.");
-            }
+            
             userSecurity.ChangePassword(command);
             _repository.Update(userSecurity);
             _repository.Log(command);

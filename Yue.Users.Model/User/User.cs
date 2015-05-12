@@ -76,6 +76,10 @@ namespace Yue.Users.Model
             user.UserId = command.UserId;
             user.Name = command.Name;
             user.Email = command.Email;
+            user.CreateAt = command.CreateAt;
+            user.CreateBy = command.CreateBy;
+            user.UpdateAt = command.CreateAt;
+            user.UpdateBy = command.CreateBy;
 
             return user;
         }

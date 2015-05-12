@@ -66,7 +66,7 @@ namespace Yue.Bookings.MicroServices
             Yue.Common.Repository.SqlOption sqlOptionWrite =
                 new Common.Repository.SqlOption
                 {
-                    ConnectionString = ConfigurationManager.ConnectionStrings["Booking.Write"].ConnectionString
+                    ConnectionString = ConfigurationManager.ConnectionStrings["Bookings.Write"].ConnectionString
                 };
 
             Container.Bind<IBookingWriteRepository>().To<BookingWriteRepository>().InSingletonScope()

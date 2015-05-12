@@ -9,6 +9,8 @@ using System.Linq;
 using System.Web;
 using Yue.Bookings.Model;
 using Yue.Bookings.Repository;
+using Yue.Users.Model;
+using Yue.Users.Repository;
 
 namespace Yue.WebApi
 {
@@ -32,6 +34,11 @@ namespace Yue.WebApi
         {
             Container.Settings.AllowNullInjection = true;
             Container.Bind<ACE.Loggers.IBusLogger>().To<Log4NetBusLogger>().InSingletonScope();
+
+            // EventBus must be thread scope, published events will be saved in thread EventBus._events, until Flush/Clear.
+            Container.Bind<IEventBus>().To<EventBus>()
+                .InThreadScope()
+                .WithConstructorArgument(Constants.ParamEventDistributionOptions, ACE.Event.EventDistributionOptions.Queue);
             
             // ActionBus must be thread scope, single thread bind to use single anonymous RabbitMQ queue for reply.
             Container.Bind<IActionBus>().To<ActionBus>().InThreadScope()
@@ -48,11 +55,25 @@ namespace Yue.WebApi
 
             Yue.Common.Repository.SqlOption sqlOptionBooking = 
                 new Common.Repository.SqlOption { 
-                    ConnectionString = ConfigurationManager.ConnectionStrings["Booking"].ConnectionString };
+                    ConnectionString = ConfigurationManager.ConnectionStrings["Bookings"].ConnectionString };
 
             Container.Bind<IBookingRepository>().To<BookingRepository>().InSingletonScope()
                 .WithConstructorArgument("option", sqlOptionBooking);
             Container.Bind<IBookingService>().To<BookingService>().InSingletonScope();
+
+            Yue.Common.Repository.SqlOption sqlOptionUser =
+                new Common.Repository.SqlOption
+                {
+                    ConnectionString = ConfigurationManager.ConnectionStrings["Users"].ConnectionString
+                };
+
+            Container.Bind<IUserRepository>().To<UserRepository>().InSingletonScope()
+                .WithConstructorArgument("option", sqlOptionUser);
+            Container.Bind<IUserService>().To<UserService>().InSingletonScope();
+
+            Container.Bind<IUserSecurityRepository>().To<UserSecurityRepository>().InSingletonScope()
+                .WithConstructorArgument("option", sqlOptionUser);
+            Container.Bind<IUserSecurityService>().To<UserSecurityService>().InSingletonScope();
         }
 
         public static void Dispose()

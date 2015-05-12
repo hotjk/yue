@@ -8,6 +8,7 @@ namespace Yue.Users.Model
 {
     public interface IUserSecurityService
     {
-        UserSecurity Get(int userId);
+        string PasswordHash(string password);
+        bool VerifyPassword(int userId, string password);
     }
 }

@@ -34,7 +34,7 @@ namespace Yue.Users.Repository
             using (IDbConnection connection = OpenConnection())
             {
                 var user = connection.Query<User>(
-                     string.Format(@"SELECT {0} FROM `users` WHERE `UserId` = @UserId;",
+                     string.Format(@"SELECT {0} FROM `users` WHERE `Email` = @Email;",
                      SqlHelper.Columns(_userColumns)),
                      new { Email = email }).SingleOrDefault();
                 return user;

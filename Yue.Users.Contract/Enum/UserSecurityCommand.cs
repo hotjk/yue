@@ -11,6 +11,5 @@ namespace Yue.Users.Contract
         Create = 0,
         ChangePassword = 11,
         ResetPassword = 12,
-        VerifyPassword = 13,
     }
 }

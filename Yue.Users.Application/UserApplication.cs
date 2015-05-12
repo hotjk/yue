@@ -14,7 +14,6 @@ namespace Yue.Users.Application
 {
     public class UserApplication : 
         IActionHandler<Register>,
-        IActionHandler<Login>,
         IActionHandler<Yue.Users.Contract.Actions.ChangePassword>,
         IActionHandler<Yue.Users.Contract.Actions.ResetPassword>
     {
@@ -48,27 +47,6 @@ namespace Yue.Users.Application
                     action.CreateAt,
                     action.UserId);
                 _commandBus.Send(createUserSecurity);
-
-                unitOfwork.Complete();
-            }
-        }
-
-        public void Invoke(Login action)
-        {
-            User user = _userService.UserByEmail(action.Email);
-            if(user == null)
-            {
-                throw new BusinessException(BusinessStatusCode.NotFound, "User not found.");
-            }
-
-            using (UnitOfWork unitOfwork = new UnitOfWork(_eventBus))
-            {
-                VerifyPassword verifyUserPassword = new VerifyPassword(
-                    user.UserId,
-                    action.PasswordHash,
-                    action.CreateAt,
-                    user.UserId);
-                _commandBus.Send(verifyUserPassword);
 
                 unitOfwork.Complete();
             }

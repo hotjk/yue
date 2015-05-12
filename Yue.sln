@@ -73,6 +73,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yue.Users.MicroServices", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yue.Common.Log", "Yue.Common.Log\Yue.Common.Log.csproj", "{AF1E904B-CB8E-440E-9F46-241AB259F3B5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yue.Users.View.Model", "Yue.Users.View.Model\Yue.Users.View.Model.csproj", "{51F23943-A42A-4433-9F0C-88FB0FEBF616}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -183,6 +185,10 @@ Global
 		{AF1E904B-CB8E-440E-9F46-241AB259F3B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AF1E904B-CB8E-440E-9F46-241AB259F3B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AF1E904B-CB8E-440E-9F46-241AB259F3B5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{51F23943-A42A-4433-9F0C-88FB0FEBF616}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{51F23943-A42A-4433-9F0C-88FB0FEBF616}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{51F23943-A42A-4433-9F0C-88FB0FEBF616}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{51F23943-A42A-4433-9F0C-88FB0FEBF616}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -218,5 +224,6 @@ Global
 		{9AD39436-6963-4ABA-BB51-2931F611472C} = {EAAC8AFB-B374-478E-A37C-DE6CC35C6546}
 		{C6E96AB8-2133-45D3-B7C4-F61139B807B7} = {9ED8A4CD-4B9B-4A67-8F27-BDA4EE038BC0}
 		{AF1E904B-CB8E-440E-9F46-241AB259F3B5} = {8098B626-8D7C-4576-9C52-C958E3A9DDBB}
+		{51F23943-A42A-4433-9F0C-88FB0FEBF616} = {55B5323B-9B6E-4EEF-AA8F-EFB92BCFAEFF}
 	EndGlobalSection
 EndGlobal

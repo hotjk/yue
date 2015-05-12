@@ -16,9 +16,16 @@ namespace Yue.Users.Model
             this._repository = repository;
         }
 
-        public UserSecurity Get(int userId)
+        public string PasswordHash(string password)
         {
-            return _repository.Get(userId);
+            return Grit.Utility.Security.PasswordHash.CreateHash(password);
+        }
+
+        public bool VerifyPassword(int userId, string password)
+        {
+            var userSecurity = _repository.Get(userId);
+            bool match = Grit.Utility.Security.PasswordHash.ValidatePassword(password, userSecurity.PasswordHash);
+            return match;
         }
     }
 }

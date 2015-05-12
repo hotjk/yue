@@ -43,16 +43,12 @@
     <Compile Include="Actions\ResetPassword.cs" />
     <Compile Include="Actions\ChangePassword.cs" />
     <Compile Include="Actions\UserActionBase.cs" />
-    <Compile Include="Actions\Login.cs" />
     <Compile Include="Actions\Register.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Commands\UserSecurity\ResetPassword.cs" />
     <Compile Include="Commands\UserSecurity\ChangePassword.cs" />
     <Compile Include="Commands\UserSecurity\UserSecurityCommandBase.cs" />
-    <Compile Include="Commands\UserSecurity\VerifyPassword.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Commands\User\CreateUser.cs" />
     <Compile Include="Commands\UserSecurity\CreateUserSecurity.cs" />
     <Compile Include="Commands\User\UserCommandBase.cs" />

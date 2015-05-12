@@ -21,10 +21,11 @@ namespace Yue.Users.Repository
         {
             using (IDbConnection connection = OpenConnection())
             {
-                return connection.Query<UserSecurity>(
+                var userSecurity = connection.Query<UserSecurity>(
                      string.Format(@"SELECT {0} FROM `user_security` WHERE `UserId` = @UserId;",
                      SqlHelper.Columns(_userSecurityColumns)),
                      new { UserId = userId }).SingleOrDefault();
+                return userSecurity;
             }
         }
     }

@@ -12,6 +12,8 @@ using Grit.Sequence.Repository.MySql;
 using Yue.Users.Model.Write;
 using Yue.Users.Repository.Write;
 using Yue.Common.Log;
+using Yue.Users.Repository;
+using Yue.Users.Model;
 
 namespace Yue.Users.MicroServices
 {
@@ -69,6 +71,22 @@ namespace Yue.Users.MicroServices
 
             Container.Bind<IUserWriteRepository>().To<UserWriteRepository>().InSingletonScope()
                 .WithConstructorArgument("option", sqlOptionWrite);
+            Container.Bind<IUserSecurityWriteRepository>().To<UserSecurityWriteRepository>().InSingletonScope()
+                .WithConstructorArgument("option", sqlOptionWrite);
+
+            Yue.Common.Repository.SqlOption sqlOptionUser =
+                new Common.Repository.SqlOption
+                {
+                    ConnectionString = ConfigurationManager.ConnectionStrings["Users"].ConnectionString
+                };
+
+            Container.Bind<IUserRepository>().To<UserRepository>().InSingletonScope()
+                .WithConstructorArgument("option", sqlOptionUser);
+            Container.Bind<IUserService>().To<UserService>().InSingletonScope();
+
+            Container.Bind<IUserSecurityRepository>().To<UserSecurityRepository>().InSingletonScope()
+                .WithConstructorArgument("option", sqlOptionUser);
+            Container.Bind<IUserSecurityService>().To<UserSecurityService>().InSingletonScope();
         }
 
         public static void Dispose()

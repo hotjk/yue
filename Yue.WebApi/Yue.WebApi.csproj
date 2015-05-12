@@ -128,6 +128,10 @@
       <Project>{81569f0a-133a-4e07-a66b-9efc8b5f7411}</Project>
       <Name>ACE</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\grit\Grit.Utility\Grit.Utility.csproj">
+      <Project>{bd3ad860-d5a7-4fbd-91a0-bdf20236e5a8}</Project>
+      <Name>Grit.Utility</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Infrastructures\Grit.Sequence.Repository.Mysql\Grit.Sequence.Repository.MySql.csproj">
       <Project>{c8223ccd-75f4-4b9e-813b-b8a5a83ff758}</Project>
       <Name>Grit.Sequence.Repository.MySql</Name>
@@ -160,8 +164,26 @@
       <Project>{c942a050-9103-4934-93d7-4290f488adcf}</Project>
       <Name>Yue.Common.Repository</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Yue.Users.Contract\Yue.Users.Contract.csproj">
+      <Project>{1e0e1aa1-4bd1-4c21-84f5-2778ece3b580}</Project>
+      <Name>Yue.Users.Contract</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Yue.Users.Model\Yue.Users.Model.csproj">
+      <Project>{cb72e1fb-035d-4bf4-8492-4897869ec2eb}</Project>
+      <Name>Yue.Users.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Yue.Users.Repository\Yue.Users.Repository.csproj">
+      <Project>{9ad39436-6963-4aba-bb51-2931f611472c}</Project>
+      <Name>Yue.Users.Repository</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Yue.Users.View.Model\Yue.Users.View.Model.csproj">
+      <Project>{51f23943-a42a-4433-9f0c-88fb0febf616}</Project>
+      <Name>Yue.Users.View.Model</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\ApiAuthorizeAttribute.cs" />
+    <Compile Include="App_Start\AuthenticationHelper.cs" />
     <Compile Include="App_Start\BootStrapper.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\NinjectDependencyResolver.cs" />
@@ -169,6 +191,7 @@
     <Compile Include="App_Start\NinjectServiceActivator.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\BookingController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

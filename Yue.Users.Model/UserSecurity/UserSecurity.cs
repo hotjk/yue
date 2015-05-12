@@ -15,7 +15,7 @@ namespace Yue.Users.Model
     {
         public int UserId { get; private set; }
         public UserState State { get; private set; }
-        private string PasswordHash { get; set; }
+        public string PasswordHash { get; private set; }
         public DateTime CreateAt { get; private set; }
         public int CreateBy { get; private set; }
         public DateTime UpdateAt { get; private set; }
@@ -31,11 +31,6 @@ namespace Yue.Users.Model
             userSecurity.UpdateAt = command.CreateAt;
             userSecurity.UpdateBy = command.CreateBy;
             return userSecurity;
-        }
-
-        public bool PasswordMatchWith(string passwordHash)
-        {
-            return this.PasswordHash == passwordHash;
         }
 
         public void ChangePassword(UserSecurityCommandBase command)
