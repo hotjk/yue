@@ -23,6 +23,7 @@ namespace Yue.WebApi
             cookieHeaderValue.Domain = cookie.Domain;
             cookieHeaderValue.Expires = DateTimeOffset.Now.AddDays(1);
             cookieHeaderValue.Path = cookie.Path;
+            cookieHeaderValue.HttpOnly = true;
             return cookieHeaderValue;
         }
 
