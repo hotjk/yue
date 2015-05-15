@@ -140,6 +140,10 @@
       <Project>{0161cd61-4221-47c3-9567-1695c06de101}</Project>
       <Name>Grit.Sequence</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Libraries\AppHarbor.Web.Security\AppHarbor.Web.Security.csproj">
+      <Project>{ba59e36d-677f-4f70-94df-c75c8860f67b}</Project>
+      <Name>AppHarbor.Web.Security</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Yue.Bookings.Contract\Yue.Bookings.Contract.csproj">
       <Project>{c904450f-f057-4f44-b7a0-e7227ccb3869}</Project>
       <Name>Yue.Bookings.Contract</Name>
@@ -183,13 +187,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\ApiAuthorizeAttribute.cs" />
-    <Compile Include="App_Start\AuthenticationHelper.cs" />
+    <Compile Include="App_Start\ApiCookieAuthenticator.cs" />
     <Compile Include="App_Start\BootStrapper.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\NinjectDependencyResolver.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\NinjectServiceActivator.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\ApiControllerBase.cs" />
     <Compile Include="Controllers\BookingController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">

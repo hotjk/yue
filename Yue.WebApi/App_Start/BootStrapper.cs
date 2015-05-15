@@ -1,4 +1,5 @@
 ﻿using ACE;
+using AppHarbor.Web.Security;
 using Grit.Sequence;
 using Grit.Sequence.Repository.MySql;
 using Ninject;
@@ -43,6 +44,9 @@ namespace Yue.WebApi
             // ActionBus must be thread scope, single thread bind to use single anonymous RabbitMQ queue for reply.
             Container.Bind<IActionBus>().To<ActionBus>().InThreadScope()
                 .WithConstructorArgument(Constants.ParamActionShouldDistributeToExternalQueue, true);
+
+            Container.Bind<ICookieAuthenticationConfiguration>().To<ConfigFileAuthenticationConfiguration>().InThreadScope();
+            Container.Bind<IAuthenticator>().To<CookieAuthenticator>().InThreadScope();
         }
 
         private static void BindBusinessObjects()

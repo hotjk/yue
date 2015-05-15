@@ -1,5 +1,6 @@
 ﻿using ACE;
 using ACE.Actions;
+using AppHarbor.Web.Security;
 using Grit.Sequence;
 using System;
 using System.Collections.Generic;
@@ -18,7 +19,7 @@ using Yue.Users.View.Model;
 
 /*
 curl --data "email=zhongwx@gmail.com&name=weixiao&password=pwd" "http://localhost:64777/api/users"
-curl "http://localhost:64777/api/users/17" -i --cookie ".auth=A109B8C21B2201483739B2D01AC23121F3EAF8B18E1412E3531F0ACEA5F650DD6FF6F14A008D256F4125AE6C914C60A627E69368DD56E7983374114E7F096739CC22A4F64AE9E207FF082EEF0FA6568799543E61F02C09D1FD5B6030F0D5CA42"
+curl "http://localhost:64777/api/users/17" -i --cookie ".auth=AHSZwuZ%252F0XthPX28wVZwW8eKDqRko8Cead4n7M2XecA%252BkQsWPBEEt8F40jgFr3CYimv0fsPeksBDcwI5p9gOG%252BO607VhXTtl0TNOnmd7xoxwdboeM6LB2r2uHm5%252FXHvC2Q%253D%253D"
 curl --data "email=zhongwx@gmail.com&password=pwd" "http://localhost:64777/api/users/login"
 curl -X PATCH --data "password=pwd&newPassword=pwd1" "http://localhost:64777/api/users/17/actions/change_password"
 */
@@ -26,22 +27,28 @@ curl -X PATCH --data "password=pwd&newPassword=pwd1" "http://localhost:64777/api
 namespace Yue.WebApi.Controllers
 {
     [RoutePrefix("api/users")]
-    public class UserController : ApiController
+    public class UserController : ApiControllerBase
     {
         private IActionBus _actionBus;
         private IEventBus _eventBus;
+        private IAuthenticator _authenticator;
+        private ICookieAuthenticationConfiguration _cookieAuthenticationConfiguration;
         private ISequenceService _sequenceService;
         private IUserService _userService;
         private IUserSecurityService _userSecurityService;
 
         public UserController(IActionBus actionBus,
             IEventBus eventBus,
+            IAuthenticator authenticator,
+            ICookieAuthenticationConfiguration cookieAuthenticationConfiguration,
             ISequenceService sequenceService,
             IUserService userService,
             IUserSecurityService userSecurityService)
         {
             _actionBus = actionBus;
             _eventBus = eventBus;
+            _authenticator = authenticator;
+            _cookieAuthenticationConfiguration = cookieAuthenticationConfiguration;
             _sequenceService = sequenceService;
             _userService = userService;
             _userSecurityService = userSecurityService;
@@ -99,12 +106,33 @@ namespace Yue.WebApi.Controllers
             bool match = _userSecurityService.VerifyPassword(user.UserId, vm.Password);
             _eventBus.Publish(new UserPasswordVerified(user.UserId, match, DateTime.Now, user.UserId).ToExternalQueue());
 
-            if (match)
+            //if (match)
+            //{
+            //    HttpResponseMessage responseMsg = Request.CreateResponse<bool>(HttpStatusCode.OK, match);
+            //    var cookie = AuthenticationHelper.GetAuthCookie(user.UserId.ToString());
+            //    responseMsg.Headers.AddCookies(new CookieHeaderValue[] { cookie });
+            //    return ResponseMessage(responseMsg);
+            //}
+
+            if(match)
             {
-                HttpResponseMessage responseMsg = Request.CreateResponse<bool>(HttpStatusCode.OK, match);
-                var cookie = AuthenticationHelper.GetAuthCookie(user.UserId.ToString());
-                responseMsg.Headers.AddCookies(new CookieHeaderValue[] { cookie });
-                return ResponseMessage(responseMsg);
+                //_authenticator.SetCookie(user.UserId.ToString());
+                var cookie = new AuthenticationCookie(0, Guid.NewGuid(), false, user.UserId.ToString(), null, null);
+                using (var protector = new CookieProtector(_cookieAuthenticationConfiguration))
+                {
+                    CookieHeaderValue cookieValue = new CookieHeaderValue(_cookieAuthenticationConfiguration.CookieName,
+                        WebUtility.UrlEncode(protector.Protect(cookie.Serialize())));
+                    cookieValue.HttpOnly = true;
+                    cookieValue.Secure = _cookieAuthenticationConfiguration.RequireSSL;
+                    cookieValue.Path = "/";
+                    if (cookie.Persistent)
+                    {
+                        cookieValue.Expires = cookie.IssueDate + _cookieAuthenticationConfiguration.Timeout;
+                    }
+                    HttpResponseMessage responseMsg = Request.CreateResponse<bool>(HttpStatusCode.OK, match);
+                    responseMsg.Headers.AddCookies(new CookieHeaderValue[] { cookieValue });
+                    return ResponseMessage(responseMsg);
+                }
             }
             
             return Ok(match);
