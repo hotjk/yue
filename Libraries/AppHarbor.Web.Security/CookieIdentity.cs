@@ -9,9 +9,9 @@ namespace AppHarbor.Web.Security
 	[Serializable]
 	public class CookieIdentity : MarshalByRefObject, IIdentity
 	{
-		private readonly AuthenticationCookie _cookie;
+		private readonly AuthenticationTicket _cookie;
 
-		public CookieIdentity(AuthenticationCookie cookie)
+		public CookieIdentity(AuthenticationTicket cookie)
 		{
 			if (cookie == null)
 			{

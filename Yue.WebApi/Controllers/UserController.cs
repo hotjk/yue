@@ -31,7 +31,6 @@ namespace Yue.WebApi.Controllers
     {
         private IActionBus _actionBus;
         private IEventBus _eventBus;
-        private IAuthenticator _authenticator;
         private ICookieAuthenticationConfiguration _cookieAuthenticationConfiguration;
         private ISequenceService _sequenceService;
         private IUserService _userService;
@@ -39,7 +38,6 @@ namespace Yue.WebApi.Controllers
 
         public UserController(IActionBus actionBus,
             IEventBus eventBus,
-            IAuthenticator authenticator,
             ICookieAuthenticationConfiguration cookieAuthenticationConfiguration,
             ISequenceService sequenceService,
             IUserService userService,
@@ -47,7 +45,6 @@ namespace Yue.WebApi.Controllers
         {
             _actionBus = actionBus;
             _eventBus = eventBus;
-            _authenticator = authenticator;
             _cookieAuthenticationConfiguration = cookieAuthenticationConfiguration;
             _sequenceService = sequenceService;
             _userService = userService;
@@ -117,7 +114,7 @@ namespace Yue.WebApi.Controllers
             if(match)
             {
                 //_authenticator.SetCookie(user.UserId.ToString());
-                var cookie = new AuthenticationCookie(0, Guid.NewGuid(), false, user.UserId.ToString(), null, null);
+                var cookie = new AuthenticationTicket(0, Guid.NewGuid(), false, user.UserId.ToString());
                 using (var protector = new CookieProtector(_cookieAuthenticationConfiguration))
                 {
                     CookieHeaderValue cookieValue = new CookieHeaderValue(_cookieAuthenticationConfiguration.CookieName,

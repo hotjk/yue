@@ -39,12 +39,8 @@
     <Reference Include="System.Web.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AuthenticationCookie.cs" />
+    <Compile Include="AuthenticationTicket.cs" />
     <Compile Include="ConfigFileAuthenticationConfiguration.cs" />
-    <Compile Include="CookieAuthenticationModule.cs" />
-    <Compile Include="CookieAuthenticator.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="CookieIdentity.cs" />
     <Compile Include="CookieProtector.cs" />
     <Compile Include="Encryption.cs" />

@@ -46,7 +46,6 @@ namespace Yue.WebApi
                 .WithConstructorArgument(Constants.ParamActionShouldDistributeToExternalQueue, true);
 
             Container.Bind<ICookieAuthenticationConfiguration>().To<ConfigFileAuthenticationConfiguration>().InThreadScope();
-            Container.Bind<IAuthenticator>().To<CookieAuthenticator>().InThreadScope();
         }
 
         private static void BindBusinessObjects()

@@ -37,7 +37,7 @@ namespace Yue.WebApi
                 {
                     byte[] data;
                     var cookieData = protector.Validate(System.Net.WebUtility.UrlDecode(cookie.Value), out data);
-                    var authenticationCookie = AuthenticationCookie.Deserialize(data);
+                    var authenticationCookie = AuthenticationTicket.Deserialize(data);
                     if (!authenticationCookie.IsExpired(_configuration.Timeout))
                     {
                         actionContext.RequestContext.Principal = authenticationCookie.GetPrincipal();
@@ -61,7 +61,7 @@ namespace Yue.WebApi
             actionContext.Response = message;
         }
 
-        private void RenewCookieIfExpiring(HttpActionContext context, CookieProtector protector, AuthenticationCookie authenticationCookie)
+        private void RenewCookieIfExpiring(HttpActionContext context, CookieProtector protector, AuthenticationTicket authenticationCookie)
         {
             if (!_configuration.SlidingExpiration || !authenticationCookie.IsExpired(TimeSpan.FromTicks(_configuration.Timeout.Ticks / 2)))
             {

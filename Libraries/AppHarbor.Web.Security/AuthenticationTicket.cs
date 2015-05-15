@@ -4,61 +4,54 @@ using System.Security.Principal;
 
 namespace AppHarbor.Web.Security
 {
-	public class AuthenticationCookie
+	public class AuthenticationTicket
 	{
-		private readonly short _cookieType;
+		private readonly int _version;
 		private readonly Guid _id;
 		private readonly bool _persistent;
 		private DateTime _issueDate;
 		private readonly string _name;
-		private readonly byte[] _tag;
-		private readonly string[] _roles;
+		private readonly byte[] _userData;
 
-		private AuthenticationCookie(byte[] data)
+		private AuthenticationTicket(byte[] data)
 		{
 			using (var memoryStream = new MemoryStream(data))
 			{
 				using (var binaryReader = new BinaryReader(memoryStream))
 				{
-					_cookieType = binaryReader.ReadInt16();
+					_version = binaryReader.ReadInt32();
 					_id = new Guid(binaryReader.ReadBytes(16));
 					_persistent = binaryReader.ReadBoolean();
 					_issueDate = DateTime.FromBinary(binaryReader.ReadInt64());
 					_name = binaryReader.ReadString();
-					var rolesLength = binaryReader.ReadInt16();
-					_roles = new string[rolesLength];
-					for (int i = 0; i < _roles.Length; i++)
-					{
-						_roles[i] = binaryReader.ReadString();
-					}
+					
 					var tagLength = binaryReader.ReadInt16();
 					if (tagLength == 0)
 					{
-						_tag = null;
+						_userData = null;
 					}
 					else
 					{
-						_tag = binaryReader.ReadBytes(tagLength);
+						_userData = binaryReader.ReadBytes(tagLength);
 					}
 				}
 			}
 		}
 
-		public AuthenticationCookie(short cookieType, Guid id, bool persistent, string name, string[] roles = null, byte[] tag = null)
+		public AuthenticationTicket(int version, Guid id, bool persistent, string name, byte[] userData = null)
 		{
-			_cookieType = cookieType;
+			_version = version;
 			_id = id;
 			_persistent = persistent;
 			_name = name;
-			_roles = roles ?? new string[0];
-			_tag = tag;
+			_userData = userData;
 			_issueDate = DateTime.UtcNow;
 		}
 
 		public IPrincipal GetPrincipal()
 		{
 			var identity = new CookieIdentity(this);
-			return new GenericPrincipal(identity, _roles);
+			return new GenericPrincipal(identity, null);
 		}
 
 		public byte[] Serialize()
@@ -67,40 +60,28 @@ namespace AppHarbor.Web.Security
 			{
 				using (var binaryWriter = new BinaryWriter(memoryStream))
 				{
-					binaryWriter.Write(_cookieType);
+					binaryWriter.Write(_version);
 					binaryWriter.Write(_id.ToByteArray());
 					binaryWriter.Write(_persistent);
 					binaryWriter.Write(_issueDate.ToBinary());
 					binaryWriter.Write(_name);
-					if (_roles == null)
+					if (_userData == null)
 					{
 						binaryWriter.Write((short)0);
 					}
 					else
 					{
-						binaryWriter.Write((short)_roles.Length);
-						foreach (var role in _roles)
-						{
-							binaryWriter.Write(role);
-						}
-					}
-					if (_tag == null)
-					{
-						binaryWriter.Write((short)0);
-					}
-					else
-					{
-						binaryWriter.Write((short)_tag.Length);
-						binaryWriter.Write(_tag);
+						binaryWriter.Write((short)_userData.Length);
+						binaryWriter.Write(_userData);
 					}
 				}
 				return memoryStream.ToArray();
 			}
 		}
 
-		public static AuthenticationCookie Deserialize(byte[] data)
+		public static AuthenticationTicket Deserialize(byte[] data)
 		{
-			return new AuthenticationCookie(data);
+			return new AuthenticationTicket(data);
 		}
 
 		public void Renew()
@@ -137,11 +118,11 @@ namespace AppHarbor.Web.Security
 			}
 		}
 
-		public short CookieType
+		public int Version
 		{
 			get
 			{
-				return _cookieType;
+				return _version;
 			}
 		}
 
@@ -153,19 +134,11 @@ namespace AppHarbor.Web.Security
 			}
 		}
 
-		public string[] Roles
+		public byte[] UserData
 		{
 			get
 			{
-				return _roles;
-			}
-		}
-
-		public byte[] Tag
-		{
-			get
-			{
-				return _tag;
+				return _userData;
 			}
 		}
 	}
