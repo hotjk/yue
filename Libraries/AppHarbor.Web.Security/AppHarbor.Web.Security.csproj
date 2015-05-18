@@ -40,12 +40,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AuthenticationTicket.cs" />
-    <Compile Include="ConfigFileAuthenticationConfiguration.cs" />
-    <Compile Include="CookieIdentity.cs" />
+    <Compile Include="AuthenticationConfiguration.cs" />
     <Compile Include="CookieProtector.cs" />
     <Compile Include="Encryption.cs" />
-    <Compile Include="IAuthenticator.cs" />
-    <Compile Include="ICookieAuthenticationConfiguration.cs" />
+    <Compile Include="IAuthenticationConfiguration.cs" />
     <Compile Include="KeyedHashValidation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StringExtensions.cs" />

@@ -1,7 +1,7 @@
 ﻿using ACE;
-using AppHarbor.Web.Security;
 using Grit.Sequence;
 using Grit.Sequence.Repository.MySql;
+using Grit.Utility.Authentication;
 using Ninject;
 using System;
 using System.Collections.Generic;
@@ -19,6 +19,8 @@ namespace Yue.WebApi
     {
         public static Ninject.IKernel Container { get; private set; }
         public static EasyNetQ.IBus EasyNetQBus { get; private set; }
+        public static Authenticator Authenticator { get; private set; }
+
         public static void BootStrap()
         {
             Container = new StandardKernel();
@@ -45,7 +47,7 @@ namespace Yue.WebApi
             Container.Bind<IActionBus>().To<ActionBus>().InThreadScope()
                 .WithConstructorArgument(Constants.ParamActionShouldDistributeToExternalQueue, true);
 
-            Container.Bind<ICookieAuthenticationConfiguration>().To<ConfigFileAuthenticationConfiguration>().InThreadScope();
+            Authenticator = new Authenticator(CookieTicketConfig.Default());
         }
 
         private static void BindBusinessObjects()

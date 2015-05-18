@@ -3,7 +3,7 @@ using System.Web.Security;
 
 namespace AppHarbor.Web.Security
 {
-	public interface ICookieAuthenticationConfiguration
+	public interface IAuthenticationConfiguration
 	{
 		string CookieName { get; }
 		bool SlidingExpiration { get; }
@@ -11,8 +11,10 @@ namespace AppHarbor.Web.Security
 		string LoginUrl { get; }
 		string EncryptionAlgorithm { get; }
 		byte[] EncryptionKey { get; }
+        byte[] EncryptionIV { get; }
 		string ValidationAlgorithm { get; }
 		byte[] ValidationKey { get; }
 		bool RequireSSL { get; }
+        string CookiePath { get; }
 	}
 }

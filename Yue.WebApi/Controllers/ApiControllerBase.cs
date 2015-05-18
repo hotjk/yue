@@ -17,7 +17,7 @@ namespace Yue.WebApi.Controllers
         {
             var httpResponseMessage = await base.ExecuteAsync(controllerContext, cancellationToken);
             object renewAuthorizationCookie;
-            if (controllerContext.Request.Properties.TryGetValue(ApiAuthorizeAttribute.RenewAuthorizationCookieKey, out renewAuthorizationCookie))
+            if (controllerContext.Request.Properties.TryGetValue(ApiAuthorizeAttribute.RenewAuthorizationCookieToken, out renewAuthorizationCookie))
             {
                 httpResponseMessage.Headers.AddCookies(new CookieHeaderValue[] { (CookieHeaderValue)renewAuthorizationCookie });
             }

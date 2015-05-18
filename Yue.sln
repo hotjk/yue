@@ -75,8 +75,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yue.Common.Log", "Yue.Commo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yue.Users.View.Model", "Yue.Users.View.Model\Yue.Users.View.Model.csproj", "{51F23943-A42A-4433-9F0C-88FB0FEBF616}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppHarbor.Web.Security", "Libraries\AppHarbor.Web.Security\AppHarbor.Web.Security.csproj", "{BA59E36D-677F-4F70-94DF-C75C8860F67B}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -191,10 +189,6 @@ Global
 		{51F23943-A42A-4433-9F0C-88FB0FEBF616}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{51F23943-A42A-4433-9F0C-88FB0FEBF616}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{51F23943-A42A-4433-9F0C-88FB0FEBF616}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BA59E36D-677F-4F70-94DF-C75C8860F67B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BA59E36D-677F-4F70-94DF-C75C8860F67B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BA59E36D-677F-4F70-94DF-C75C8860F67B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BA59E36D-677F-4F70-94DF-C75C8860F67B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -231,6 +225,5 @@ Global
 		{C6E96AB8-2133-45D3-B7C4-F61139B807B7} = {9ED8A4CD-4B9B-4A67-8F27-BDA4EE038BC0}
 		{AF1E904B-CB8E-440E-9F46-241AB259F3B5} = {8098B626-8D7C-4576-9C52-C958E3A9DDBB}
 		{51F23943-A42A-4433-9F0C-88FB0FEBF616} = {55B5323B-9B6E-4EEF-AA8F-EFB92BCFAEFF}
-		{BA59E36D-677F-4F70-94DF-C75C8860F67B} = {2E1CF9DD-177F-4F81-BE3B-2DB154462231}
 	EndGlobalSection
 EndGlobal

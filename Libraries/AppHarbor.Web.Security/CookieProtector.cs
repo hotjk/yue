@@ -9,7 +9,7 @@ namespace AppHarbor.Web.Security
 		private readonly Encryption _encryption;
 		private readonly Validation _validation;
 
-		public CookieProtector(ICookieAuthenticationConfiguration configuration)
+		public CookieProtector(IAuthenticationConfiguration configuration)
 		{
 			_encryption = Encryption.Create(configuration.EncryptionAlgorithm, configuration.EncryptionKey);
 			_validation = Validation.Create(configuration.ValidationAlgorithm, configuration.ValidationKey);

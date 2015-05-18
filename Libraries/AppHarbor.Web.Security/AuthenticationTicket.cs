@@ -38,6 +38,11 @@ namespace AppHarbor.Web.Security
 			}
 		}
 
+        public AuthenticationTicket(string name, byte[] userData = null)
+            : this(0, Guid.NewGuid(), false, name, userData)
+        {
+        }
+
 		public AuthenticationTicket(int version, Guid id, bool persistent, string name, byte[] userData = null)
 		{
 			_version = version;
@@ -46,12 +51,6 @@ namespace AppHarbor.Web.Security
 			_name = name;
 			_userData = userData;
 			_issueDate = DateTime.UtcNow;
-		}
-
-		public IPrincipal GetPrincipal()
-		{
-			var identity = new CookieIdentity(this);
-			return new GenericPrincipal(identity, null);
 		}
 
 		public byte[] Serialize()

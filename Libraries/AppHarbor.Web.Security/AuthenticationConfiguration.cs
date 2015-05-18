@@ -4,7 +4,7 @@ using System.Web.Security;
 
 namespace AppHarbor.Web.Security
 {
-	public sealed class ConfigFileAuthenticationConfiguration : ICookieAuthenticationConfiguration
+	public sealed class AuthenticationConfiguration : IAuthenticationConfiguration
 	{
 		public string CookieName
 		{
@@ -57,6 +57,14 @@ namespace AppHarbor.Web.Security
 			}
 		}
 
+        public byte[] EncryptionIV
+        {
+            get
+            {
+                return GetRequiredSetting("cookieauthentication.encryptioniv").GetByteArrayFromHexString();
+            }
+        }
+
 		public string ValidationAlgorithm
 		{
 			get
@@ -88,5 +96,13 @@ namespace AppHarbor.Web.Security
 				return FormsAuthentication.RequireSSL;
 			}
 		}
+
+        public string CookiePath
+        {
+            get
+            {
+                return "/";
+            }
+        }
 	}
 }

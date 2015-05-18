@@ -14,6 +14,7 @@ namespace Yue.WebApi
         protected void Application_Start()
         {
             log4net.Config.XmlConfigurator.Configure();
+
             BootStrapper.BootStrap();
             var resolver = new NinjectDependencyResolver { Kernel = BootStrapper.Container };
             DependencyResolver.SetResolver(resolver);
