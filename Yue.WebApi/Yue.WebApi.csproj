@@ -186,6 +186,7 @@
     <Compile Include="App_Start\Authenticator.cs" />
     <Compile Include="App_Start\BootStrapper.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\IAuthenticator.cs" />
     <Compile Include="App_Start\NinjectDependencyResolver.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\NinjectServiceActivator.cs" />

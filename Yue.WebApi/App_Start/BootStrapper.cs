@@ -19,7 +19,6 @@ namespace Yue.WebApi
     {
         public static Ninject.IKernel Container { get; private set; }
         public static EasyNetQ.IBus EasyNetQBus { get; private set; }
-        public static Authenticator Authenticator { get; private set; }
 
         public static void BootStrap()
         {
@@ -47,7 +46,8 @@ namespace Yue.WebApi
             Container.Bind<IActionBus>().To<ActionBus>().InThreadScope()
                 .WithConstructorArgument(Constants.ParamActionShouldDistributeToExternalQueue, true);
 
-            Authenticator = new Authenticator(CookieTicketConfig.Default());
+            Container.Bind<ICookieTicketConfig>().ToConstant(CookieTicketConfig.Default());
+            Container.Bind<IAuthenticator>().To<Authenticator>().InThreadScope();
         }
 
         private static void BindBusinessObjects()

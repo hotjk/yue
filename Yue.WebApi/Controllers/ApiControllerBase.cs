@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ACE;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -13,6 +14,20 @@ namespace Yue.WebApi.Controllers
 {
     public class ApiControllerBase : ApiController
     {
+        public IAuthenticator _authenticator { get; protected set; }
+        public IActionBus _actionBus { get; protected set; }
+        public IEventBus _eventBus { get; protected set; }
+        public int? UserId { get; set; }
+
+        public ApiControllerBase(IAuthenticator authenticator,
+             IActionBus actionBus,
+             IEventBus eventBus)
+        {
+            this._authenticator = authenticator;
+            this._actionBus = actionBus;
+            this._eventBus = eventBus;
+        }
+
         public override async Task<HttpResponseMessage> ExecuteAsync(HttpControllerContext controllerContext, CancellationToken cancellationToken)
         {
             var httpResponseMessage = await base.ExecuteAsync(controllerContext, cancellationToken);

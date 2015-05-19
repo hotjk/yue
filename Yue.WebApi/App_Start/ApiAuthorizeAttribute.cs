@@ -1,15 +1,9 @@
 ﻿using Grit.Utility.Authentication;
-using Grit.Utility.Security;
-using Ninject;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Text;
-using System.Web;
-using System.Web.Http.Controllers;
+using Yue.WebApi.Controllers;
 
 namespace Yue.WebApi
 {
@@ -18,21 +12,31 @@ namespace Yue.WebApi
     {
         public const string RenewAuthorizationCookieToken = "RenewAuthorizationCookieToken";
 
-        public override void OnAuthorization(HttpActionContext actionContext)
+        public override void OnAuthorization(System.Web.Http.Controllers.HttpActionContext actionContext)
         {
-            var cookie = actionContext.Request.Headers.GetCookies().Select(
-                c => c[BootStrapper.Authenticator.CookieTicketConfig.CookieName]).FirstOrDefault();
+            bool authorized = false;
+            var controller = actionContext.ControllerContext.Controller as ApiControllerBase;
+            if (controller != null)
+            {
+                var cookie = actionContext.Request.Headers.GetCookies().Select(
+                c => c[controller._authenticator.CookieTicketConfig.CookieName]).FirstOrDefault();
 
-            CookieHeaderValue cookieValue;
-            if(!BootStrapper.Authenticator.ValidateCookieTicket(cookie, out cookieValue))
+                CookieHeaderValue cookieValue;
+                CookieTicket ticket;
+                if (controller._authenticator.ValidateCookieTicket(cookie, out ticket, out cookieValue))
+                {
+                    authorized = true;
+                    controller.UserId = int.Parse(ticket.Name);
+                    if (cookieValue != null)
+                    {
+                        actionContext.Request.Properties.Add(RenewAuthorizationCookieToken, cookieValue);
+                    }
+                }
+            }
+            if (!authorized)
             {
                 var message = new HttpResponseMessage(System.Net.HttpStatusCode.Unauthorized);
                 actionContext.Response = message;
-                return;
-            }
-            if (cookieValue != null)
-            {
-                actionContext.Request.Properties.Add(RenewAuthorizationCookieToken, cookieValue);
             }
         }
     }

@@ -1,17 +1,13 @@
 ﻿using Grit.Utility.Authentication;
 using Grit.Utility.Security;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Web;
 using Yue.Users.Model;
 
 namespace Yue.WebApi
 {
-    public class Authenticator
+    public class Authenticator : IAuthenticator
     {
         public ICookieTicketConfig CookieTicketConfig { get; private set; }
         public Authenticator(ICookieTicketConfig cookieTicketConfig)
@@ -41,7 +37,7 @@ namespace Yue.WebApi
             }
         }
 
-        public bool ValidateCookieTicket(CookieState cookie, out CookieHeaderValue renewCookie)
+        public bool ValidateCookieTicket(CookieState cookie, out CookieTicket ticket, out CookieHeaderValue renewCookie)
         {
             if (cookie != null)
             {
@@ -50,7 +46,7 @@ namespace Yue.WebApi
                 {
                     byte[] data;
                     var cookieData = protector.ValidateThenDecrypt(Convert.FromBase64String(System.Net.WebUtility.UrlDecode(cookie.Value)), out data);
-                    var ticket = CookieTicket.Deserialize(data);
+                    ticket = CookieTicket.Deserialize(data);
                     if (!ticket.IsExpired(CookieTicketConfig.Timeout))
                     {
                         if (!CookieTicketConfig.SlidingExpiration || !ticket.IsExpired(TimeSpan.FromTicks(CookieTicketConfig.Timeout.Ticks / 2)))
@@ -89,6 +85,7 @@ namespace Yue.WebApi
             }
 
             renewCookie = null;
+            ticket = null;
             return false;
         }
     }

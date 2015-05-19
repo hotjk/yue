@@ -21,9 +21,9 @@ using Yue.Users.View.Model;
 
 /*
 curl --data "email=zhongwx@gmail.com&name=weixiao&password=pwd" "http://localhost:64777/api/users" -i
-curl "http://localhost:64777/api/users/17" -i --cookie ".auth=AHSZwuZ%252F0XthPX28wVZwW8eKDqRko8Cead4n7M2XecA%252BkQsWPBEEt8F40jgFr3CYimv0fsPeksBDcwI5p9gOG%252BO607VhXTtl0TNOnmd7xoxwdboeM6LB2r2uHm5%252FXHvC2Q%253D%253D"
-curl --data "email=zhongwx@gmail.com&password=pwd" "http://localhost:64777/api/users/login"
-curl -X PATCH --data "password=pwd&newPassword=pwd1" "http://localhost:64777/api/users/17/actions/change_password"
+curl "http://localhost:64777/api/users/17" -i --cookie ".auth=g%252FXQOxPnqqS5c%252F%252B7AK2lnB5c0eat7btMdOxxQnvu1eHvcrEVMjgAP4NuEB0JA087gdkSv0eNCgtkfoTbgBX%252BEQ%253D%253D"
+curl --data "email=zhongwx@gmail.com&password=pwd" "http://localhost:64777/api/users/login" -i
+curl -X PATCH --data "password=pwd&newPassword=pwd1" "http://localhost:64777/api/users/17/actions/change_password" -i
 */
 
 namespace Yue.WebApi.Controllers
@@ -31,18 +31,19 @@ namespace Yue.WebApi.Controllers
     [RoutePrefix("api/users")]
     public class UserController : ApiControllerBase
     {
-        private IActionBus _actionBus;
-        private IEventBus _eventBus;
         private ISequenceService _sequenceService;
         private IUserService _userService;
         private IUserSecurityService _userSecurityService;
 
-        public UserController(IActionBus actionBus,
+        public UserController(IAuthenticator authenticator, 
+            IActionBus actionBus,
             IEventBus eventBus,
             ISequenceService sequenceService,
             IUserService userService,
-            IUserSecurityService userSecurityService)
+            IUserSecurityService userSecurityService) 
+            : base(authenticator, actionBus, eventBus)
         {
+            _authenticator = authenticator;
             _actionBus = actionBus;
             _eventBus = eventBus;
             _sequenceService = sequenceService;
@@ -50,13 +51,15 @@ namespace Yue.WebApi.Controllers
             _userSecurityService = userSecurityService;
         }
 
-        private const int userId = 0;
-
         [HttpGet]
         [Route("{id}")]
         [ApiAuthorize]
         public IHttpActionResult Get(int id)
         {
+            if (UserId != id)
+            {
+                return ResponseMessage(Request.CreateResponse(HttpStatusCode.Forbidden));
+            }
             User user = _userService.Get(id);
             return Ok(user);
         }
@@ -102,16 +105,23 @@ namespace Yue.WebApi.Controllers
             bool match = _userSecurityService.VerifyPassword(user.UserId, vm.Password);
             _eventBus.Publish(new UserPasswordVerified(user.UserId, match, DateTime.Now, user.UserId).ToExternalQueue());
 
-            if(match)
+            if(!match)
             {
-                var cookie = BootStrapper.Authenticator.GetCookieTicket(user);
-                HttpResponseMessage responseMsg = Request.CreateResponse<bool>(HttpStatusCode.OK, match);
-                responseMsg.Headers.AddCookies(new CookieHeaderValue[] { cookie });
-                return ResponseMessage(responseMsg);
+                return Unauthorized(new AuthenticationHeaderValue("Basic"));
             }
-            
-            return Ok(match);
+            var cookie = _authenticator.GetCookieTicket(user);
+            HttpResponseMessage responseMsg = Request.CreateResponse<User>(HttpStatusCode.OK, user);
+            responseMsg.Headers.AddCookies(new CookieHeaderValue[] { cookie });
+            return ResponseMessage(responseMsg);
         }
+
+        //[HttpPatch]
+        //[Route("{id}/actions/singout")]
+        //[ApiAuthorize]
+        //public IHttpActionResult Signout()
+        //{
+
+        //}
 
         [HttpPatch]
         [Route("{id}/actions/change_password")]

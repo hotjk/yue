@@ -13,6 +13,8 @@ namespace Yue.WebApi
     {
         protected void Application_Start()
         {
+            MvcHandler.DisableMvcResponseHeader = true;
+
             log4net.Config.XmlConfigurator.Configure();
 
             BootStrapper.BootStrap();
@@ -31,6 +33,11 @@ namespace Yue.WebApi
         protected void Application_Stop()
         {
             BootStrapper.Dispose();
+        }
+
+        protected void Application_PreSendRequestHeaders(object sender, EventArgs e)
+        {
+            HttpContext.Current.Response.Headers.Remove("Server");
         }
     }
 }
