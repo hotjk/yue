@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Yue.Users.Contract.Commands
 {
-    public class ChangePassword : UserSecurityCommandBase, ACE.ICommand
+    public class ChangePassword : PasswordCommandBase
     {
         public ChangePassword(int userId, string passwordHash,
             DateTime createAt, int createBy)

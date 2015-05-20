@@ -9,6 +9,7 @@ using Yue.Users.Model;
 using Yue.Users.Model.Write;
 using Dapper;
 using Yue.Users.Contract.Commands;
+using Yue.Users.Repository.Model;
 
 namespace Yue.Users.Repository.Write
 {
@@ -17,11 +18,11 @@ namespace Yue.Users.Repository.Write
         public UserSecurityWriteRepository(SqlOption option) : base(option) { }
 
         private static readonly string[] _userSecurityColumns = new string[] {
-"UserId", "PasswordHash", "CreateBy", "UpdateBy", "CreateAt", "UpdateAt" };
+"UserId", "PasswordHash", "ActivateToken", "ResetPasswordToken", "CreateBy", "UpdateBy", "CreateAt", "UpdateAt" };
         private static readonly string[] _userSecurityUpdateColumns = new string[] {
-"PasswordHash", "CreateBy", "UpdateBy" };
+"PasswordHash", "ActivateToken", "ResetPasswordToken", "UpdateAt", "UpdateBy" };
         private static readonly string[] _userSecurityLogsColumns = new string[] {
-"UserId", "Type", "PasswordHash", "CreateBy", "CreateAt" };
+"UserId", "Type", "Data", "CreateBy", "CreateAt" };
 
         public UserSecurity Get(int userId)
         {
@@ -76,7 +77,7 @@ namespace Yue.Users.Repository.Write
                     string.Format(@"INSERT INTO `user_security_logs` ({0}) VALUES ({1});",
                     SqlHelper.Columns(_userSecurityLogsColumns),
                     SqlHelper.Params(_userSecurityLogsColumns)),
-                    command);
+                    UserSecurityLogPM.ToPM(command));
             }
         }
     }

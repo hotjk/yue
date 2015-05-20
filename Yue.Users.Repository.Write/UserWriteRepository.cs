@@ -20,9 +20,6 @@ namespace Yue.Users.Repository.Write
         private static readonly string[] _userUpdateColumns = new string[] {
 "Email", "Name", "State", "UpdateBy", "UpdateAt" };
 
-        private static readonly string[] _userSecurityColumns = new string[] {
-"UserId", "PasswordHash", "PasswordChangeAt", "PasswordChangeBy" };
-
         public User GetForUpdate(int userId)
         {
             using (IDbConnection connection = OpenConnection())

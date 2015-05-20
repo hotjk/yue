@@ -39,11 +39,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActivateVM.cs" />
     <Compile Include="ChangePasswordVM.cs" />
     <Compile Include="ChangeProfileVM.cs" />
     <Compile Include="LoginVM.cs" />
-    <Compile Include="RegisterVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RegisterVM.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

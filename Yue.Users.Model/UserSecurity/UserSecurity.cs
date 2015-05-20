@@ -14,12 +14,13 @@ namespace Yue.Users.Model
     public class UserSecurity : IAggregateRoot
     {
         public int UserId { get; private set; }
-        public UserState State { get; private set; }
         public string PasswordHash { get; private set; }
+        public string ActivateToken { get; private set; }
+        public string ResetPasswordToken { get; private set; }
         public DateTime CreateAt { get; private set; }
         public int CreateBy { get; private set; }
-        public DateTime UpdateAt { get; private set; }
-        public int UpdateBy { get; private set; }
+        public DateTime UpdateAt { get; set; }
+        public int UpdateBy { get; set; }
 
         public static UserSecurity Create(CreateUserSecurity command)
         {
@@ -33,9 +34,23 @@ namespace Yue.Users.Model
             return userSecurity;
         }
 
-        public void ChangePassword(UserSecurityCommandBase command)
+        public void UpdatePassword(PasswordCommandBase command)
         {
             this.PasswordHash = command.PasswordHash;
+            this.UpdateAt = command.CreateAt;
+            this.UpdateBy = command.CreateBy;
+        }
+
+        public void UpdateActivateToken(TokenCommandBase command)
+        {
+            this.ActivateToken = command.Token;
+            this.UpdateAt = command.CreateAt;
+            this.UpdateBy = command.CreateBy;
+        }
+
+        public void UpdateResetPasswordToken(TokenCommandBase command)
+        {
+            this.ResetPasswordToken = command.Token;
             this.UpdateAt = command.CreateAt;
             this.UpdateBy = command.CreateBy;
         }

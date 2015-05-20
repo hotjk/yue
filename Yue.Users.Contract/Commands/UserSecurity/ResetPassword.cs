@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Yue.Users.Contract.Commands
 {
-    public class ResetPassword : UserSecurityCommandBase, ACE.ICommand
+    public class ResetPassword : PasswordCommandBase
     {
         public ResetPassword(int userId, string passwordHash,
             DateTime createAt, int createBy)

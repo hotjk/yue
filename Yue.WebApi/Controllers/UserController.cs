@@ -20,16 +20,18 @@ using Yue.Users.Model;
 using Yue.Users.View.Model;
 
 /*
-curl --data "email=zhongwx@gmail.com&name=weixiao&password=pwd" "http://localhost:64777/api/users" -i
-curl "http://localhost:64777/api/users/17" -i --cookie ".auth=g%252FXQOxPnqqS5c%252F%252B7AK2lnB5c0eat7btMdOxxQnvu1eHvcrEVMjgAP4NuEB0JA087gdkSv0eNCgtkfoTbgBX%252BEQ%253D%253D"
+curl --data "email=zhongwx@gmail.com&name=weixiao&password=pwd" "http://localhost:64777/api/users/register" -i
 curl --data "email=zhongwx@gmail.com&password=pwd" "http://localhost:64777/api/users/login" -i
-curl -X PATCH --data "password=pwd&newPassword=pwd1" "http://localhost:64777/api/users/17/actions/change_password" -i
+curl "http://localhost:64777/api/users" -i --cookie ".auth=5e5HJJgON2LldfFURg5zUgW%252BlNFbfN2HX9IxwweaNV78b%252BBG4Lw3QogFtbQDlNAo1j1i67V1pTAXP%252Fmfl7M27g%253D%253D;"
+curl -X POST "http://localhost:64777/api/users/signout" -i
+curl -X PATCH --data "password=pwd&newPassword=pwd1" "http://localhost:64777/api/users/change_password" -i --cookie ".auth=5e5HJJgON2LldfFURg5zUgW%252BlNFbfN2HX9IxwweaNV78b%252BBG4Lw3QogFtbQDlNAo1j1i67V1pTAXP%252Fmfl7M27g%253D%253D;"
+curl -X GET "http://localhost:64777/api/users/activate" -i --cookie ".auth=5e5HJJgON2LldfFURg5zUgW%252BlNFbfN2HX9IxwweaNV78b%252BBG4Lw3QogFtbQDlNAo1j1i67V1pTAXP%252Fmfl7M27g%253D%253D;"
 */
 
 namespace Yue.WebApi.Controllers
 {
     [RoutePrefix("api/users")]
-    public class UserController : ApiControllerBase
+    public class UserController : ApiAuthorizeController
     {
         private ISequenceService _sequenceService;
         private IUserService _userService;
@@ -43,29 +45,25 @@ namespace Yue.WebApi.Controllers
             IUserSecurityService userSecurityService) 
             : base(authenticator, actionBus, eventBus)
         {
-            _authenticator = authenticator;
-            _actionBus = actionBus;
-            _eventBus = eventBus;
+            Authenticator = authenticator;
+            ActionBus = actionBus;
+            EventBus = eventBus;
             _sequenceService = sequenceService;
             _userService = userService;
             _userSecurityService = userSecurityService;
         }
 
         [HttpGet]
-        [Route("{id}")]
+        [Route("")]
         [ApiAuthorize]
-        public IHttpActionResult Get(int id)
+        public IHttpActionResult Get()
         {
-            if (UserId != id)
-            {
-                return ResponseMessage(Request.CreateResponse(HttpStatusCode.Forbidden));
-            }
-            User user = _userService.Get(id);
+            User user = _userService.Get(UserId.Value);
             return Ok(user);
         }
 
         [HttpPost]
-        [Route("")]
+        [Route("register")]
         public async Task<IHttpActionResult> Register([FromBody]RegisterVM vm)
         {
             User user = _userService.UserByEmail(vm.Email);
@@ -80,7 +78,7 @@ namespace Yue.WebApi.Controllers
                 vm.Name,
                 _userSecurityService.PasswordHash(vm.Password),
                 DateTime.Now);
-            ActionResponse actionResponse = await _actionBus.SendAsync<UserActionBase, Register>(action);
+            ActionResponse actionResponse = await ActionBus.SendAsync<UserActionBase, Register>(action);
 
             if (actionResponse.Result == ActionResponse.ActionResponseResult.OK)
             {
@@ -94,7 +92,7 @@ namespace Yue.WebApi.Controllers
 
         [HttpPost]
         [Route("login")]
-        public IHttpActionResult Login([FromBody]LoginVM vm)
+        public async Task<IHttpActionResult> Login([FromBody]LoginVM vm)
         {
             User user = _userService.UserByEmail(vm.Email);
             if (user == null)
@@ -102,43 +100,82 @@ namespace Yue.WebApi.Controllers
                 return NotFound();
             }
 
-            bool match = _userSecurityService.VerifyPassword(user.UserId, vm.Password);
-            _eventBus.Publish(new UserPasswordVerified(user.UserId, match, DateTime.Now, user.UserId).ToExternalQueue());
+            VerifyPassword action = new VerifyPassword(
+                UserId.Value, _userSecurityService.PasswordHash(vm.Password),
+                DateTime.Now, UserId.Value);
+            ActionResponse actionResponse = await ActionBus.SendAsync<UserActionBase, VerifyPassword>(action);
 
-            if(!match)
+            if (actionResponse.Result != ActionResponse.ActionResponseResult.OK)
             {
                 return Unauthorized(new AuthenticationHeaderValue("Basic"));
             }
-            var cookie = _authenticator.GetCookieTicket(user);
+            var cookie = Authenticator.GetCookieTicket(user);
             HttpResponseMessage responseMsg = Request.CreateResponse<User>(HttpStatusCode.OK, user);
             responseMsg.Headers.AddCookies(new CookieHeaderValue[] { cookie });
             return ResponseMessage(responseMsg);
         }
 
-        //[HttpPatch]
-        //[Route("{id}/actions/singout")]
-        //[ApiAuthorize]
-        //public IHttpActionResult Signout()
-        //{
+        [HttpPost]
+        [Route("signout")]
+        public IHttpActionResult Signout()
+        {
+            HttpResponseMessage msg = Request.CreateResponse(HttpStatusCode.OK);
+            var cookieValue = new CookieHeaderValue(Authenticator.CookieTicketConfig.CookieName, "");
+            cookieValue.Expires = DateTime.UtcNow.AddMonths(-100);
+            msg.Headers.AddCookies(new CookieHeaderValue[] { cookieValue });
+            return ResponseMessage(msg);
+        }
 
-        //}
+        [HttpGet]
+        [Route("activate")]
+        [ApiAuthorize]
+        public async Task<IHttpActionResult> Activite()
+        {
+            User user = _userService.Get(UserId.Value);
+            if (!user.EnsoureState(Users.Contract.UserSecurityCommand.RequestActivateToken))
+            {
+                return Conflict();
+            }
+            RequestActivateToken action = new RequestActivateToken(
+                UserId.Value, Guid.NewGuid().ToString(), DateTime.Now, UserId.Value);
+            ActionResponse actionResponse = await ActionBus.SendAsync<UserActionBase, RequestActivateToken>(action);
+            return Ok(ActionResponseVM.ToVM(actionResponse));
+        }
 
         [HttpPatch]
-        [Route("{id}/actions/change_password")]
-        [ApiAuthorize]
-        public async Task<IHttpActionResult> ChangePassword(int id, [FromBody]ChangePasswordVM vm)
+        [Route("activate")]
+        public async Task<IHttpActionResult> Activite(ActivateVM vm)
         {
-            bool match = _userSecurityService.VerifyPassword(id, vm.Password);
+            User user = _userService.Get(vm.User);
+            if (user == null)
+            {
+                return NotFound();
+            }
+            if (!user.EnsoureState(Users.Contract.UserSecurityCommand.RequestActivateToken))
+            {
+                return Conflict();
+            }
+            Activate action = new Activate(UserId.Value, vm.Token, DateTime.Now, UserId.Value);
+            ActionResponse actionResponse = await ActionBus.SendAsync<UserActionBase, Activate>(action);
+            return Ok(ActionResponseVM.ToVM(actionResponse));
+        }
+
+        [HttpPatch]
+        [Route("change_password")]
+        [ApiAuthorize]
+        public async Task<IHttpActionResult> ChangePassword([FromBody]ChangePasswordVM vm)
+        {
+            bool match = _userSecurityService.VerifyPassword(UserId.Value, vm.Password);
             if (!match)
             {
                 return BadRequest();
             }
             ChangePassword action = new ChangePassword(
-                id,
-                _userSecurityService.PasswordHash(vm.Password),
+                UserId.Value,
+                _userSecurityService.PasswordHash(vm.NewPassword),
                 DateTime.Now,
-                id);
-            ActionResponse actionResponse = await _actionBus.SendAsync<UserActionBase, ChangePassword>(action);
+                UserId.Value);
+            ActionResponse actionResponse = await ActionBus.SendAsync<UserActionBase, ChangePassword>(action);
             return Ok(ActionResponseVM.ToVM(actionResponse));
         }
     }

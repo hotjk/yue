@@ -12,20 +12,20 @@ using System.Web.Http.Controllers;
 
 namespace Yue.WebApi.Controllers
 {
-    public class ApiControllerBase : ApiController
+    public class ApiAuthorizeController : ApiController
     {
-        public IAuthenticator _authenticator { get; protected set; }
-        public IActionBus _actionBus { get; protected set; }
-        public IEventBus _eventBus { get; protected set; }
+        public IAuthenticator Authenticator { get; protected set; }
+        public IActionBus ActionBus { get; protected set; }
+        public IEventBus EventBus { get; protected set; }
         public int? UserId { get; set; }
 
-        public ApiControllerBase(IAuthenticator authenticator,
+        public ApiAuthorizeController(IAuthenticator authenticator,
              IActionBus actionBus,
              IEventBus eventBus)
         {
-            this._authenticator = authenticator;
-            this._actionBus = actionBus;
-            this._eventBus = eventBus;
+            this.Authenticator = authenticator;
+            this.ActionBus = actionBus;
+            this.EventBus = eventBus;
         }
 
         public override async Task<HttpResponseMessage> ExecuteAsync(HttpControllerContext controllerContext, CancellationToken cancellationToken)

@@ -6,12 +6,11 @@ using System.Threading.Tasks;
 
 namespace Yue.Users.Contract.Commands
 {
-    public class CreateUserSecurity : UserSecurityCommandBase, ACE.ICommand
+    public abstract class PasswordCommandBase : UserSecurityCommandBase, ACE.ICommand
     {
-        public CreateUserSecurity(int userId,
-            string passwordHash,
-            DateTime createAt,
-            int createBy) : base(userId, UserSecurityCommand.CreateUserSecurity, createAt, createBy)
+        public PasswordCommandBase(int userId, UserSecurityCommand command, string passwordHash,
+            DateTime createAt, int createBy)
+            : base(userId, command, createAt, createBy)
         {
             this.PasswordHash = passwordHash;
         }

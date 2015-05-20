@@ -15,15 +15,15 @@ namespace Yue.WebApi
         public override void OnAuthorization(System.Web.Http.Controllers.HttpActionContext actionContext)
         {
             bool authorized = false;
-            var controller = actionContext.ControllerContext.Controller as ApiControllerBase;
+            var controller = actionContext.ControllerContext.Controller as ApiAuthorizeController;
             if (controller != null)
             {
                 var cookie = actionContext.Request.Headers.GetCookies().Select(
-                c => c[controller._authenticator.CookieTicketConfig.CookieName]).FirstOrDefault();
+                c => c[controller.Authenticator.CookieTicketConfig.CookieName]).FirstOrDefault();
 
                 CookieHeaderValue cookieValue;
                 CookieTicket ticket;
-                if (controller._authenticator.ValidateCookieTicket(cookie, out ticket, out cookieValue))
+                if (controller.Authenticator.ValidateCookieTicket(cookie, out ticket, out cookieValue))
                 {
                     authorized = true;
                     controller.UserId = int.Parse(ticket.Name);

@@ -8,8 +8,15 @@ namespace Yue.Users.Contract
 {
     public enum UserSecurityCommand
     {
-        Create = 0,
-        ChangePassword = 11,
-        ResetPassword = 12,
+        CreateUserSecurity = 0,
+        RequestActivateToken = 1,
+        ActivateUser = 2,
+        VerifyPassword = 3,
+        RequestResetPasswordToken = 10,
+        ResetPassword = 11,
+        ChangePassword = 12,
+        Block = 20,
+        Destory = 21,
+        Restore = 22,
     }
 }

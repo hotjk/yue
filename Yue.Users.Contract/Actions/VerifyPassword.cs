@@ -6,18 +6,19 @@ using System.Threading.Tasks;
 
 namespace Yue.Users.Contract.Actions
 {
-    public class Activate : UserActionBase
+    public class VerifyPassword : UserActionBase
     {
-        public Activate(int userId, string token, DateTime createAt, int createBy)
+        public VerifyPassword(int userId, string passwordHash, DateTime createAt, int createBy)
         {
             this.UserId = userId;
-            this.Token = token;
+            this.PasswordHash = passwordHash;
             this.CreateAt = createAt;
             this.CreateBy = createBy;
         }
+
         public int UserId { get; private set; }
-        public string Token { get; private set; }
-        public DateTime CreateAt { get; private set; }
-        public int CreateBy { get; private set; }
+        public string PasswordHash { get; private set; }
+        public DateTime CreateAt { get; set; }
+        public int CreateBy {get;set;}
     }
 }

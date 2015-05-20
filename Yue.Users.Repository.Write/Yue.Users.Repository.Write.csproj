@@ -70,6 +70,10 @@
       <Project>{cb72e1fb-035d-4bf4-8492-4897869ec2eb}</Project>
       <Name>Yue.Users.Model</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Yue.Users.Repository.Model\Yue.Users.Repository.Model.csproj">
+      <Project>{f7da45aa-7dd5-43e6-aa51-2ab88317b734}</Project>
+      <Name>Yue.Users.Repository.Model</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
