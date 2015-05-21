@@ -12,10 +12,5 @@ namespace Yue.Users.Contract.Commands
             : base(userId, UserSecurityCommand.ActivateUser, token, createAt, createBy)
         {
         }
-
-        public ActivateUser ClearToken()
-        {
-            return new ActivateUser(this.UserId, null, this.CreateAt, this.CreateBy);
-        }
     }
 }

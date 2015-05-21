@@ -16,16 +16,13 @@ namespace Yue.WebApi.Controllers
     {
         public IAuthenticator Authenticator { get; protected set; }
         public IActionBus ActionBus { get; protected set; }
-        public IEventBus EventBus { get; protected set; }
         public int? UserId { get; set; }
 
         public ApiAuthorizeController(IAuthenticator authenticator,
-             IActionBus actionBus,
-             IEventBus eventBus)
+             IActionBus actionBus)
         {
             this.Authenticator = authenticator;
             this.ActionBus = actionBus;
-            this.EventBus = eventBus;
         }
 
         public override async Task<HttpResponseMessage> ExecuteAsync(HttpControllerContext controllerContext, CancellationToken cancellationToken)

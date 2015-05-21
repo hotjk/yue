@@ -48,9 +48,23 @@ namespace Yue.Users.Model
             this.UpdateBy = command.CreateBy;
         }
 
+        public void ClearActivateToken(UserSecurityCommandBase command)
+        {
+            this.ActivateToken = null;
+            this.UpdateAt = command.CreateAt;
+            this.UpdateBy = command.CreateBy;
+        }
+
         public void UpdateResetPasswordToken(TokenCommandBase command)
         {
             this.ResetPasswordToken = command.Token;
+            this.UpdateAt = command.CreateAt;
+            this.UpdateBy = command.CreateBy;
+        }
+
+        public void ClearResetPasswordToken(UserSecurityCommandBase command)
+        {
+            this.ResetPasswordToken = null;
             this.UpdateAt = command.CreateAt;
             this.UpdateBy = command.CreateBy;
         }

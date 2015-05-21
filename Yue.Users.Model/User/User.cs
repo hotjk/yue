@@ -55,6 +55,7 @@ namespace Yue.Users.Model
             _fsmUserSecurity.Configure(UserState.Normal)
                 .Permit(UserSecurityCommand.VerifyPassword, UserState.Normal)
                 .Permit(UserSecurityCommand.RequestResetPasswordToken, UserState.Normal)
+                .Permit(UserSecurityCommand.VerifyResetPasswordToken, UserState.Normal)
                 .Permit(UserSecurityCommand.ResetPassword, UserState.Normal)
                 .Permit(UserSecurityCommand.ChangePassword, UserState.Normal)
                 .Permit(UserSecurityCommand.Block, UserState.Blocked)

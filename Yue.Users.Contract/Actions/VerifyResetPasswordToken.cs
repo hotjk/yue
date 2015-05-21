@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Yue.Users.Contract.Actions
 {
-    public class RequestActivateToken : TokenUserActionBase
+    public class VerifyResetPasswordToken : TokenUserActionBase
     {
-        public RequestActivateToken(int userId, DateTime createAt, int createBy, string token)
+        public VerifyResetPasswordToken(int userId, DateTime createAt, int createBy, string token)
             :base(userId, createAt, createBy, token)
         {
         }

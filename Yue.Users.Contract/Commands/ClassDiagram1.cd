@@ -1,0 +1,106 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
+  <Class Name="Yue.Users.Contract.Commands.UserSecurityCommandBase">
+    <Position X="10.75" Y="3" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAIAAAAAgAAAAAgAAAAAAAAAAQAAAAAAAAA=</HashCode>
+      <FileName>Commands\UserSecurity\UserSecurityCommandBase.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Yue.Users.Contract.Commands.ActivateUser" Collapsed="true">
+    <Position X="3" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Commands\UserSecurity\ActivateUser.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Yue.Users.Contract.Commands.ChangePassword" Collapsed="true">
+    <Position X="16.75" Y="7.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Commands\UserSecurity\ChangePassword.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Yue.Users.Contract.Commands.CreateUserSecurity" Collapsed="true">
+    <Position X="0.5" Y="6" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Commands\UserSecurity\CreateUserSecurity.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Yue.Users.Contract.Commands.RequestActivateToken" Collapsed="true">
+    <Position X="5.25" Y="7.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Commands\UserSecurity\RequestActivateToken.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Yue.Users.Contract.Commands.ResetPassword" Collapsed="true">
+    <Position X="19.25" Y="7.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAA=</HashCode>
+      <FileName>Commands\UserSecurity\ResetPassword.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Yue.Users.Contract.Commands.TokenCommandBase" Collapsed="true">
+    <Position X="8.5" Y="6" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAA=</HashCode>
+      <FileName>Commands\UserSecurity\TokenCommandBase.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Yue.Users.Contract.Commands.PasswordCommandBase" Collapsed="true">
+    <Position X="19.25" Y="6" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Commands\UserSecurity\PasswordCommandBase.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Yue.Users.Contract.Commands.CancelResetPasswordToken" Collapsed="true">
+    <Position X="7.75" Y="7.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Commands\UserSecurity\CancelResetPasswordToken.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Yue.Users.Contract.Commands.RequestResetPasswordToken" Collapsed="true">
+    <Position X="10.75" Y="7.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Commands\UserSecurity\RequestResetPasswordToken.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Yue.Users.Contract.Commands.VerifyPassword" Collapsed="true">
+    <Position X="21.75" Y="7.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Commands\UserSecurity\VerifyPassword.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Yue.Users.Contract.Commands.VerifyResetPasswordToken" Collapsed="true">
+    <Position X="13.75" Y="7.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Commands\UserSecurity\VerifyResetPasswordToken.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Yue.Users.Contract.Commands.CreateUser" Collapsed="true">
+    <Position X="3.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAAACAAAAAAAAAAAAwAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Commands\User\CreateUser.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Yue.Users.Contract.Commands.UserCommandBase" Collapsed="true">
+    <Position X="3.5" Y="3" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAIAAAAAgAAAAAAAAAAAAAAAAQAAAAAAAAA=</HashCode>
+      <FileName>Commands\User\UserCommandBase.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

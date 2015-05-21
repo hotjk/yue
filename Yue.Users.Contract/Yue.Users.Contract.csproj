@@ -39,10 +39,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Actions\PasswordUserActionBase.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Actions\ResetPassword.cs" />
+    <Compile Include="Actions\VerifyResetPasswordToken.cs" />
+    <Compile Include="Actions\RequestResetPasswordToken.cs" />
+    <Compile Include="Actions\CancelResetPasswordToken.cs" />
     <Compile Include="Actions\RequestActivateToken.cs" />
     <Compile Include="Actions\Activate.cs" />
-    <Compile Include="Actions\ResetPassword.cs" />
     <Compile Include="Actions\ChangePassword.cs" />
+    <Compile Include="Actions\TokenUserActionBase.cs" />
     <Compile Include="Actions\UserActionBase.cs" />
     <Compile Include="Actions\Register.cs">
       <SubType>Code</SubType>
@@ -50,12 +57,14 @@
     <Compile Include="Actions\VerifyPassword.cs" />
     <Compile Include="Commands\UserSecurity\ActivateUser.cs" />
     <Compile Include="Commands\UserSecurity\RequestResetPasswordToken.cs" />
+    <Compile Include="Commands\UserSecurity\CancelResetPasswordToken.cs" />
     <Compile Include="Commands\UserSecurity\ResetPassword.cs" />
     <Compile Include="Commands\UserSecurity\ChangePassword.cs" />
     <Compile Include="Commands\UserSecurity\TokenCommandBase.cs" />
     <Compile Include="Commands\UserSecurity\RequestActivateToken.cs" />
     <Compile Include="Commands\UserSecurity\PasswordCommandBase.cs" />
     <Compile Include="Commands\UserSecurity\UserSecurityCommandBase.cs" />
+    <Compile Include="Commands\UserSecurity\VerifyResetPasswordToken.cs" />
     <Compile Include="Commands\UserSecurity\VerifyPassword.cs" />
     <Compile Include="Commands\User\CreateUser.cs" />
     <Compile Include="Commands\UserSecurity\CreateUserSecurity.cs" />
@@ -64,13 +73,15 @@
     <Compile Include="Enum\UserCommand.cs" />
     <Compile Include="Enum\UserRole.cs" />
     <Compile Include="Enum\UserState.cs" />
+    <Compile Include="Events\UserResetPasswordTokenGenerated.cs" />
     <Compile Include="Events\UserActiviteTokenGenerated.cs" />
     <Compile Include="Events\UserPasswordChanged.cs" />
     <Compile Include="Events\UserPasswordVerified.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Commands\UserSecurity\ClassDiagram1.cd" />
+    <None Include="Actions\ClassDiagram1.cd" />
+    <None Include="Commands\ClassDiagram1.cd" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\ace\ACE.Contracts\ACE.Contracts.csproj">

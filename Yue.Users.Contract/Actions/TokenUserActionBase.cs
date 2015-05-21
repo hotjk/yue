@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace Yue.Users.Contract.Actions
 {
-    public class ResetPassword : PasswordUserActionBase
+    public abstract class TokenUserActionBase:UserActionBase
     {
-        public ResetPassword(int userId, DateTime createAt, int createBy, string passwordHash, string token)
-            :base(userId, createAt, createBy, passwordHash)
+        public TokenUserActionBase(int userId, DateTime createAt, int createBy, string token)
+            :base(userId, createAt, createBy)
         {
             this.Token = token;
         }

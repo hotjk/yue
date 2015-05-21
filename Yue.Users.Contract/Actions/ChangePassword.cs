@@ -6,19 +6,11 @@ using System.Threading.Tasks;
 
 namespace Yue.Users.Contract.Actions
 {
-    public class ChangePassword : UserActionBase
+    public class ChangePassword : PasswordUserActionBase
     {
-        public ChangePassword(int userId, string passwordHash, DateTime createAt, int createBy)
+        public ChangePassword(int userId, DateTime createAt, int createBy, string passwordHash)
+            :base(userId, createAt, createBy, passwordHash)
         {
-            this.UserId = userId;
-            this.PasswordHash = passwordHash;
-            this.CreateAt = createAt;
-            this.CreateBy = createBy;
         }
-
-        public int UserId { get; private set; }
-        public string PasswordHash { get; private set; }
-        public DateTime CreateAt { get; private set; }
-        public int CreateBy { get; private set; }
     }
 }

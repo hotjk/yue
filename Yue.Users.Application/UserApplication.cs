@@ -16,9 +16,12 @@ namespace Yue.Users.Application
         IActionHandler<Contract.Actions.Register>,
         IActionHandler<Contract.Actions.VerifyPassword>,
         IActionHandler<Contract.Actions.ChangePassword>,
-        IActionHandler<Contract.Actions.ResetPassword>,
         IActionHandler<Contract.Actions.RequestActivateToken>,
-        IActionHandler<Contract.Actions.Activate>
+        IActionHandler<Contract.Actions.Activate>,
+        IActionHandler<Contract.Actions.RequestResetPasswordToken>,
+        IActionHandler<Contract.Actions.VerifyResetPasswordToken>,
+        IActionHandler<Contract.Actions.ResetPassword>,
+        IActionHandler<Contract.Actions.CancelResetPasswordToken>
     {
         protected ICommandBus _commandBus;
         protected IEventBus _eventBus;
@@ -37,9 +40,9 @@ namespace Yue.Users.Application
             using (UnitOfWork unitOfwork = new UnitOfWork(_eventBus))
             {
                 CreateUser createUser = new CreateUser(
-                    action.UserId, 
+                    action.UserId,
                     action.Email,
-                    action.Name, 
+                    action.Name,
                     action.CreateAt,
                     action.UserId);
                 _commandBus.Send(createUser);
@@ -67,17 +70,7 @@ namespace Yue.Users.Application
             }
         }
 
-        public void Invoke(Contract.Actions.ResetPassword action)
-        {
-            using (UnitOfWork unitOfwork = new UnitOfWork(_eventBus))
-            {
-                Yue.Users.Contract.Commands.ResetPassword cmd = new Contract.Commands.ResetPassword
-                (action.UserId, action.PasswordHash, action.CreateAt, action.CreateBy);
-                _commandBus.Send(cmd);
-
-                unitOfwork.Complete();
-            }
-        }
+        
 
         public void Invoke(Contract.Actions.RequestActivateToken action)
         {
@@ -109,6 +102,54 @@ namespace Yue.Users.Application
             {
                 Yue.Users.Contract.Commands.VerifyPassword cmd = new Contract.Commands.VerifyPassword
                 (action.UserId, action.PasswordHash, action.CreateAt, action.CreateBy);
+                _commandBus.Send(cmd);
+
+                unitOfwork.Complete();
+            }
+        }
+
+        public void Invoke(Contract.Actions.RequestResetPasswordToken action)
+        {
+            using (UnitOfWork unitOfwork = new UnitOfWork(_eventBus))
+            {
+                Yue.Users.Contract.Commands.RequestResetPasswordToken cmd = new Contract.Commands.RequestResetPasswordToken
+                (action.UserId, action.Token, action.CreateAt, action.CreateBy);
+                _commandBus.Send(cmd);
+
+                unitOfwork.Complete();
+            }
+        }
+
+        public void Invoke(Contract.Actions.CancelResetPasswordToken action)
+        {
+            using (UnitOfWork unitOfwork = new UnitOfWork(_eventBus))
+            {
+                Yue.Users.Contract.Commands.CancelResetPasswordToken cmd = new Contract.Commands.CancelResetPasswordToken
+                (action.UserId, action.CreateAt, action.CreateBy, action.Token);
+                _commandBus.Send(cmd);
+
+                unitOfwork.Complete();
+            }
+        }
+
+        public void Invoke(Contract.Actions.ResetPassword action)
+        {
+            using (UnitOfWork unitOfwork = new UnitOfWork(_eventBus))
+            {
+                Yue.Users.Contract.Commands.ResetPassword cmd = new Contract.Commands.ResetPassword
+                (action.UserId, action.PasswordHash, action.Token, action.CreateAt, action.CreateBy);
+                _commandBus.Send(cmd);
+
+                unitOfwork.Complete();
+            }
+        }
+
+        public void Invoke(Contract.Actions.VerifyResetPasswordToken action)
+        {
+            using (UnitOfWork unitOfwork = new UnitOfWork(_eventBus))
+            {
+                Yue.Users.Contract.Commands.VerifyResetPasswordToken cmd = new Contract.Commands.VerifyResetPasswordToken
+                (action.UserId, action.Token, action.CreateAt, action.CreateBy);
                 _commandBus.Send(cmd);
 
                 unitOfwork.Complete();

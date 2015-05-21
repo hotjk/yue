@@ -40,6 +40,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ActivateVM.cs" />
+    <Compile Include="VerifyResetPasswordTokenVM.cs" />
+    <Compile Include="ResetPasswordVM.cs" />
+    <Compile Include="RequestResetPasswordVM.cs" />
     <Compile Include="ChangePasswordVM.cs" />
     <Compile Include="ChangeProfileVM.cs" />
     <Compile Include="LoginVM.cs" />

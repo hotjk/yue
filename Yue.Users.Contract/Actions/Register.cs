@@ -6,22 +6,17 @@ using System.Threading.Tasks;
 
 namespace Yue.Users.Contract.Actions
 {
-    public class Register : UserActionBase
+    public class Register : PasswordUserActionBase
     {
-        public Register(int userId, string email, string name,
-            string passwordHash, DateTime createAt)
+        public Register(int userId, DateTime createAt, int createBy, string passwordHash,
+            string email, string name)
+            : base(userId, createAt, createBy, passwordHash)
         {
-            this.UserId = userId;
             this.Email = email;
             this.Name = name;
-            this.PasswordHash = passwordHash;
-            this.CreateAt = createAt;
         }
 
-        public int UserId { get; private set; }
         public string Email { get; private set; }
         public string Name { get; private set; }
-        public string PasswordHash { get; private set; }
-        public DateTime CreateAt { get; set; }
     }
 }

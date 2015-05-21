@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Yue.Users.Contract.Actions
 {
-    public class RequestActivateToken : TokenUserActionBase
+    public class CancelResetPasswordToken : TokenUserActionBase
     {
-        public RequestActivateToken(int userId, DateTime createAt, int createBy, string token)
+        public CancelResetPasswordToken(int userId, DateTime createAt, int createBy, string token)
             :base(userId, createAt, createBy, token)
         {
         }
