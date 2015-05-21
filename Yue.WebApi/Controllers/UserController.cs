@@ -59,19 +59,20 @@ namespace Yue.WebApi.Controllers
     [RoutePrefix("api/users")]
     public class UserController : ApiAuthorizeController
     {
+        private IEventBus EventBus;
         private ISequenceService _sequenceService;
         private IUserService _userService;
         private IUserSecurityService _userSecurityService;
 
         public UserController(IAuthenticator authenticator, 
             IActionBus actionBus,
+            IEventBus eventBus,
             ISequenceService sequenceService,
             IUserService userService,
             IUserSecurityService userSecurityService) 
             : base(authenticator, actionBus)
         {
-            Authenticator = authenticator;
-            ActionBus = actionBus;
+            EventBus = eventBus;
             _sequenceService = sequenceService;
             _userService = userService;
             _userSecurityService = userSecurityService;
@@ -113,7 +114,7 @@ namespace Yue.WebApi.Controllers
 
         [HttpPost]
         [Route("login")]
-        public async Task<IHttpActionResult> Login(LoginVM vm)
+        public IHttpActionResult Login(LoginVM vm)
         {
             User user = _userService.UserByEmail(vm.Email);
             if (user == null)
@@ -121,14 +122,19 @@ namespace Yue.WebApi.Controllers
                 return NotFound();
             }
 
-            VerifyPassword action = new VerifyPassword(
-                user.UserId, DateTime.Now, user.UserId, _userSecurityService.PasswordHash(vm.Password));
-            ActionResponse actionResponse = await ActionBus.SendAsync<UserActionBase, VerifyPassword>(action);
+            if(!user.EnsoureState(Users.Contract.UserSecurityCommand.VerifyPassword))
+            {
+                return Conflict();
+            }
 
-            if (actionResponse.Result != ActionResponse.ActionResponseResult.OK)
+            bool match = _userSecurityService.VerifyPassword(user.UserId, vm.Password);
+            EventBus.FlushAnEvent(new UserPasswordVerified(user.UserId, match, DateTime.Now, user.UserId).ToExternalQueue());
+
+            if (!match)
             {
                 return Unauthorized(new AuthenticationHeaderValue("Basic"));
             }
+
             var cookie = Authenticator.GetCookieTicket(user);
             HttpResponseMessage responseMsg = Request.CreateResponse<User>(HttpStatusCode.OK, user);
             responseMsg.Headers.AddCookies(new CookieHeaderValue[] { cookie });

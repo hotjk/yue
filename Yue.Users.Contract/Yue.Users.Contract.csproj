@@ -54,7 +54,6 @@
     <Compile Include="Actions\Register.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Actions\VerifyPassword.cs" />
     <Compile Include="Commands\UserSecurity\ActivateUser.cs" />
     <Compile Include="Commands\UserSecurity\RequestResetPasswordToken.cs" />
     <Compile Include="Commands\UserSecurity\CancelResetPasswordToken.cs" />
@@ -65,7 +64,6 @@
     <Compile Include="Commands\UserSecurity\PasswordCommandBase.cs" />
     <Compile Include="Commands\UserSecurity\UserSecurityCommandBase.cs" />
     <Compile Include="Commands\UserSecurity\VerifyResetPasswordToken.cs" />
-    <Compile Include="Commands\UserSecurity\VerifyPassword.cs" />
     <Compile Include="Commands\User\CreateUser.cs" />
     <Compile Include="Commands\UserSecurity\CreateUserSecurity.cs" />
     <Compile Include="Commands\User\UserCommandBase.cs" />

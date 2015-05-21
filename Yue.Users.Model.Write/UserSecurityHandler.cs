@@ -13,7 +13,6 @@ namespace Yue.Users.Model.Write
 {
     public class UserSecurityHandler :
         ICommandHandler<CreateUserSecurity>,
-        ICommandHandler<VerifyPassword>,
         ICommandHandler<ChangePassword>,
         ICommandHandler<RequestActivateToken>,
         ICommandHandler<ActivateUser>,
@@ -86,22 +85,6 @@ namespace Yue.Users.Model.Write
             _userRepository.Update(user);
             _userSecurityRepository.Update(userSecurity);
             _userSecurityRepository.Log(command);
-        }
-
-        public void Execute(VerifyPassword command)
-        {
-            User user = _userRepository.GetForUpdate(command.UserId);
-            user.EnsoureAndUpdateState(command);
-
-            UserSecurity userSecurity = _userSecurityRepository.Get(command.UserId);
-            bool match = userSecurity.VerifyPassword(command.PasswordHash);
-
-            _eventBus.FlushAnEvent(new UserPasswordVerified(command.UserId, match, DateTime.Now, command.UserId).ToExternalQueue());
-
-            if(!match)
-            {
-                throw new BusinessException(BusinessStatusCode.Unauthorized, "Invalid password");
-            }
         }
 
         public void Execute(RequestResetPasswordToken command)

@@ -20,7 +20,6 @@ namespace Yue.Users.Repository.Model
             Mapper.CreateMap<RequestActivateToken, UserSecurityLogPM>();
             Mapper.CreateMap<RequestResetPasswordToken, UserSecurityLogPM>();
             Mapper.CreateMap<ResetPassword, UserSecurityLogPM>();
-            Mapper.CreateMap<VerifyPassword, UserSecurityLogPM>();
             Mapper.CreateMap<VerifyResetPasswordToken, UserSecurityLogPM>();
         }
 

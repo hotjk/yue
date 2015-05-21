@@ -14,7 +14,6 @@ namespace Yue.Users.Application
 {
     public class UserApplication :
         IActionHandler<Contract.Actions.Register>,
-        IActionHandler<Contract.Actions.VerifyPassword>,
         IActionHandler<Contract.Actions.ChangePassword>,
         IActionHandler<Contract.Actions.RequestActivateToken>,
         IActionHandler<Contract.Actions.Activate>,
@@ -90,18 +89,6 @@ namespace Yue.Users.Application
             {
                 Yue.Users.Contract.Commands.ActivateUser cmd = new Contract.Commands.ActivateUser
                 (action.UserId, action.Token, action.CreateAt, action.CreateBy);
-                _commandBus.Send(cmd);
-
-                unitOfwork.Complete();
-            }
-        }
-
-        public void Invoke(Contract.Actions.VerifyPassword action)
-        {
-            using (UnitOfWork unitOfwork = new UnitOfWork(_eventBus))
-            {
-                Yue.Users.Contract.Commands.VerifyPassword cmd = new Contract.Commands.VerifyPassword
-                (action.UserId, action.PasswordHash, action.CreateAt, action.CreateBy);
                 _commandBus.Send(cmd);
 
                 unitOfwork.Complete();

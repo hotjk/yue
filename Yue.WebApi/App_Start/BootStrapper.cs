@@ -37,6 +37,11 @@ namespace Yue.WebApi
             Container.Settings.AllowNullInjection = true;
             Container.Bind<ACE.Loggers.IBusLogger>().To<Log4NetBusLogger>().InSingletonScope();
 
+            // EventBus must be thread scope, published events will be saved in thread EventBus._events, until Flush/Clear.
+            Container.Bind<IEventBus>().To<EventBus>()
+                .InThreadScope()
+                .WithConstructorArgument(Constants.ParamEventDistributionOptions, ACE.Event.EventDistributionOptions.Queue);
+            
             // ActionBus must be thread scope, single thread bind to use single anonymous RabbitMQ queue for reply.
             Container.Bind<IActionBus>().To<ActionBus>().InThreadScope()
                 .WithConstructorArgument(Constants.ParamActionShouldDistributeToExternalQueue, true);
