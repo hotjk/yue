@@ -27,31 +27,31 @@ using Yue.Users.View.Model;
  * curl --data "email=zhongwx@gmail.com&password=pwd" "http://localhost:64777/api/users/login" -i
  * 
  * Get
- * curl "http://localhost:64777/api/users" -i --cookie ".auth=FVhAZLcC3Nsf437F9JKECf%252BoMUwy0pig1oEYC0%252FW2G1%252FPhiyjyPw3ZpsVWpWCX7gjxDTLUb5%252BFKApclv9rqVYA%253D%253D;"
+ * curl "http://localhost:64777/api/users" -i --cookie ".auth=VlKks%252FpLOPteEbgKotr72EiyKvgwi%252F3N1cEMAv9jZBIUjxLwgvohxvQP4IarZ5TU2Iwnh%252BdS2sgsVZpTr8eV3Q%253D%253D;"
  * 
  * Sign Out
- * curl -X POST "http://localhost:64777/api/users/signout" -i
+ * curl -X POST --data "" "http://localhost:64777/api/users/signout" -i
  * 
  * Change Password
- * curl -X POST --data "password=pwd&newPassword=pwd1" "http://localhost:64777/api/users/change_password" -i --cookie ".auth=5e5HJJgON2LldfFURg5zUgW%252BlNFbfN2HX9IxwweaNV78b%252BBG4Lw3QogFtbQDlNAo1j1i67V1pTAXP%252Fmfl7M27g%253D%253D;"
+ * curl -X POST --data "password=pwd&newPassword=pwd1" "http://localhost:64777/api/users/change_password" -i --cookie ".auth=oebk2ctBVEwo4gC4AoYRArfBGR0nmN7PyB4KdVZLXKCRxsDKJCCaJ7nBi77IBHRWj7ycGvk6yCqbTRFlMbw36w%253D%253D;"
  * 
  * Request Activate Code
- * curl -X GET "http://localhost:64777/api/users/activate" -i --cookie ".auth=FVhAZLcC3Nsf437F9JKECf%252BoMUwy0pig1oEYC0%252FW2G1%252FPhiyjyPw3ZpsVWpWCX7gjxDTLUb5%252BFKApclv9rqVYA%253D%253D;"
+ * curl -X GET "http://localhost:64777/api/users/activate" -i --cookie ".auth=oebk2ctBVEwo4gC4AoYRArfBGR0nmN7PyB4KdVZLXKCRxsDKJCCaJ7nBi77IBHRWj7ycGvk6yCqbTRFlMbw36w%253D%253D;"
  * 
  * Activate
- * curl -X POST --data "user=29&token=c8c49b8b-2bb6-469e-84fb-36af49fd3d3a" "http://localhost:64777/api/users/activate" -i --cookie ".auth=FVhAZLcC3Nsf437F9JKECf%252BoMUwy0pig1oEYC0%252FW2G1%252FPhiyjyPw3ZpsVWpWCX7gjxDTLUb5%252BFKApclv9rqVYA%253D%253D;"
+ * curl -X POST --data "user=33&token=5f162f8d-009e-4d3a-8f6c-21b99deb1550" "http://localhost:64777/api/users/activate" -i
  * 
  * Request Reset Password Token
  * curl -X POST --data "email=zhongwx@gmail.com" "http://localhost:64777/api/users/request_reset_password" -i 
  * 
  * Verify Reset Password Token
- * curl -X POST --data "user=29&token=2a5c9f34-64fe-4211-8ac6-fc5904c37444" "http://localhost:64777/api/users/verify_reset_password" -i 
+ * curl -X POST --data "user=33&token=ee90cff6-b35d-4b32-8346-8a22ce868eea" "http://localhost:64777/api/users/verify_reset_password" -i 
  * 
  * Cancel Reset Password
- * curl -X POST --data "user=29&token=3a44cb7c-c871-4fa2-8af7-333b53d14b68" "http://localhost:64777/api/users/cancel_reset_password" -i 
+ * curl -X POST --data "user=33&token=ee90cff6-b35d-4b32-8346-8a22ce868eea" "http://localhost:64777/api/users/cancel_reset_password" -i 
  * 
  * Reset Password
- * curl -X POST --data "user=29&token=2a5c9f34-64fe-4211-8ac6-fc5904c37444&password=pwd1" "http://localhost:64777/api/users/reset_password" -i 
+ * curl -X POST --data "user=33&token=7e93e31f-ca8d-41b0-a3da-13bd2a4a9c0d&password=pwd" "http://localhost:64777/api/users/reset_password" -i 
 */
 
 namespace Yue.WebApi.Controllers
@@ -99,7 +99,7 @@ namespace Yue.WebApi.Controllers
 
             int userId = _sequenceService.Next(Sequence.User);
             Register action = new Register(
-                userId, DateTime.Now, userId, _userSecurityService.PasswordHash(user.UserId, vm.Password), vm.Email, vm.Name);
+                userId, DateTime.Now, userId, _userSecurityService.PasswordHash(userId, vm.Password), vm.Email, vm.Name);
             ActionResponse actionResponse = await ActionBus.SendAsync<UserActionBase, Register>(action);
 
             if (actionResponse.Result == ActionResponse.ActionResponseResult.OK)
