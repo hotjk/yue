@@ -34,11 +34,6 @@ namespace Yue.Users.Model
             return userSecurity;
         }
 
-        public bool VerifyPassword(string password)
-        {
-            return Grit.Utility.Security.PasswordHash.ValidatePassword(password, this.PasswordHash);
-        }
-
         public void UpdatePassword(PasswordCommandBase command)
         {
             this.PasswordHash = command.PasswordHash;

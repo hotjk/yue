@@ -99,7 +99,7 @@ namespace Yue.WebApi.Controllers
 
             int userId = _sequenceService.Next(Sequence.User);
             Register action = new Register(
-                userId, DateTime.Now, userId, _userSecurityService.PasswordHash(vm.Password), vm.Email, vm.Name);
+                userId, DateTime.Now, userId, _userSecurityService.PasswordHash(user.UserId, vm.Password), vm.Email, vm.Name);
             ActionResponse actionResponse = await ActionBus.SendAsync<UserActionBase, Register>(action);
 
             if (actionResponse.Result == ActionResponse.ActionResponseResult.OK)
@@ -241,7 +241,7 @@ namespace Yue.WebApi.Controllers
                 return Conflict();
             }
             ResetPassword action = new ResetPassword(
-            user.UserId, DateTime.Now, user.UserId, _userSecurityService.PasswordHash(vm.Password), vm.Token);
+            user.UserId, DateTime.Now, user.UserId, _userSecurityService.PasswordHash(user.UserId, vm.Password), vm.Token);
             ActionResponse actionResponse = await ActionBus.SendAsync<UserActionBase, ResetPassword>(action);
             return Ok(ActionResponseVM.ToVM(actionResponse));
         }
@@ -257,7 +257,7 @@ namespace Yue.WebApi.Controllers
                 return BadRequest();
             }
             ChangePassword action = new ChangePassword(
-                UserId.Value,DateTime.Now,UserId.Value, _userSecurityService.PasswordHash(vm.NewPassword));
+                UserId.Value,DateTime.Now,UserId.Value, _userSecurityService.PasswordHash(UserId.Value, vm.NewPassword));
             ActionResponse actionResponse = await ActionBus.SendAsync<UserActionBase, ChangePassword>(action);
             return Ok(ActionResponseVM.ToVM(actionResponse));
         }
