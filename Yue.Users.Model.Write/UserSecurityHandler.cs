@@ -44,14 +44,9 @@ namespace Yue.Users.Model.Write
 
         public void Execute(ChangePassword command)
         {
-            UpdatePassword(command);
-        }
-
-        private void UpdatePassword(PasswordCommandBase command)
-        {
             User user = _userRepository.GetForUpdate(command.UserId);
             user.EnsoureAndUpdateState(command);
-            
+
             UserSecurity userSecurity = _userSecurityRepository.Get(command.UserId);
             userSecurity.UpdatePassword(command);
 
@@ -82,7 +77,7 @@ namespace Yue.Users.Model.Write
             user.EnsoureAndUpdateState(command);
 
             UserSecurity userSecurity = _userSecurityRepository.Get(command.UserId);
-            if (string.Compare(userSecurity.ActivateToken, command.Token) != 0)
+            if (!userSecurity.VerifyActivateToken(command.Token))
             {
                 throw new BusinessException(BusinessStatusCode.Unauthorized, "Invalid activate token");
             }
@@ -99,7 +94,7 @@ namespace Yue.Users.Model.Write
             user.EnsoureAndUpdateState(command);
 
             UserSecurity userSecurity = _userSecurityRepository.Get(command.UserId);
-            bool match = string.Compare(userSecurity.PasswordHash, command.PasswordHash) != 0;
+            bool match = userSecurity.VerifyPassword(command.PasswordHash);
 
             _eventBus.FlushAnEvent(new UserPasswordVerified(command.UserId, match, DateTime.Now, command.UserId).ToExternalQueue());
 
@@ -140,7 +135,7 @@ namespace Yue.Users.Model.Write
             user.EnsoureAndUpdateState(command);
 
             UserSecurity userSecurity = _userSecurityRepository.Get(command.UserId);
-            if (string.Compare(userSecurity.ResetPasswordToken, command.Token) != 0)
+            if (!userSecurity.VerifyResetPasswordToken(command.Token))
             {
                 throw new BusinessException(BusinessStatusCode.Unauthorized, "Invalid reset password token");
             }
@@ -158,7 +153,7 @@ namespace Yue.Users.Model.Write
             user.EnsoureAndUpdateState(command);
 
             UserSecurity userSecurity = _userSecurityRepository.Get(command.UserId);
-            if (string.Compare(userSecurity.ResetPasswordToken, command.Token) != 0)
+            if (!userSecurity.VerifyResetPasswordToken(command.Token))
             {
                 throw new BusinessException(BusinessStatusCode.Unauthorized, "Invalid reset password token");
             }

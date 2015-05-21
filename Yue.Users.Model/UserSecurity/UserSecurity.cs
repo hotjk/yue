@@ -34,11 +34,22 @@ namespace Yue.Users.Model
             return userSecurity;
         }
 
+        public bool VerifyPassword(string password)
+        {
+            return Grit.Utility.Security.PasswordHash.ValidatePassword(password, this.PasswordHash);
+        }
+
         public void UpdatePassword(PasswordCommandBase command)
         {
             this.PasswordHash = command.PasswordHash;
             this.UpdateAt = command.CreateAt;
             this.UpdateBy = command.CreateBy;
+        }
+
+        public bool VerifyActivateToken(string token)
+        {
+            return (!string.IsNullOrEmpty(this.ActivateToken) &&
+                string.Compare(this.ActivateToken, token) == 0);
         }
 
         public void UpdateActivateToken(TokenCommandBase command)
@@ -53,6 +64,12 @@ namespace Yue.Users.Model
             this.ActivateToken = null;
             this.UpdateAt = command.CreateAt;
             this.UpdateBy = command.CreateBy;
+        }
+
+        public bool VerifyResetPasswordToken(string token)
+        {
+            return (!string.IsNullOrEmpty(this.ResetPasswordToken) &&
+                string.Compare(this.ResetPasswordToken, token) == 0);
         }
 
         public void UpdateResetPasswordToken(TokenCommandBase command)

@@ -22,7 +22,7 @@ namespace Yue.Users.Repository.Write
         private static readonly string[] _userSecurityUpdateColumns = new string[] {
 "PasswordHash", "ActivateToken", "ResetPasswordToken", "UpdateAt", "UpdateBy" };
         private static readonly string[] _userSecurityLogsColumns = new string[] {
-"UserId", "Type", "Data", "CreateBy", "CreateAt" };
+"UserId", "Type", "PasswordHash", "Token", "CreateBy", "CreateAt" };
 
         public UserSecurity Get(int userId)
         {

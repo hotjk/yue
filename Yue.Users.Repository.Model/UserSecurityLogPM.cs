@@ -13,15 +13,21 @@ namespace Yue.Users.Repository.Model
     {
         static UserSecurityLogPM()
         {
-            Mapper.CreateMap<ChangePassword, UserSecurityLogPM>().ForMember(x => x.Data, opt => opt.MapFrom(n => n.PasswordHash));
-            Mapper.CreateMap<CreateUserSecurity, UserSecurityLogPM>().ForMember(x => x.Data, opt => opt.MapFrom(n => n.PasswordHash));
-            Mapper.CreateMap<ResetPassword, UserSecurityLogPM>().ForMember(x => x.Data, opt => opt.MapFrom(n => n.PasswordHash));
-            Mapper.CreateMap<TokenCommandBase, UserSecurityLogPM>().ForMember(x => x.Data, opt => opt.MapFrom(n => n.Token));
+            Mapper.CreateMap<ActivateUser, UserSecurityLogPM>();
+            Mapper.CreateMap<CancelResetPasswordToken, UserSecurityLogPM>();
+            Mapper.CreateMap<ChangePassword, UserSecurityLogPM>();
+            Mapper.CreateMap<CreateUserSecurity, UserSecurityLogPM>();
+            Mapper.CreateMap<RequestActivateToken, UserSecurityLogPM>();
+            Mapper.CreateMap<RequestResetPasswordToken, UserSecurityLogPM>();
+            Mapper.CreateMap<ResetPassword, UserSecurityLogPM>();
+            Mapper.CreateMap<VerifyPassword, UserSecurityLogPM>();
+            Mapper.CreateMap<VerifyResetPasswordToken, UserSecurityLogPM>();
         }
 
         public int UserId { get; private set; }
         public UserSecurityCommand Type { get; private set; }
-        public string Data { get; private set; }
+        public string PasswordHash { get; private set; }
+        public string Token { get; private set; }
         public DateTime CreateAt { get; private set; }
         public int CreateBy { get; private set; }
 
