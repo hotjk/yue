@@ -79,6 +79,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yue.Users.Repository.Model"
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Yue.Users.ContractFS", "Yue.Users.ContractFS\Yue.Users.ContractFS.fsproj", "{E095BAB3-BF66-4042-AA4E-78D0D406136A}"
 EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Yue.Bookings.ContractFS", "Yue.Bookings.ContractFS\Yue.Bookings.ContractFS.fsproj", "{F790A30B-68B2-40D2-BD33-3499078EC2EA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -201,6 +203,10 @@ Global
 		{E095BAB3-BF66-4042-AA4E-78D0D406136A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E095BAB3-BF66-4042-AA4E-78D0D406136A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E095BAB3-BF66-4042-AA4E-78D0D406136A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F790A30B-68B2-40D2-BD33-3499078EC2EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F790A30B-68B2-40D2-BD33-3499078EC2EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F790A30B-68B2-40D2-BD33-3499078EC2EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F790A30B-68B2-40D2-BD33-3499078EC2EA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -239,5 +245,6 @@ Global
 		{51F23943-A42A-4433-9F0C-88FB0FEBF616} = {55B5323B-9B6E-4EEF-AA8F-EFB92BCFAEFF}
 		{F7DA45AA-7DD5-43E6-AA51-2AB88317B734} = {55B5323B-9B6E-4EEF-AA8F-EFB92BCFAEFF}
 		{E095BAB3-BF66-4042-AA4E-78D0D406136A} = {55B5323B-9B6E-4EEF-AA8F-EFB92BCFAEFF}
+		{F790A30B-68B2-40D2-BD33-3499078EC2EA} = {4BB4E507-F12B-4512-BC12-A8B0A557B43D}
 	EndGlobalSection
 EndGlobal

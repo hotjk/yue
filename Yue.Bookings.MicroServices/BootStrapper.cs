@@ -47,13 +47,13 @@ namespace Yue.Bookings.MicroServices
             Container.Bind<ICommandBus>().To<CommandBus>().InSingletonScope();
             Container.Bind<IEventHandlerFactory>().To<EventHandlerFactory>()
                 .InSingletonScope()
-                .WithConstructorArgument(Constants.ParamEventAssmblies, new string[] { "Yue.Bookings.Contract" })
+                .WithConstructorArgument(Constants.ParamEventAssmblies, new string[] { "Yue.Bookings.ContractFS" })
                 .WithConstructorArgument(Constants.ParamHandlerAssmblies, new string[] { "Yue.Bookings.Model.Write" });
             // EventBus must be thread scope, published events will be saved in thread EventBus._events, until Flush/Clear.
             Container.Bind<IEventBus>().To<EventBus>().InThreadScope();
             Container.Bind<IActionHandlerFactory>().To<ActionHandlerFactory>()
                 .InSingletonScope()
-                .WithConstructorArgument(Constants.ParamActionAssmblies, new string[] { "Yue.Bookings.Contract" })
+                .WithConstructorArgument(Constants.ParamActionAssmblies, new string[] { "Yue.Bookings.ContractFS" })
                 .WithConstructorArgument(Constants.ParamHandlerAssmblies, new string[] { "Yue.Bookings.Application" });
             // ActionBus must be thread scope, single thread bind to use single anonymous RabbitMQ queue for reply.
             Container.Bind<IActionBus>().To<ActionBus>().InThreadScope();

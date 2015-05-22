@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Yue.Bookings.Contract.Actions;
+using Yue.Bookings.Contract.Commands;
 
 namespace Yue.Bookings.Model.Write
 {
@@ -12,6 +12,6 @@ namespace Yue.Bookings.Model.Write
         Booking GetForUpdate(int bookingId);
         bool Add(Booking booking);
         bool Update(Booking booking);
-        bool AddAction(BookingActionBase action);
+        bool AddAction(BookingCommandBase action);
     }
 }

@@ -140,6 +140,10 @@
       <Project>{0161cd61-4221-47c3-9567-1695c06de101}</Project>
       <Name>Grit.Sequence</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Yue.Bookings.ContractFS\Yue.Bookings.ContractFS.fsproj">
+      <Project>{f790a30b-68b2-40d2-bd33-3499078ec2ea}</Project>
+      <Name>Yue.Bookings.ContractFS</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Yue.Bookings.Contract\Yue.Bookings.Contract.csproj">
       <Project>{c904450f-f057-4f44-b7a0-e7227ccb3869}</Project>
       <Name>Yue.Bookings.Contract</Name>

@@ -5,12 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Yue.Bookings.Contract;
-using Yue.Bookings.Contract.Actions;
+using Yue.Bookings.Contract.Commands;
 using Yue.Common.Contract;
 
 namespace Yue.Bookings.Repository.Model
 {
-    public class BookingActionPM : BookingActionBase
+    public class BookingActionPM : BookingCommandBase
     {
         public TimeSlot TimeSlot { get; private set; }
         public DateTime? From { get; private set; }
@@ -21,7 +21,7 @@ namespace Yue.Bookings.Repository.Model
         static BookingActionPM()
         {
             _bookingActionTypes = new Dictionary<BookingCommand, Type>();
-            var ns = typeof(BookingActionBase).Namespace;
+            var ns = typeof(BookingCommandBase).Namespace;
             foreach (BookingCommand value in Enum.GetValues(typeof(BookingCommand)))
             {
                 string name = Enum.GetName(typeof(BookingCommand), value);
@@ -35,17 +35,17 @@ namespace Yue.Bookings.Repository.Model
             }
         }
 
-        public static BookingActionBase FromPM(BookingActionPM actionPM)
+        public static BookingCommandBase FromPM(BookingActionPM actionPM)
         {
             if(actionPM.From != null && actionPM.To != null)
             {
                 actionPM.TimeSlot = (new TimeSlot(actionPM.From.Value, actionPM.To.Value));
             }
             
-            return (Mapper.Map(actionPM, typeof(BookingActionPM), _bookingActionTypes[actionPM.Type]) as BookingActionBase);
+            return (Mapper.Map(actionPM, typeof(BookingActionPM), _bookingActionTypes[actionPM.Type]) as BookingCommandBase);
         }
 
-        public static BookingActionPM ToPM(BookingActionBase action)
+        public static BookingActionPM ToPM(BookingCommandBase action)
         {
             BookingActionPM pm = Mapper.Map<BookingActionPM>(action);
             if (pm.TimeSlot != null)

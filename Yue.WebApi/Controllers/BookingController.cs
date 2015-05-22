@@ -15,11 +15,11 @@ using Yue.Bookings.View.Model;
 using Yue.Common.Contract;
 /*
 curl --data "message=hello&from=2015-01-01T01:01:01&to=2015-01-01T02:01:01&resource=1" "http://localhost:64777/api/bookings"
-curl "http://localhost:64777/api/bookings/25"
-curl -X PATCH --data "message=hello" "http://localhost:64777/api/bookings/25/actions/confirm"
-curl -X PATCH --data "message=hello" "http://localhost:64777/api/bookings/25/actions/message"
-curl -X PATCH --data "message=hello&from=2015-01-01T01:01:01&to=2015-01-01T02:01:01" "http://localhost:64777/api/bookings/25/actions/time"
-curl -X DELETE --data "message=hello" "http://localhost:64777/api/bookings/25"
+curl "http://localhost:64777/api/bookings/36"
+curl -X PATCH --data "message=hello" "http://localhost:64777/api/bookings/36/actions/confirm"
+curl -X PATCH --data "message=hello" "http://localhost:64777/api/bookings/36/actions/message"
+curl -X PATCH --data "message=hello&from=2015-01-01T01:01:01&to=2015-01-01T02:01:01" "http://localhost:64777/api/bookings/36/actions/time"
+curl -X DELETE --data "message=hello" "http://localhost:64777/api/bookings/36"
 curl "http://localhost:64777/api/bookings?resource=1&from=2015-01-01T01:01:01&to=2015-01-01T02:01:01"
 curl "http://localhost:64777/api/bookings?user=0&from=2015-01-01T01:01:01&to=2015-01-01T02:01:01"
 */
@@ -76,9 +76,9 @@ namespace Yue.WebApi.Controllers
                 vm.Resource,
                 _sequenceService.Next(Sequence.Booking),
                 vm.Message,
-                userId,
+                 new TimeSlot(vm.From, vm.To),
                 DateTime.Now,
-                new TimeSlot(vm.From, vm.To));
+                userId);
             ActionResponse actionResponse = await _actionBus.SendAsync<BookingActionBase, SubscribeResource>(action);
 
             var booking = _bookingService.Get(action.BookingId);
@@ -107,8 +107,8 @@ namespace Yue.WebApi.Controllers
                         booking.ResourceId,
                         booking.BookingId,
                         vm.Message,
-                        userId,
-                        DateTime.Now);
+                        DateTime.Now,
+                        userId);
             ActionResponse actionResponse = await _actionBus.SendAsync<BookingActionBase, CancelSubscriotion>(cs);
             return Ok(ActionResponseVM.ToVM(actionResponse));
         }
@@ -133,8 +133,8 @@ namespace Yue.WebApi.Controllers
                     booking.ResourceId,
                     booking.BookingId,
                     vm.Message,
-                    userId,
-                    DateTime.Now);
+                    DateTime.Now,
+                    userId);
             ActionResponse actionResponse = await _actionBus.SendAsync<BookingActionBase, ConfirmSubscription>(cs);
             return Ok(ActionResponseVM.ToVM(actionResponse));
         }
@@ -158,8 +158,8 @@ namespace Yue.WebApi.Controllers
                     booking.ResourceId,
                     booking.BookingId,
                     vm.Message,
-                    userId,
-                    DateTime.Now);
+                    DateTime.Now,
+                    userId);
             ActionResponse actionResponse = await _actionBus.SendAsync<BookingActionBase, LeaveAMessage>(cs);
             return Ok(ActionResponseVM.ToVM(actionResponse));
         }
@@ -184,9 +184,9 @@ namespace Yue.WebApi.Controllers
                     booking.ResourceId,
                     booking.BookingId,
                     vm.Message,
-                    userId,
+                    new TimeSlot(vm.From, vm.To),
                     DateTime.Now,
-                    new TimeSlot(vm.From, vm.To));
+                    userId);
             ActionResponse actionResponse = await _actionBus.SendAsync<BookingActionBase, ChangeTime>(cs);
             return Ok(ActionResponseVM.ToVM(actionResponse));
         }

@@ -50,6 +50,10 @@
       <Project>{82f70b71-71ab-49b1-9e3f-5197abbfd1aa}</Project>
       <Name>ACE.Contracts</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Yue.Bookings.ContractFS\Yue.Bookings.ContractFS.fsproj">
+      <Project>{f790a30b-68b2-40d2-bd33-3499078ec2ea}</Project>
+      <Name>Yue.Bookings.ContractFS</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Yue.Bookings.Contract\Yue.Bookings.Contract.csproj">
       <Project>{c904450f-f057-4f44-b7a0-e7227ccb3869}</Project>
       <Name>Yue.Bookings.Contract</Name>

@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Yue.Bookings.Contract;
 using Yue.Bookings.Contract.Actions;
+using Yue.Bookings.Contract.Commands;
 
 namespace Yue.Bookings.Model
 {
@@ -26,7 +27,7 @@ namespace Yue.Bookings.Model
         static BookingVM()
         {
             Mapper.CreateMap<Booking, BookingVM>();
-            Mapper.CreateMap<BookingActionBase, BookingActionVM>();
+            Mapper.CreateMap<BookingCommandBase, BookingActionVM>();
         }
 
         public static BookingVM ToVM(Booking booking)

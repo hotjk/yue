@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Yue.Bookings.Contract.Actions
+namespace Yue.Bookings.Contract.Commands
 {
-    public class BookingActionBase : ACE.IAction
+    public class BookingCommandBase
     {
-        public BookingActionBase() { }
-        public BookingActionBase(int actionId, int resourceId, int bookingId, BookingCommand type, string message, int createBy, DateTime createAt)
+        public BookingCommandBase() { }
+        public BookingCommandBase(int actionId, int resourceId, int bookingId, BookingCommand type, string message, int createBy, DateTime createAt)
         {
             this.ActionId = actionId;
             this.ResourceId = resourceId;

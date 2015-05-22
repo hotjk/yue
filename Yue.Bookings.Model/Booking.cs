@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Yue.Bookings.Contract;
-using Yue.Bookings.Contract.Actions;
+using Yue.Bookings.Contract.Commands;
 using Yue.Common.Contract;
 
 namespace Yue.Bookings.Model
@@ -23,7 +23,7 @@ namespace Yue.Bookings.Model
         public int UpdateBy { get; private set; }
         public DateTime UpdateAt { get; private set; }
 
-        public IEnumerable<BookingActionBase> Actions { get; protected set; }
+        public IEnumerable<BookingCommandBase> Actions { get; protected set; }
 
         private static StateMachine<BookingState, BookingCommand> _stateMachine;
         
@@ -55,7 +55,7 @@ namespace Yue.Bookings.Model
             return _stateMachine.Instance(this.State).CanFire(bookingAction);
         }
 
-        public void EnsoureAndUpdateState(BookingActionBase action)
+        public void EnsoureAndUpdateState(BookingCommandBase action)
         {
             var instance = _stateMachine.Instance(this.State);
             if (!instance.Fire(action.Type))
