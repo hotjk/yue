@@ -191,6 +191,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\ApiAuthorizeAttribute.cs" />
+    <Compile Include="App_Start\MockAuthenticator.cs" />
     <Compile Include="App_Start\Authenticator.cs" />
     <Compile Include="App_Start\BootStrapper.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />

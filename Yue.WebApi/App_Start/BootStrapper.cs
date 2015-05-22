@@ -45,7 +45,8 @@ namespace Yue.WebApi
                 .WithConstructorArgument(Constants.ParamActionShouldDistributeToExternalQueue, true);
 
             Container.Bind<ICookieTicketConfig>().ToConstant(CookieTicketConfig.Default());
-            Container.Bind<IAuthenticator>().To<Authenticator>().InThreadScope();
+            Container.Bind<IAuthenticator>().To<Authenticator>().InSingletonScope();
+            //Container.Bind<IAuthenticator>().To<MockAuthenticator>().InSingletonScope().WithConstructorArgument("userId", 33);
         }
 
         private static void BindBusinessObjects()
