@@ -8,7 +8,6 @@ namespace Yue.Bookings.Contract.Commands
 {
     public class BookingCommandBase
     {
-        public BookingCommandBase() { }
         public BookingCommandBase(int actionId, int resourceId, int bookingId, BookingCommand type, string message, int createBy, DateTime createAt)
         {
             this.ActionId = actionId;

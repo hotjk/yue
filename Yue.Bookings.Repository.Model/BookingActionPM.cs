@@ -12,6 +12,9 @@ namespace Yue.Bookings.Repository.Model
 {
     public class BookingActionPM : BookingCommandBase
     {
+        public BookingActionPM(int actionId, int resourceId, int bookingId, BookingCommand type, string message, int createBy, DateTime createAt)
+            : base(actionId, resourceId, bookingId, type, message, createBy, createAt) { }
+
         public TimeSlot TimeSlot { get; private set; }
         public DateTime? From { get; private set; }
         public DateTime? To { get; private set; }
