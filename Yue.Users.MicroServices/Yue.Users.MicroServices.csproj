@@ -105,6 +105,10 @@
       <Project>{78e5da98-d805-49ff-997e-512bd61134c3}</Project>
       <Name>Yue.Users.Application</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Yue.Users.ContractFS\Yue.Users.ContractFS.fsproj">
+      <Project>{e095bab3-bf66-4042-aa4e-78d0d406136a}</Project>
+      <Name>Yue.Users.ContractFS</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Yue.Users.Contract\Yue.Users.Contract.csproj">
       <Project>{1e0e1aa1-4bd1-4c21-84f5-2778ece3b580}</Project>
       <Name>Yue.Users.Contract</Name>

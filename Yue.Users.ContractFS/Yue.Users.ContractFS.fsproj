@@ -42,7 +42,6 @@
     <Reference Include="System.Numerics" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Enum.fs" />
     <Compile Include="Actions.fs" />
     <Compile Include="Events.fs" />
   </ItemGroup>

@@ -42,7 +42,7 @@ using Yue.Users.View.Model;
  * curl -X POST --data "user=33&token=5f162f8d-009e-4d3a-8f6c-21b99deb1550" "http://localhost:64777/api/users/activate" -i
  * 
  * Request Reset Password Token
- * curl -X POST --data "email=zhongwx@gmail.com" "http://localhost:64777/api/users/request_reset_password" -i 
+ * curl -X POST --data "email=zhongwx@gmail.com" "http://localhost:64777/api/password/actions/token" -i 
  * 
  * Verify Reset Password Token
  * curl -X POST --data "user=33&token=ee90cff6-b35d-4b32-8346-8a22ce868eea" "http://localhost:64777/api/users/verify_reset_password" -i 

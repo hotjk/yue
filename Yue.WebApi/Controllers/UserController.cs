@@ -24,7 +24,7 @@ using Yue.Users.View.Model;
  * curl --data "email=zhongwx@gmail.com&name=weixiao&password=pwd" "http://localhost:64777/api/users/register" -i
  * 
  * Login
- * curl --data "email=zhongwx@gmail.com&password=pwd" "http://localhost:64777/api/users/login" -i
+ * curl --data "email=zhongwx@gmail.com&password=pwd" "http://localhost:64777/api/users/actions/login" -i
  * 
  * Get
  * curl "http://localhost:64777/api/users" -i --cookie ".auth=VlKks%252FpLOPteEbgKotr72EiyKvgwi%252F3N1cEMAv9jZBIUjxLwgvohxvQP4IarZ5TU2Iwnh%252BdS2sgsVZpTr8eV3Q%253D%253D;"
@@ -128,7 +128,7 @@ namespace Yue.WebApi.Controllers
             }
 
             bool match = _userSecurityService.VerifyPassword(user.UserId, vm.Password);
-            EventBus.FlushAnEvent(new UserPasswordVerified(user.UserId, match, DateTime.Now, user.UserId));
+            EventBus.FlushAnEvent(new UserPasswordVerified(user.UserId, DateTime.Now, user.UserId, match));
 
             if (!match)
             {
