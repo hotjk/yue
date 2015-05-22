@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Yue.Common.Contract;
 using Yue.Users.Contract;
-using Yue.Users.Contract.Commands;
+using Yue.Users.Model.Commands;
 
 namespace Yue.Users.Model
 {

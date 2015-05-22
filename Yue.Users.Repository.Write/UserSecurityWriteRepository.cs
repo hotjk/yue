@@ -8,7 +8,7 @@ using Yue.Common.Repository;
 using Yue.Users.Model;
 using Yue.Users.Model.Write;
 using Dapper;
-using Yue.Users.Contract.Commands;
+using Yue.Users.Model.Commands;
 using Yue.Users.Repository.Model;
 
 namespace Yue.Users.Repository.Write

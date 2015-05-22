@@ -39,18 +39,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Commands\BookingCommandBase.cs" />
-    <Compile Include="Commands\CancelSubscriotion.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Commands\ChangeTime.cs" />
-    <Compile Include="Commands\ConfirmSubscription.cs" />
-    <Compile Include="Commands\LeaveAMessage.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Commands\SubscribeResource.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Enum\BookingCommand.cs" />
     <Compile Include="Enum\BookingState.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

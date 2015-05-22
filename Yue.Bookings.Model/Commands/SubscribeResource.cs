@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Yue.Bookings.Contract;
 
-namespace Yue.Bookings.Contract.Commands
+namespace Yue.Bookings.Model.Commands
 {
     public class SubscribeResource : BookingCommandBase, ACE.ICommand
     {

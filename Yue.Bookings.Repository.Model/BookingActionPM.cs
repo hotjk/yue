@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Yue.Bookings.Contract;
-using Yue.Bookings.Contract.Commands;
+using Yue.Bookings.Model.Commands;
 using Yue.Common.Contract;
 
 namespace Yue.Bookings.Repository.Model
@@ -32,8 +32,8 @@ namespace Yue.Bookings.Repository.Model
             foreach (BookingCommand value in Enum.GetValues(typeof(BookingCommand)))
             {
                 string name = Enum.GetName(typeof(BookingCommand), value);
-                // Assumed that BookingActionBase and concrete class in the same directory. 
-                _bookingActionTypes.Add(value, typeof(BookingCommand).Assembly.GetType(ns + "." + name));
+                // Assumed that BookingCommandBase and concrete class in the same directory. 
+                _bookingActionTypes.Add(value, typeof(BookingCommandBase).Assembly.GetType(ns + "." + name));
             }
             foreach (var value in _bookingActionTypes.Values)
             {

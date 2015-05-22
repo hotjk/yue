@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Yue.Users.Contract;
 
-namespace Yue.Users.Contract.Commands
+namespace Yue.Users.Model.Commands
 {
     public class Activate : TokenCommandBase
     {

@@ -39,6 +39,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\UserSecurity\Activate.cs" />
+    <Compile Include="Commands\UserSecurity\CancelResetPasswordToken.cs" />
+    <Compile Include="Commands\UserSecurity\ChangePassword.cs" />
+    <Compile Include="Commands\UserSecurity\CreateUserSecurity.cs" />
+    <Compile Include="Commands\UserSecurity\PasswordCommandBase.cs" />
+    <Compile Include="Commands\UserSecurity\RequestActivateToken.cs" />
+    <Compile Include="Commands\UserSecurity\RequestResetPasswordToken.cs" />
+    <Compile Include="Commands\UserSecurity\ResetPassword.cs" />
+    <Compile Include="Commands\UserSecurity\TokenCommandBase.cs" />
+    <Compile Include="Commands\UserSecurity\UserSecurityCommandBase.cs" />
+    <Compile Include="Commands\UserSecurity\VerifyResetPasswordToken.cs" />
+    <Compile Include="Commands\User\CreateUser.cs" />
+    <Compile Include="Commands\User\UserCommandBase.cs" />
     <Compile Include="User\IUserRepository.cs" />
     <Compile Include="UserSecurity\IUserSecurityRepository.cs" />
     <Compile Include="UserSecurity\IUserSecurityService.cs" />
@@ -74,6 +87,9 @@
       <Project>{1e0e1aa1-4bd1-4c21-84f5-2778ece3b580}</Project>
       <Name>Yue.Users.Contract</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Commands\ClassDiagram1.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

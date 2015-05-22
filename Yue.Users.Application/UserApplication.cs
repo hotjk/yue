@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Yue.Common.Contract;
 using Yue.Users.Contract.Actions;
-using Yue.Users.Contract.Commands;
+using Yue.Users.Model.Commands;
 using Yue.Users.Model;
 
 namespace Yue.Users.Application
@@ -61,7 +61,7 @@ namespace Yue.Users.Application
         {
             using (UnitOfWork unitOfwork = new UnitOfWork(_eventBus))
             {
-                Yue.Users.Contract.Commands.ChangePassword cmd = new Contract.Commands.ChangePassword
+                Yue.Users.Model.Commands.ChangePassword cmd = new Model.Commands.ChangePassword
                 (action.UserId, action.PasswordHash, action.CreateAt, action.CreateBy);
                 _commandBus.Send(cmd);
 
@@ -75,7 +75,7 @@ namespace Yue.Users.Application
         {
             using (UnitOfWork unitOfwork = new UnitOfWork(_eventBus))
             {
-                Yue.Users.Contract.Commands.RequestActivateToken cmd = new Contract.Commands.RequestActivateToken
+                Yue.Users.Model.Commands.RequestActivateToken cmd = new Model.Commands.RequestActivateToken
                 (action.UserId, action.Token, action.CreateAt, action.CreateBy);
                 _commandBus.Send(cmd);
 
@@ -87,7 +87,7 @@ namespace Yue.Users.Application
         {
             using (UnitOfWork unitOfwork = new UnitOfWork(_eventBus))
             {
-                Yue.Users.Contract.Commands.Activate cmd = new Contract.Commands.Activate
+                Yue.Users.Model.Commands.Activate cmd = new Model.Commands.Activate
                 (action.UserId, action.Token, action.CreateAt, action.CreateBy);
                 _commandBus.Send(cmd);
 
@@ -99,7 +99,7 @@ namespace Yue.Users.Application
         {
             using (UnitOfWork unitOfwork = new UnitOfWork(_eventBus))
             {
-                Yue.Users.Contract.Commands.RequestResetPasswordToken cmd = new Contract.Commands.RequestResetPasswordToken
+                Yue.Users.Model.Commands.RequestResetPasswordToken cmd = new Model.Commands.RequestResetPasswordToken
                 (action.UserId, action.Token, action.CreateAt, action.CreateBy);
                 _commandBus.Send(cmd);
 
@@ -111,7 +111,7 @@ namespace Yue.Users.Application
         {
             using (UnitOfWork unitOfwork = new UnitOfWork(_eventBus))
             {
-                Yue.Users.Contract.Commands.CancelResetPasswordToken cmd = new Contract.Commands.CancelResetPasswordToken
+                Yue.Users.Model.Commands.CancelResetPasswordToken cmd = new Model.Commands.CancelResetPasswordToken
                 (action.UserId, action.CreateAt, action.CreateBy, action.Token);
                 _commandBus.Send(cmd);
 
@@ -123,7 +123,7 @@ namespace Yue.Users.Application
         {
             using (UnitOfWork unitOfwork = new UnitOfWork(_eventBus))
             {
-                Yue.Users.Contract.Commands.ResetPassword cmd = new Contract.Commands.ResetPassword
+                Yue.Users.Model.Commands.ResetPassword cmd = new Model.Commands.ResetPassword
                 (action.UserId, action.PasswordHash, action.Token, action.CreateAt, action.CreateBy);
                 _commandBus.Send(cmd);
 
@@ -135,7 +135,7 @@ namespace Yue.Users.Application
         {
             using (UnitOfWork unitOfwork = new UnitOfWork(_eventBus))
             {
-                Yue.Users.Contract.Commands.VerifyResetPasswordToken cmd = new Contract.Commands.VerifyResetPasswordToken
+                Yue.Users.Model.Commands.VerifyResetPasswordToken cmd = new Model.Commands.VerifyResetPasswordToken
                 (action.UserId, action.Token, action.CreateAt, action.CreateBy);
                 _commandBus.Send(cmd);
 

@@ -39,29 +39,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Commands\UserSecurity\Activate.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Commands\UserSecurity\RequestResetPasswordToken.cs" />
-    <Compile Include="Commands\UserSecurity\CancelResetPasswordToken.cs" />
-    <Compile Include="Commands\UserSecurity\ResetPassword.cs" />
-    <Compile Include="Commands\UserSecurity\ChangePassword.cs" />
-    <Compile Include="Commands\UserSecurity\TokenCommandBase.cs" />
-    <Compile Include="Commands\UserSecurity\RequestActivateToken.cs" />
-    <Compile Include="Commands\UserSecurity\PasswordCommandBase.cs" />
-    <Compile Include="Commands\UserSecurity\UserSecurityCommandBase.cs" />
-    <Compile Include="Commands\UserSecurity\VerifyResetPasswordToken.cs" />
-    <Compile Include="Commands\User\CreateUser.cs" />
-    <Compile Include="Commands\UserSecurity\CreateUserSecurity.cs" />
-    <Compile Include="Commands\User\UserCommandBase.cs" />
     <Compile Include="Enum\UserSecurityCommand.cs" />
     <Compile Include="Enum\UserCommand.cs" />
     <Compile Include="Enum\UserRole.cs" />
     <Compile Include="Enum\UserState.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Commands\ClassDiagram1.cd" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\ace\ACE.Contracts\ACE.Contracts.csproj">

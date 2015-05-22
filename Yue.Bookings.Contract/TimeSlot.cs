@@ -9,7 +9,6 @@ namespace Yue.Bookings.Contract
 {
     public class TimeSlot
     {
-        public TimeSlot() { }
         public TimeSlot(DateTime from, DateTime to)
         {
             if (from > to)
@@ -20,10 +19,10 @@ namespace Yue.Bookings.Contract
             this.To = to;
         }
 
-        public TimeSlot(DateTime from, int minutes)
+        // Json.Net require only one constructor with parameters
+        public static TimeSlot Create(DateTime from, int minutes)
         {
-            this.From = from;
-            this.To = this.From.AddMinutes(minutes);
+            return new TimeSlot(from, from.AddMinutes(minutes));
         }
 
         public TimeSlot Clone()

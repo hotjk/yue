@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Yue.Common.Contract;
-using Yue.Users.Contract.Commands;
+using Yue.Users.Model.Commands;
 using Yue.Users.Contract.Events;
 
 namespace Yue.Users.Model.Write

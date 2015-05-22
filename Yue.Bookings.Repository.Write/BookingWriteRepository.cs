@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Yue.Bookings.Contract;
-using Yue.Bookings.Contract.Commands;
+using Yue.Bookings.Model.Commands;
 using Yue.Bookings.Model;
 using Yue.Common.Repository;
 using Dapper;

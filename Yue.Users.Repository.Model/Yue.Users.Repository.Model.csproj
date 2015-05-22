@@ -60,6 +60,10 @@
       <Project>{1e0e1aa1-4bd1-4c21-84f5-2778ece3b580}</Project>
       <Name>Yue.Users.Contract</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Yue.Users.Model\Yue.Users.Model.csproj">
+      <Project>{cb72e1fb-035d-4bf4-8492-4897869ec2eb}</Project>
+      <Name>Yue.Users.Model</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets" Condition="Exists('..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets')" />

@@ -41,8 +41,7 @@ namespace Yue.WebApi
             Container.Bind<IEventBus>().To<EventBus>().InThreadScope();
             
             // ActionBus must be thread scope, single thread bind to use single anonymous RabbitMQ queue for reply.
-            Container.Bind<IActionBus>().To<ActionBus>().InThreadScope()
-                .WithConstructorArgument(Constants.ParamActionShouldDistributeToExternalQueue, true);
+            Container.Bind<IActionBus>().To<ActionBus>().InThreadScope();
 
             Container.Bind<ICookieTicketConfig>().ToConstant(CookieTicketConfig.Default());
             Container.Bind<IAuthenticator>().To<Authenticator>().InSingletonScope();
