@@ -83,11 +83,11 @@ namespace Yue.Users.Application
             }
         }
 
-        public void Invoke(Activate action)
+        public void Invoke(Yue.Users.Contract.Actions.Activate action)
         {
             using (UnitOfWork unitOfwork = new UnitOfWork(_eventBus))
             {
-                Yue.Users.Contract.Commands.ActivateUser cmd = new Contract.Commands.ActivateUser
+                Yue.Users.Contract.Commands.Activate cmd = new Contract.Commands.Activate
                 (action.UserId, action.Token, action.CreateAt, action.CreateBy);
                 _commandBus.Send(cmd);
 

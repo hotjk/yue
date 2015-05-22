@@ -13,7 +13,7 @@ namespace Yue.Users.Repository.Model
     {
         static UserSecurityLogPM()
         {
-            Mapper.CreateMap<ActivateUser, UserSecurityLogPM>();
+            Mapper.CreateMap<Activate, UserSecurityLogPM>();
             Mapper.CreateMap<CancelResetPasswordToken, UserSecurityLogPM>();
             Mapper.CreateMap<ChangePassword, UserSecurityLogPM>();
             Mapper.CreateMap<CreateUserSecurity, UserSecurityLogPM>();

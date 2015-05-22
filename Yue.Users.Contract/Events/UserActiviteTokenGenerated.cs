@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Yue.Users.Contract.Events
 {
-    public class UserActiviteTokenGenerated : ACE.Event
+    public class UserActiviteTokenGenerated : ACE.IEvent
     {
         public UserActiviteTokenGenerated(int userId, string token, DateTime changeAt, int changeBy)
         {

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Yue.Users.Contract.Events
 {
-    public class UserResetPasswordTokenGenerated : ACE.Event
+    public class UserResetPasswordTokenGenerated : ACE.IEvent
     {
         public UserResetPasswordTokenGenerated(int userId, string token, DateTime changeAt, int changeBy)
         {

@@ -61,7 +61,7 @@ namespace Yue.Bookings.Model.Write
             _repository.Add(booking);
             _repository.AddAction(command);
 
-            _eventBus.Publish(AutoMapper.Mapper.Map<BookingIsCreated>(booking).ToExternalQueue());
+            _eventBus.Publish(AutoMapper.Mapper.Map<BookingIsCreated>(booking));
         }
 
         public void Execute(ConfirmSubscription command)
@@ -75,7 +75,7 @@ namespace Yue.Bookings.Model.Write
 
             var evt = AutoMapper.Mapper.Map<BookingStateChanged>(booking);;
             evt.OrignalState = orignalState;
-            _eventBus.Publish(evt.ToExternalQueue());
+            _eventBus.Publish(evt);
         }
 
         public void Execute(CancelSubscriotion command)
@@ -89,7 +89,7 @@ namespace Yue.Bookings.Model.Write
 
             var evt = AutoMapper.Mapper.Map<BookingStateChanged>(booking);
             evt.OrignalState = orignalState;
-            _eventBus.Publish(evt.ToExternalQueue());
+            _eventBus.Publish(evt);
         }
 
         public void Execute(LeaveAMessage command)
@@ -112,7 +112,7 @@ namespace Yue.Bookings.Model.Write
 
             var evt = AutoMapper.Mapper.Map<BookingTimeChanged>(booking);
             evt.OrignalTimeSlot = orignalTimeSlot;
-            _eventBus.Publish(evt.ToExternalQueue());
+            _eventBus.Publish(evt);
         }
     }
 }

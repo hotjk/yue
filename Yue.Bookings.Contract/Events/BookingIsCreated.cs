@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Yue.Bookings.Contract.Events
 {
-    public class BookingIsCreated : ACE.Event
+    public class BookingIsCreated : ACE.IEvent
     {
         public int ResourceId { get; set; }
         public int BookingId { get; set; }

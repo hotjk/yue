@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Yue.Users.Contract.Events
 {
-    public class UserPasswordChanged : ACE.Event
+    public class UserPasswordChanged : ACE.IEvent
     {
         public UserPasswordChanged(int userId, DateTime changeAt, int changeBy)
         {

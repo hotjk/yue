@@ -15,7 +15,7 @@ namespace Yue.Users.Model.Write
         ICommandHandler<CreateUserSecurity>,
         ICommandHandler<ChangePassword>,
         ICommandHandler<RequestActivateToken>,
-        ICommandHandler<ActivateUser>,
+        ICommandHandler<Activate>,
         ICommandHandler<RequestResetPasswordToken>,
         ICommandHandler<VerifyResetPasswordToken>,
         ICommandHandler<CancelResetPasswordToken>,
@@ -54,7 +54,7 @@ namespace Yue.Users.Model.Write
             _userSecurityRepository.Log(command);
 
             UserPasswordChanged evt = new UserPasswordChanged(userSecurity.UserId, command.CreateAt, command.CreateBy);
-            _eventBus.Publish(evt.ToExternalQueue());
+            _eventBus.Publish(evt);
         }
 
         public void Execute(RequestActivateToken command)
@@ -70,7 +70,7 @@ namespace Yue.Users.Model.Write
             _userSecurityRepository.Log(command);
         }
 
-        public void Execute(ActivateUser command)
+        public void Execute(Activate command)
         {
             User user = _userRepository.GetForUpdate(command.UserId);
             user.EnsoureAndUpdateState(command);

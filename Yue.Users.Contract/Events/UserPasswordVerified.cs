@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Yue.Users.Contract.Events
 {
-    public class UserPasswordVerified : ACE.Event
+    public class UserPasswordVerified : ACE.IEvent
     {
         public UserPasswordVerified(int userId, bool match, DateTime verifyAt, int verifyBy)
         {

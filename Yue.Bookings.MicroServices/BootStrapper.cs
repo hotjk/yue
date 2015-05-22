@@ -50,9 +50,7 @@ namespace Yue.Bookings.MicroServices
                 .WithConstructorArgument(Constants.ParamEventAssmblies, new string[] { "Yue.Bookings.Contract" })
                 .WithConstructorArgument(Constants.ParamHandlerAssmblies, new string[] { "Yue.Bookings.Model.Write" });
             // EventBus must be thread scope, published events will be saved in thread EventBus._events, until Flush/Clear.
-            Container.Bind<IEventBus>().To<EventBus>()
-                .InThreadScope()
-                .WithConstructorArgument(Constants.ParamEventDistributionOptions, ACE.Event.EventDistributionOptions.Queue);
+            Container.Bind<IEventBus>().To<EventBus>().InThreadScope();
             Container.Bind<IActionHandlerFactory>().To<ActionHandlerFactory>()
                 .InSingletonScope()
                 .WithConstructorArgument(Constants.ParamActionAssmblies, new string[] { "Yue.Bookings.Contract" })

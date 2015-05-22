@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Yue.Users.Contract.Actions
 {
-    public abstract class UserActionBase : ACE.Action
+    public abstract class UserActionBase : ACE.IAction
     {
         public UserActionBase(int userId, DateTime createAt, int createBy)
         {

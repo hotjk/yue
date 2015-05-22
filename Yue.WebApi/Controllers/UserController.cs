@@ -1,5 +1,5 @@
 ﻿using ACE;
-using ACE.Actions;
+using ACE.IActions;
 using Grit.Sequence;
 using Grit.Utility.Authentication;
 using Grit.Utility.Security;
@@ -88,7 +88,7 @@ namespace Yue.WebApi.Controllers
         }
 
         [HttpPost]
-        [Route("register")]
+        [Route("")]
         public async Task<IHttpActionResult> Register(RegisterVM vm)
         {
             User user = _userService.UserByEmail(vm.Email);
@@ -113,7 +113,7 @@ namespace Yue.WebApi.Controllers
         }
 
         [HttpPost]
-        [Route("login")]
+        [Route("actions/login")]
         public IHttpActionResult Login(LoginVM vm)
         {
             User user = _userService.UserByEmail(vm.Email);
@@ -128,7 +128,7 @@ namespace Yue.WebApi.Controllers
             }
 
             bool match = _userSecurityService.VerifyPassword(user.UserId, vm.Password);
-            EventBus.FlushAnEvent(new UserPasswordVerified(user.UserId, match, DateTime.Now, user.UserId).ToExternalQueue());
+            EventBus.FlushAnEvent(new UserPasswordVerified(user.UserId, match, DateTime.Now, user.UserId));
 
             if (!match)
             {
@@ -142,7 +142,7 @@ namespace Yue.WebApi.Controllers
         }
 
         [HttpPost]
-        [Route("signout")]
+        [Route("actions/signout")]
         public IHttpActionResult Signout()
         {
             HttpResponseMessage msg = Request.CreateResponse(HttpStatusCode.OK);
@@ -152,8 +152,8 @@ namespace Yue.WebApi.Controllers
             return ResponseMessage(msg);
         }
 
-        [HttpGet]
-        [Route("activate")]
+        [HttpPost]
+        [Route("actions/activate")]
         [ApiAuthorize]
         public async Task<IHttpActionResult> Activite()
         {
@@ -169,7 +169,7 @@ namespace Yue.WebApi.Controllers
         }
 
         [HttpPost]
-        [Route("activate")]
+        [Route("actions/activate")]
         public async Task<IHttpActionResult> Activite(ActivateVM vm)
         {
             User user = _userService.Get(vm.User);
@@ -183,82 +183,6 @@ namespace Yue.WebApi.Controllers
             }
             Activate action = new Activate(user.UserId, DateTime.Now, user.UserId, vm.Token);
             ActionResponse actionResponse = await ActionBus.SendAsync<UserActionBase, Activate>(action);
-            return Ok(ActionResponseVM.ToVM(actionResponse));
-        }
-
-        [HttpPost]
-        [Route("request_reset_password")]
-        public async Task<IHttpActionResult> RequestResetPasswordToken(RequestResetPasswordVM vm)
-        {
-            User user = _userService.UserByEmail(vm.Email);
-            if (!user.EnsoureState(Users.Contract.UserSecurityCommand.RequestResetPasswordToken))
-            {
-                return Conflict();
-            }
-            RequestResetPasswordToken action = new RequestResetPasswordToken(
-                user.UserId, DateTime.Now, user.UserId, Guid.NewGuid().ToString());
-            ActionResponse actionResponse = await ActionBus.SendAsync<UserActionBase, RequestResetPasswordToken>(action);
-            return Ok(ActionResponseVM.ToVM(actionResponse));
-        }
-
-        [HttpPost]
-        [Route("verify_reset_password")]
-        public async Task<IHttpActionResult> VerifyResetPasswordToken(VerifyResetPasswordTokenVM vm)
-        {
-            User user = _userService.Get(vm.User);
-            if (!user.EnsoureState(Users.Contract.UserSecurityCommand.VerifyResetPasswordToken))
-            {
-                return Conflict();
-            }
-            VerifyResetPasswordToken action = new VerifyResetPasswordToken(
-                user.UserId, DateTime.Now, user.UserId, vm.Token);
-            ActionResponse actionResponse = await ActionBus.SendAsync<UserActionBase, VerifyResetPasswordToken>(action);
-            return Ok(ActionResponseVM.ToVM(actionResponse));
-        }
-
-        [HttpPost]
-        [Route("cancel_reset_password")]
-        public async Task<IHttpActionResult> CancelResetPasswordToken(VerifyResetPasswordTokenVM vm)
-        {
-            User user = _userService.Get(vm.User);
-            if (!user.EnsoureState(Users.Contract.UserSecurityCommand.CancelResetPasswordToken))
-            {
-                return Conflict();
-            }
-            CancelResetPasswordToken action = new CancelResetPasswordToken(
-                user.UserId, DateTime.Now, user.UserId, vm.Token);
-            ActionResponse actionResponse = await ActionBus.SendAsync<UserActionBase, CancelResetPasswordToken>(action);
-            return Ok(ActionResponseVM.ToVM(actionResponse));
-        }
-
-        [HttpPost]
-        [Route("reset_password")]
-        public async Task<IHttpActionResult> ResetPassword(ResetPasswordVM vm)
-        {
-            User user = _userService.Get(vm.User);
-            if (!user.EnsoureState(Users.Contract.UserSecurityCommand.ResetPassword))
-            {
-                return Conflict();
-            }
-            ResetPassword action = new ResetPassword(
-            user.UserId, DateTime.Now, user.UserId, _userSecurityService.PasswordHash(user.UserId, vm.Password), vm.Token);
-            ActionResponse actionResponse = await ActionBus.SendAsync<UserActionBase, ResetPassword>(action);
-            return Ok(ActionResponseVM.ToVM(actionResponse));
-        }
-
-        [HttpPost]
-        [Route("change_password")]
-        [ApiAuthorize]
-        public async Task<IHttpActionResult> ChangePassword(ChangePasswordVM vm)
-        {
-            bool match = _userSecurityService.VerifyPassword(UserId.Value, vm.Password);
-            if (!match)
-            {
-                return BadRequest();
-            }
-            ChangePassword action = new ChangePassword(
-                UserId.Value,DateTime.Now,UserId.Value, _userSecurityService.PasswordHash(UserId.Value, vm.NewPassword));
-            ActionResponse actionResponse = await ActionBus.SendAsync<UserActionBase, ChangePassword>(action);
             return Ok(ActionResponseVM.ToVM(actionResponse));
         }
     }
