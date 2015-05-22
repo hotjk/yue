@@ -48,7 +48,7 @@
   <ItemGroup>
     <Compile Include="Response\ActionResponseVM.cs" />
     <Compile Include="Response\BookingVM.cs" />
-    <Compile Include="Response\BookingActionVM.cs" />
+    <Compile Include="Response\BookingActivityVM.cs" />
     <Compile Include="Request\LeaveAMessageVM.cs" />
     <Compile Include="Request\ChangeTimeVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -23,8 +23,8 @@ namespace Yue.Bookings.Repository.Write
         private static readonly string[] _bookingUpdateColumns = new string[] {
             "State", "From", "To", "Minutes", "UpdateBy", "UpdateAt" };
 
-        private static readonly string[] _actionColumns = new string[] {
-"ActionId", "ResourceId", "BookingId", "CreateBy", "CreateAt", "Type", "From", "To", "Minutes", "Message" };
+        private static readonly string[] _activityColumns = new string[] {
+"ActivityId", "ResourceId", "BookingId", "CreateBy", "CreateAt", "Type", "From", "To", "Minutes", "Message" };
 
         public Booking GetForUpdate(int bookingId)
         {
@@ -62,15 +62,15 @@ namespace Yue.Bookings.Repository.Write
             }
         }
 
-        public bool AddAction(BookingCommandBase action)
+        public bool AddAction(BookingCommandBase activity)
         {
             using (IDbConnection connection = OpenConnection())
             {
                 return 1 == connection.Execute(
-                    string.Format(@"INSERT INTO `booking_actions` ({0}) VALUES ({1});",
-                    SqlHelper.Columns(_actionColumns),
-                    SqlHelper.Params(_actionColumns)),
-                    BookingActionPM.ToPM(action));
+                    string.Format(@"INSERT INTO `booking_activities` ({0}) VALUES ({1});",
+                    SqlHelper.Columns(_activityColumns),
+                    SqlHelper.Params(_activityColumns)),
+                    BookingActivityPM.ToPM(activity));
             }
         }
     }

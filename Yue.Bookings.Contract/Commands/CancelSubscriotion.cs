@@ -8,7 +8,7 @@ namespace Yue.Bookings.Contract.Commands
 {
     public class CancelSubscriotion : BookingCommandBase, ACE.ICommand
     {
-        public CancelSubscriotion(int actionId, int resourceId, int bookingId, string message, int createBy, DateTime createAt)
-            : base(actionId, resourceId, bookingId, BookingCommand.CancelSubscriotion, message, createBy, createAt) { }
+        public CancelSubscriotion(int activityId, int resourceId, int bookingId, string message, int createBy, DateTime createAt)
+            : base(activityId, resourceId, bookingId, BookingCommand.CancelSubscriotion, message, createBy, createAt) { }
     }
 }

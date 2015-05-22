@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Yue.Bookings.Contract.Actions
 {
-    public class BookingActionVM
+    public class BookingActivityVM
     {
-        public int ActionId { get; private set; }
+        public int ActivityId { get; private set; }
         public int ResourceId { get; private set; }
         public int BookingId { get; private set; }
         public BookingCommand Type { get; protected set; }

@@ -14,11 +14,11 @@ using Yue.Bookings.View.Model;
 using Yue.Common.Contract;
 /*
 curl --data "message=hello&from=2015-01-01T01:01:01&to=2015-01-01T02:01:01&resource=1" "http://localhost:64777/api/bookings"
-curl "http://localhost:64777/api/bookings/36"
-curl -X PATCH --data "message=hello" "http://localhost:64777/api/bookings/36/actions/confirm"
-curl -X PATCH --data "message=hello" "http://localhost:64777/api/bookings/36/actions/message"
-curl -X PATCH --data "message=hello&from=2015-01-01T01:01:01&to=2015-01-01T02:01:01" "http://localhost:64777/api/bookings/36/actions/time"
-curl -X DELETE --data "message=hello" "http://localhost:64777/api/bookings/36"
+curl "http://localhost:64777/api/bookings/43?activity=true"
+curl -X PATCH --data "message=hello" "http://localhost:64777/api/bookings/43/actions/confirm"
+curl -X PATCH --data "message=hello" "http://localhost:64777/api/bookings/43/actions/message"
+curl -X PATCH --data "message=hello&from=2015-01-01T01:01:01&to=2015-01-01T02:01:01" "http://localhost:64777/api/bookings/43/actions/time"
+curl -X DELETE --data "message=hello" "http://localhost:64777/api/bookings/43"
 curl "http://localhost:64777/api/bookings?resource=1&from=2015-01-01T01:01:01&to=2015-01-01T02:01:01"
 curl "http://localhost:64777/api/bookings?user=0&from=2015-01-01T01:01:01&to=2015-01-01T02:01:01"
 */
@@ -44,9 +44,9 @@ namespace Yue.WebApi.Controllers
 
         [HttpGet]
         [Route("{id}")]
-        public IHttpActionResult Get(int id, bool action=false)
+        public IHttpActionResult Get(int id, bool activity=false)
         {
-            Booking booking = _bookingService.Get(id, action);
+            Booking booking = _bookingService.Get(id, activity);
             return Ok(BookingVM.ToVM(booking));
         }
 

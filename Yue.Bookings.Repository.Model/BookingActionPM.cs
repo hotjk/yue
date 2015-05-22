@@ -10,18 +10,22 @@ using Yue.Common.Contract;
 
 namespace Yue.Bookings.Repository.Model
 {
-    public class BookingActionPM : BookingCommandBase
+    public class BookingActivityPM
     {
-        public BookingActionPM(int actionId, int resourceId, int bookingId, BookingCommand type, string message, int createBy, DateTime createAt)
-            : base(actionId, resourceId, bookingId, type, message, createBy, createAt) { }
-
+        public int ActivityId { get; private set; }
+        public int ResourceId { get; private set; }
+        public int BookingId { get; private set; }
+        public BookingCommand Type { get; protected set; }
+        public string Message { get; private set; }
+        public int CreateBy { get; private set; }
+        public DateTime CreateAt { get; private set; }
         public TimeSlot TimeSlot { get; private set; }
         public DateTime? From { get; private set; }
         public DateTime? To { get; private set; }
         public int? Minutes { get; private set; }
 
         private static IDictionary<BookingCommand, Type> _bookingActionTypes;
-        static BookingActionPM()
+        static BookingActivityPM()
         {
             _bookingActionTypes = new Dictionary<BookingCommand, Type>();
             var ns = typeof(BookingCommandBase).Namespace;
@@ -33,24 +37,24 @@ namespace Yue.Bookings.Repository.Model
             }
             foreach (var value in _bookingActionTypes.Values)
             {
-                Mapper.CreateMap(typeof(BookingActionPM), value);
-                Mapper.CreateMap(value, typeof(BookingActionPM));
+                Mapper.CreateMap(typeof(BookingActivityPM), value);
+                Mapper.CreateMap(value, typeof(BookingActivityPM));
             }
         }
 
-        public static BookingCommandBase FromPM(BookingActionPM actionPM)
+        public static BookingCommandBase FromPM(BookingActivityPM actionPM)
         {
             if(actionPM.From != null && actionPM.To != null)
             {
                 actionPM.TimeSlot = (new TimeSlot(actionPM.From.Value, actionPM.To.Value));
             }
             
-            return (Mapper.Map(actionPM, typeof(BookingActionPM), _bookingActionTypes[actionPM.Type]) as BookingCommandBase);
+            return (Mapper.Map(actionPM, typeof(BookingActivityPM), _bookingActionTypes[actionPM.Type]) as BookingCommandBase);
         }
 
-        public static BookingActionPM ToPM(BookingCommandBase action)
+        public static BookingActivityPM ToPM(BookingCommandBase action)
         {
-            BookingActionPM pm = Mapper.Map<BookingActionPM>(action);
+            BookingActivityPM pm = Mapper.Map<BookingActivityPM>(action);
             if (pm.TimeSlot != null)
             {
                 pm.From = pm.TimeSlot.From;

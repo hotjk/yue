@@ -8,7 +8,7 @@ namespace Yue.Bookings.Contract.Commands
 {
     public class ConfirmSubscription : BookingCommandBase, ACE.ICommand
     {
-        public ConfirmSubscription(int actionId, int resourceId, int bookingId, string message, int createBy, DateTime createAt)
-            : base(actionId, resourceId, bookingId, BookingCommand.ConfirmSubscription, message, createBy, createAt) { }
+        public ConfirmSubscription(int activityId, int resourceId, int bookingId, string message, int createBy, DateTime createAt)
+            : base(activityId, resourceId, bookingId, BookingCommand.ConfirmSubscription, message, createBy, createAt) { }
     }
 }

@@ -22,20 +22,20 @@ namespace Yue.Bookings.Model
         public int UpdateBy { get; set; }
         public DateTime UpdateAt { get; set; }
 
-        public IEnumerable<BookingActionVM> Actions { get; set; }
+        public IEnumerable<BookingActivityVM> Activities { get; set; }
 
         static BookingVM()
         {
             Mapper.CreateMap<Booking, BookingVM>();
-            Mapper.CreateMap<BookingCommandBase, BookingActionVM>();
+            Mapper.CreateMap<BookingCommandBase, BookingActivityVM>();
         }
 
         public static BookingVM ToVM(Booking booking)
         {
             BookingVM vm = Mapper.Map<BookingVM>(booking);
-            if (!vm.Actions.Any())
+            if (!vm.Activities.Any())
             {
-                vm.Actions = null;
+                vm.Activities = null;
             }
             return vm;
         }
@@ -45,9 +45,9 @@ namespace Yue.Bookings.Model
             IEnumerable<BookingVM> vms = Mapper.Map<IEnumerable<BookingVM>>(bookings);
             foreach(var vm in vms)
             {
-                if (!vm.Actions.Any())
+                if (!vm.Activities.Any())
                 {
-                    vm.Actions = null;
+                    vm.Activities = null;
                 }
             }
             return vms;

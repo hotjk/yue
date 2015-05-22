@@ -8,8 +8,8 @@ namespace Yue.Bookings.Contract.Commands
 {
     public class ChangeTime : BookingCommandBase, ACE.ICommand
     {
-        public ChangeTime(int actionId, int resourceId, int bookingId, string message, int createBy, DateTime createAt, TimeSlot timeSlot)
-            : base(actionId,resourceId, bookingId, BookingCommand.ChangeTime, message, createBy, createAt)
+        public ChangeTime(int activityId, int resourceId, int bookingId, string message, int createBy, DateTime createAt, TimeSlot timeSlot)
+            : base(activityId,resourceId, bookingId, BookingCommand.ChangeTime, message, createBy, createAt)
         {
             this.TimeSlot = timeSlot;
         }

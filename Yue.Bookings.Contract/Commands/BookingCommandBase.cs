@@ -8,9 +8,9 @@ namespace Yue.Bookings.Contract.Commands
 {
     public class BookingCommandBase
     {
-        public BookingCommandBase(int actionId, int resourceId, int bookingId, BookingCommand type, string message, int createBy, DateTime createAt)
+        public BookingCommandBase(int activityId, int resourceId, int bookingId, BookingCommand type, string message, int createBy, DateTime createAt)
         {
-            this.ActionId = actionId;
+            this.ActivityId = activityId;
             this.ResourceId = resourceId;
             this.BookingId = bookingId;
             this.Type = type;
@@ -18,7 +18,7 @@ namespace Yue.Bookings.Contract.Commands
             this.CreateBy = createBy;
             this.CreateAt = createAt;
         }
-        public int ActionId { get; private set; }
+        public int ActivityId { get; private set; }
         public int ResourceId { get; private set; }
         public int BookingId { get; private set; }
         public BookingCommand Type { get; protected set; }

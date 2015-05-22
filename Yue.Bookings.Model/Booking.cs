@@ -23,7 +23,7 @@ namespace Yue.Bookings.Model
         public int UpdateBy { get; private set; }
         public DateTime UpdateAt { get; private set; }
 
-        public IEnumerable<BookingCommandBase> Actions { get; protected set; }
+        public IEnumerable<BookingCommandBase> Activities { get; protected set; }
 
         private static StateMachine<BookingState, BookingCommand> _stateMachine;
         

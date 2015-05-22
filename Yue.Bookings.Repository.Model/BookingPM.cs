@@ -23,12 +23,12 @@ namespace Yue.Bookings.Repository.Model
         public DateTime To { get; private set; }
         public int Minutes { get; private set; }
 
-        public static Booking FromPM(BookingPM bookingPM, IEnumerable<BookingActionPM> actions = null)
+        public static Booking FromPM(BookingPM bookingPM, IEnumerable<BookingActivityPM> actions = null)
         {
             bookingPM.TimeSlot = (new TimeSlot(bookingPM.From, bookingPM.To));
             if (actions != null)
             {
-                bookingPM.Actions = actions.Select(n => BookingActionPM.FromPM(n));
+                bookingPM.Activities = actions.Select(n => BookingActivityPM.FromPM(n));
             }
             return Mapper.Map<Booking>(bookingPM);
         }

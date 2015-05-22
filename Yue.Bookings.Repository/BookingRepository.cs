@@ -19,10 +19,10 @@ namespace Yue.Bookings.Repository
 
         private static readonly string[] _bookingColumns = new string[] {
 "BookingId", "ResourceId", "State", "From", "To", "Minutes", "CreateBy", "UpdateBy", "CreateAt", "UpdateAt" };
-        private static readonly string[] _actionColumns = new string[] {
-"ActionId", "ResourceId", "BookingId", "CreateBy", "CreateAt", "Type", "From", "To", "Minutes", "Message" };
+        private static readonly string[] _activityColumns = new string[] {
+"ActivityId", "ResourceId", "BookingId", "CreateBy", "CreateAt", "Type", "From", "To", "Minutes", "Message" };
 
-        public Booking Get(int bookingId, bool withActions)
+        public Booking Get(int bookingId, bool withActivities)
         {
             using (IDbConnection connection = OpenConnection())
             {
@@ -34,15 +34,15 @@ WHERE `BookingId` = @BookingId;", SqlHelper.Columns(_bookingColumns)),
 
                 if (booking == null) return null;
 
-                if (withActions)
+                if (withActivities)
                 {
-                    var actions = connection.Query<BookingActionPM>(
+                    var activities = connection.Query<BookingActivityPM>(
                         string.Format(
-@"SELECT {0} FROM `booking_actions` 
-WHERE `BookingId` = @BookingId ORDER BY ActionId DESC;", SqlHelper.Columns(_actionColumns)),
+@"SELECT {0} FROM `booking_activities` 
+WHERE `BookingId` = @BookingId ORDER BY ActivityId DESC;", SqlHelper.Columns(_activityColumns)),
                         new { BookingId = bookingId });
 
-                    return BookingPM.FromPM(booking, actions);
+                    return BookingPM.FromPM(booking, activities);
                 }
                 return BookingPM.FromPM(booking);
             }
