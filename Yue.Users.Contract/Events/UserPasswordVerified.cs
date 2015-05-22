@@ -12,12 +12,12 @@ namespace Yue.Users.Contract.Events
         {
             this.UserId = userId;
             this.Match = match;
-            this.VerifyAt = verifyAt;
-            this.VerifyBy = verifyBy;
+            this.CreateAt = verifyAt;
+            this.CreateBy = verifyBy;
         }
         public int UserId { get; private set; }
         public bool Match { get; private set; }
-        public DateTime VerifyAt { get; private set; }
-        public int VerifyBy { get; private set; }
+        public DateTime CreateAt { get; private set; }
+        public int CreateBy { get; private set; }
     }
 }

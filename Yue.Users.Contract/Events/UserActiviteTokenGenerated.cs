@@ -12,12 +12,12 @@ namespace Yue.Users.Contract.Events
         {
             this.UserId = userId;
             this.Token = token;
-            this.ChangeAt = changeAt;
-            this.ChangeBy = changeBy;
+            this.CreateAt = changeAt;
+            this.CreateBy = changeBy;
         }
         public int UserId { get; private set; }
         public string Token { get; private set; }
-        public DateTime ChangeAt { get; private set; }
-        public int ChangeBy { get; private set; }
+        public DateTime CreateAt { get; private set; }
+        public int CreateBy { get; private set; }
     }
 }
