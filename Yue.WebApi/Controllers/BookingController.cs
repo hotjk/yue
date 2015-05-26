@@ -131,7 +131,7 @@ namespace Yue.WebApi.Controllers
                     _sequenceService.Next(Sequence.BookingAction),
                     booking.ResourceId,
                     booking.BookingId,
-                    vm.Message,
+                    vm == null ? null : vm.Message,
                     DateTime.Now,
                     userId);
             ActionResponse actionResponse = await _actionBus.SendAsync<BookingActionBase, ConfirmSubscription>(cs);
@@ -182,7 +182,7 @@ namespace Yue.WebApi.Controllers
                 _sequenceService.Next(Sequence.BookingAction),
                     booking.ResourceId,
                     booking.BookingId,
-                    vm.Message,
+                    vm == null ? null : vm.Message,
                     new TimeSlot(vm.From, vm.To),
                     DateTime.Now,
                     userId);
