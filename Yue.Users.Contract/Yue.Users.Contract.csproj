@@ -41,7 +41,6 @@
   <ItemGroup>
     <Compile Include="Enum\UserSecurityCommand.cs" />
     <Compile Include="Enum\UserCommand.cs" />
-    <Compile Include="Enum\UserRole.cs" />
     <Compile Include="Enum\UserState.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

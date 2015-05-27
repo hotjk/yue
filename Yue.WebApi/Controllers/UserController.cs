@@ -31,9 +31,6 @@ using Yue.Users.View.Model;
  * Sign Out
  * curl -X POST --data "" "http://localhost:64777/api/users/signout" -i
  * 
- * Change Password
- * curl -X POST --data "password=pwd&newPassword=pwd1" "http://localhost:64777/api/users/change_password" -i --cookie ".auth=oebk2ctBVEwo4gC4AoYRArfBGR0nmN7PyB4KdVZLXKCRxsDKJCCaJ7nBi77IBHRWj7ycGvk6yCqbTRFlMbw36w%253D%253D;"
- * 
  * Request Activate Code
  * curl -X POST "http://localhost:64777/api/users/actions/activate" -i --cookie ".auth=dAN8etO20uU7DSCsLRStv1oSPMV0pt1xxhJhceYPTmvGVUhKs5ovqTAlgwz8g3FfDGyvGlqz7CuYV%252BE7bLQlog%253D%253D;"
  * 

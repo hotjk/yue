@@ -4,6 +4,7 @@ using RestSharp;
 using Newtonsoft.Json;
 using Yue.Bookings.Model;
 using System.Net;
+using System.Diagnostics;
 
 namespace Yue.WebApi.Test
 {
@@ -31,7 +32,7 @@ namespace Yue.WebApi.Test
             IRestResponse response = client.Execute(request);
             Assert.IsTrue(response.StatusCode == HttpStatusCode.Created);
             var content = response.Content;
-            Console.WriteLine(content);
+            Trace.WriteLine(content);
             bookingVM = JsonConvert.DeserializeObject<BookingVM>(content);
         }
 
@@ -44,7 +45,7 @@ namespace Yue.WebApi.Test
             IRestResponse response = client.Execute(request);
             Assert.IsTrue(response.StatusCode == HttpStatusCode.OK);
             var content = response.Content;
-            Console.WriteLine(content);
+            Trace.WriteLine(content);
         }
 
         [TestMethod]
@@ -55,7 +56,7 @@ namespace Yue.WebApi.Test
             IRestResponse response = client.Execute(request);
             Assert.IsTrue(response.StatusCode == HttpStatusCode.OK);
             var content = response.Content;
-            Console.WriteLine(content);
+            Trace.WriteLine(content);
         }
 
         [TestMethod]
@@ -67,7 +68,7 @@ namespace Yue.WebApi.Test
             IRestResponse response = client.Execute(request);
             Assert.IsTrue(response.StatusCode == HttpStatusCode.OK);
             var content = response.Content;
-            Console.WriteLine(content);
+            Trace.WriteLine(content);
         }
 
         [TestMethod]
@@ -81,7 +82,7 @@ namespace Yue.WebApi.Test
             IRestResponse response = client.Execute(request);
             Assert.IsTrue(response.StatusCode == HttpStatusCode.OK);
             var content = response.Content;
-            Console.WriteLine(content);
+            Trace.WriteLine(content);
         }
 
         [TestMethod]
@@ -95,7 +96,7 @@ namespace Yue.WebApi.Test
             IRestResponse response = client.Execute(request);
             Assert.IsTrue(response.StatusCode == HttpStatusCode.OK);
             var content = response.Content;
-            Console.WriteLine(content);
+            Trace.WriteLine(content);
         }
 
         [TestMethod]
@@ -109,7 +110,7 @@ namespace Yue.WebApi.Test
             IRestResponse response = client.Execute(request);
             Assert.IsTrue(response.StatusCode == HttpStatusCode.OK);
             var content = response.Content;
-            Console.WriteLine(content);
+            Trace.WriteLine(content);
         }
 
         [TestCleanup]
@@ -119,7 +120,7 @@ namespace Yue.WebApi.Test
             request.Method = Method.DELETE;
             IRestResponse response = client.Execute(request);
             var content = response.Content;
-            Console.WriteLine(content);
+            Trace.WriteLine(content);
         }
     }
 }
