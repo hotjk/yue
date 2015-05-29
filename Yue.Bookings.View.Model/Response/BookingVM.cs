@@ -6,9 +6,10 @@ using System.Text;
 using System.Threading.Tasks;
 using Yue.Bookings.Contract;
 using Yue.Bookings.Contract.Actions;
-using Yue.Bookings.Model.Commands;
+using Yue.Bookings.Contract.Commands;
+using Yue.Bookings.Model;
 
-namespace Yue.Bookings.Model
+namespace Yue.Bookings.View.Model
 {
     public class BookingVM
     {

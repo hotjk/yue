@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="Events.fs" />
     <Compile Include="Actions.fs" />
+    <Compile Include="Commands.fs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\ace\ACE.Contracts\ACE.Contracts.csproj">

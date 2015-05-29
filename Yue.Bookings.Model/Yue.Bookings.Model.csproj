@@ -43,12 +43,6 @@
     <Compile Include="BookingService.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Commands\BookingCommandBase.cs" />
-    <Compile Include="Commands\CancelSubscriotion.cs" />
-    <Compile Include="Commands\ChangeTime.cs" />
-    <Compile Include="Commands\ConfirmSubscription.cs" />
-    <Compile Include="Commands\LeaveAMessage.cs" />
-    <Compile Include="Commands\SubscribeResource.cs" />
     <Compile Include="IBookingRepository.cs" />
     <Compile Include="IBookingService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

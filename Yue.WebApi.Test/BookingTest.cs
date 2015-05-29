@@ -2,9 +2,9 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RestSharp;
 using Newtonsoft.Json;
-using Yue.Bookings.Model;
 using System.Net;
 using System.Diagnostics;
+using Yue.Bookings.View.Model;
 
 namespace Yue.WebApi.Test
 {

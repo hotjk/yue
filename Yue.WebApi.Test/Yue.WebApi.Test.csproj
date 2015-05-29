@@ -56,6 +56,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="SecurityTest.cs" />
     <Compile Include="BookingTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -63,6 +64,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\grit\Grit.Utility\Grit.Utility.csproj">
+      <Project>{bd3ad860-d5a7-4fbd-91a0-bdf20236e5a8}</Project>
+      <Name>Grit.Utility</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Yue.Bookings.View.Model\Yue.Bookings.View.Model.csproj">
       <Project>{5767c7c6-9de4-43d4-8183-c57c6bf4d616}</Project>
       <Name>Yue.Bookings.View.Model</Name>

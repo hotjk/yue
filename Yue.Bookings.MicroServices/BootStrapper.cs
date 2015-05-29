@@ -42,7 +42,7 @@ namespace Yue.Bookings.MicroServices
             Container.Bind<ACE.Loggers.IBusLogger>().To<Log4NetBusLogger>().InSingletonScope();
             Container.Bind<ICommandHandlerFactory>().To<CommandHandlerFactory>()
                 .InSingletonScope()
-                .WithConstructorArgument(Constants.ParamCommandAssmblies, new string[] { "Yue.Bookings.Model" })
+                .WithConstructorArgument(Constants.ParamCommandAssmblies, new string[] { "Yue.Bookings.ContractFS" })
                 .WithConstructorArgument(Constants.ParamHandlerAssmblies, new string[] { "Yue.Bookings.Model.Write" });
             Container.Bind<ICommandBus>().To<CommandBus>().InSingletonScope();
             Container.Bind<IEventHandlerFactory>().To<EventHandlerFactory>()

@@ -16,7 +16,7 @@ namespace Yue.Bookings.Repository.Model
         static BookingPM()
         {
             Mapper.CreateMap<BookingPM, Booking>();
-            Mapper.CreateMap<Booking, BookingPM>();
+            Mapper.CreateMap<Booking, BookingPM>().ForMember(dest => dest.Activities, opt => opt.Ignore());
         }
 
         public DateTime From { get; private set; }
@@ -28,7 +28,14 @@ namespace Yue.Bookings.Repository.Model
             bookingPM.TimeSlot = (new TimeSlot(bookingPM.From, bookingPM.To));
             if (actions != null)
             {
-                bookingPM.Activities = actions.Select(n => BookingActivityPM.FromPM(n));
+                foreach(var action in actions)
+                {
+                    if(action.From != null && action.To != null)
+                    {
+                        bookingPM.TimeSlot = new TimeSlot(action.From.Value, action.To.Value);
+                    }
+                }
+                bookingPM.Activities = actions.Select(n => BookingActivityPM.FromPM(n)).ToList();
             }
             return Mapper.Map<Booking>(bookingPM);
         }

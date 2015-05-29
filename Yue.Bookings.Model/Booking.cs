@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Yue.Bookings.Contract;
-using Yue.Bookings.Model.Commands;
+using Yue.Bookings.Contract.Commands;
 using Yue.Common.Contract;
 
 namespace Yue.Bookings.Model
@@ -57,14 +57,14 @@ namespace Yue.Bookings.Model
 
         public void EnsoureAndUpdateState(BookingCommandBase action)
         {
+            var command = (BookingCommand)Enum.Parse(typeof(BookingCommand), action.GetType().Name, true);
+
             var instance = _stateMachine.Instance(this.State);
-            if (!instance.Fire(action.Type))
+            if (!instance.Fire(command))
             {
                 throw new BusinessException(BusinessStatusCode.Forbidden, "Invalid booking state.");
             }
             this.State = instance.State;
-            this.UpdateBy = action.CreateBy;
-            this.UpdateAt = action.CreateAt;
         }
 
         public static Booking Create(SubscribeResource action)

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Yue.Bookings.Contract;
-using Yue.Bookings.Model.Commands;
+using Yue.Bookings.Contract.Commands;
 using Yue.Common.Contract;
 
 namespace Yue.Bookings.Repository.Model
@@ -38,7 +38,7 @@ namespace Yue.Bookings.Repository.Model
             foreach (var value in _bookingActionTypes.Values)
             {
                 Mapper.CreateMap(typeof(BookingActivityPM), value);
-                Mapper.CreateMap(value, typeof(BookingActivityPM));
+                Mapper.CreateMap(value, typeof(BookingActivityPM)).ForMember("Type", opt => opt.Ignore());
             }
         }
 
@@ -61,6 +61,7 @@ namespace Yue.Bookings.Repository.Model
                 pm.To = pm.TimeSlot.To;
                 pm.Minutes = pm.TimeSlot.Minutes;
             }
+            pm.Type = (BookingCommand)Enum.Parse(typeof(BookingCommand), action.GetType().Name, true);
             return pm;
         }
     }

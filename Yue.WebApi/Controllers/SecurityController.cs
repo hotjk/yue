@@ -24,31 +24,31 @@ using Yue.Users.View.Model;
  * curl --data "email=zhongwx@gmail.com&name=weixiao&password=pwd" "http://localhost:64777/api/security/actions/register" -i
  * 
  * Login
- * curl --data "email=zhongwx@gmail.com&password=pwd" "http://localhost:64777/api/users/actions/login" -i
+ * curl --data "email=zhongwx@gmail.com&password=pwd" "http://localhost:64777/api/security/actions/login" -i
  * 
  * Sign Out
- * curl -X POST --data "" "http://localhost:64777/api/users/signout" -i
+ * curl -X POST --data "" "http://localhost:64777/api/security/signout" -i
  * 
  * Request Activate Code
- * curl -X POST "http://localhost:64777/api/users/actions/activate" -i --cookie ".auth=dAN8etO20uU7DSCsLRStv1oSPMV0pt1xxhJhceYPTmvGVUhKs5ovqTAlgwz8g3FfDGyvGlqz7CuYV%252BE7bLQlog%253D%253D;"
+ * curl -X POST "http://localhost:64777/api/security/actions/activate" -i --cookie ".auth=dAN8etO20uU7DSCsLRStv1oSPMV0pt1xxhJhceYPTmvGVUhKs5ovqTAlgwz8g3FfDGyvGlqz7CuYV%252BE7bLQlog%253D%253D;"
  * 
  * Activate
- * curl -X POST --data "user=33&token=5f162f8d-009e-4d3a-8f6c-21b99deb1550" "http://localhost:64777/api/users/activate" -i
+ * curl -X POST --data "user=33&token=5f162f8d-009e-4d3a-8f6c-21b99deb1550" "http://localhost:64777/api/security/actions/activate" -i
  * 
  * Change Password
- * curl -X POST --data "password=pwd&newPassword=pwd1" "http://localhost:64777/api/users/change_password" -i --cookie ".auth=oebk2ctBVEwo4gC4AoYRArfBGR0nmN7PyB4KdVZLXKCRxsDKJCCaJ7nBi77IBHRWj7ycGvk6yCqbTRFlMbw36w%253D%253D;"
+ * curl -X POST --data "password=pwd&newPassword=pwd1" "http://localhost:64777/api/security/actions/change_password" -i --cookie ".auth=oebk2ctBVEwo4gC4AoYRArfBGR0nmN7PyB4KdVZLXKCRxsDKJCCaJ7nBi77IBHRWj7ycGvk6yCqbTRFlMbw36w%253D%253D;"
  * 
  * Request Reset Password Token
- * curl -X POST --data "email=zhongwx@gmail.com" "http://localhost:64777/api/password/actions/token" -i 
+ * curl -X POST --data "email=zhongwx@gmail.com" "http://localhost:64777/api/security/actions/token" -i 
  * 
  * Verify Reset Password Token
- * curl -X POST --data "user=33&token=ee90cff6-b35d-4b32-8346-8a22ce868eea" "http://localhost:64777/api/users/verify_reset_password" -i 
+ * curl -X POST --data "user=33&token=ee90cff6-b35d-4b32-8346-8a22ce868eea" "http://localhost:64777/api/security/actions/verify_reset_password" -i 
  * 
  * Cancel Reset Password
- * curl -X POST --data "user=33&token=ee90cff6-b35d-4b32-8346-8a22ce868eea" "http://localhost:64777/api/users/cancel_reset_password" -i 
+ * curl -X POST --data "user=33&token=ee90cff6-b35d-4b32-8346-8a22ce868eea" "http://localhost:64777/api/security/actions/cancel_reset_password" -i 
  * 
  * Reset Password
- * curl -X POST --data "user=33&token=7e93e31f-ca8d-41b0-a3da-13bd2a4a9c0d&password=pwd" "http://localhost:64777/api/users/reset_password" -i 
+ * curl -X POST --data "user=33&token=7e93e31f-ca8d-41b0-a3da-13bd2a4a9c0d&password=pwd" "http://localhost:64777/api/security/actions/reset_password" -i 
 */
 
 namespace Yue.WebApi.Controllers
@@ -129,7 +129,7 @@ namespace Yue.WebApi.Controllers
         }
 
         [HttpPost]
-        [Route("actions/activate")]
+        [Route("actions/activate_token")]
         [ApiAuthorize]
         public async Task<IHttpActionResult> Activite()
         {
@@ -163,7 +163,7 @@ namespace Yue.WebApi.Controllers
         }
 
         [HttpPost]
-        [Route("actions/token")]
+        [Route("actions/reset")]
         public async Task<IHttpActionResult> RequestResetPasswordToken(RequestResetPasswordVM vm)
         {
             var userSecurity = _userSecurityService.UserSecurityByEmail(vm.Email);

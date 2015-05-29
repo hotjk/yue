@@ -29,8 +29,8 @@ namespace Yue.Bookings.Application
             using (UnitOfWork unitOfwork = new UnitOfWork(EventBus))
             {
                 CommandBus.Send(
-                    new Yue.Bookings.Model.Commands.SubscribeResource(
-                    action.ActionId,action.ResourceId, action.BookingId, action.Message, action.CreateBy, action.CreateAt, action.TimeSlot));
+                    new Yue.Bookings.Contract.Commands.SubscribeResource(
+                    action.ActivityId, action.ResourceId, action.BookingId, action.Message, action.TimeSlot, action.CreateAt, action.CreateBy));
                 unitOfwork.Complete();
             }
         }
@@ -40,8 +40,8 @@ namespace Yue.Bookings.Application
             using (UnitOfWork unitOfwork = new UnitOfWork(EventBus))
             {
                 CommandBus.Send(
-                    new Yue.Bookings.Model.Commands.ConfirmSubscription(
-                    action.ActionId,action.ResourceId, action.BookingId, action.Message, action.CreateBy, action.CreateAt));
+                    new Yue.Bookings.Contract.Commands.ConfirmSubscription(
+                    action.ActivityId, action.ResourceId, action.BookingId, action.Message, action.CreateAt, action.CreateBy));
                 unitOfwork.Complete();
             }
         }
@@ -51,8 +51,8 @@ namespace Yue.Bookings.Application
             using (UnitOfWork unitOfwork = new UnitOfWork(EventBus))
             {
                 CommandBus.Send(
-                    new Yue.Bookings.Model.Commands.CancelSubscriotion(
-                    action.ActionId, action.ResourceId, action.BookingId, action.Message, action.CreateBy, action.CreateAt));
+                    new Yue.Bookings.Contract.Commands.CancelSubscriotion(
+                    action.ActivityId, action.ResourceId, action.BookingId, action.Message, action.CreateAt, action.CreateBy));
                 unitOfwork.Complete();
             }
         }
@@ -62,8 +62,8 @@ namespace Yue.Bookings.Application
             using (UnitOfWork unitOfwork = new UnitOfWork(EventBus))
             {
                 CommandBus.Send(
-                    new Yue.Bookings.Model.Commands.LeaveAMessage(
-                    action.ActionId, action.ResourceId, action.BookingId, action.Message, action.CreateBy, action.CreateAt));
+                    new Yue.Bookings.Contract.Commands.LeaveAMessage(
+                    action.ActivityId, action.ResourceId, action.BookingId, action.Message, action.CreateAt, action.CreateBy));
                 unitOfwork.Complete();
             }
         }
@@ -73,8 +73,8 @@ namespace Yue.Bookings.Application
             using (UnitOfWork unitOfwork = new UnitOfWork(EventBus))
             {
                 CommandBus.Send(
-                    new Yue.Bookings.Model.Commands.ChangeTime(
-                    action.ActionId, action.ResourceId, action.BookingId, action.Message, action.CreateBy, action.CreateAt, action.TimeSlot));
+                    new Yue.Bookings.Contract.Commands.ChangeTime(
+                    action.ActivityId, action.ResourceId, action.BookingId, action.Message, action.TimeSlot, action.CreateAt, action.CreateBy));
                 unitOfwork.Complete();
             }
         }
