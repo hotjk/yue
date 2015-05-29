@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Yue.Common.Contract;
 using Yue.Users.Contract;
-using Yue.Users.Model.Commands;
+using Yue.Users.Contract.Commands;
 
 namespace Yue.Users.Model
 {
@@ -24,80 +24,35 @@ namespace Yue.Users.Model
         public int UpdateBy { get; private set; }
         public DateTime UpdateAt { get; private set; }
 
-        private static StateMachine<UserState, UserCommand> _fsmUser;
-        private static StateMachine<UserState, UserSecurityCommand> _fsmUserSecurity;
+        private static StateMachine<UserState, UserCommand> _fsm;
 
         static User()
         {
-            InitStateMachine();
-        }
-
-        private static void InitStateMachine()
-        {
-            _fsmUser = new StateMachine<UserState, UserCommand>();
-            _fsmUser.Configure(UserState.Initial)
-                .Permit(UserCommand.Create, UserState.Inactive);
-            _fsmUser.Configure(UserState.Inactive)
+            _fsm = new StateMachine<UserState, UserCommand>();
+            _fsm.Configure(UserState.Initial)
+                .Permit(UserCommand.CreateUser, UserState.Inactive);
+            _fsm.Configure(UserState.Inactive)
+                .Permit(UserCommand.ActivateUser, UserState.Normal)
                 .Permit(UserCommand.ChangeProfile, UserState.Inactive);
-            _fsmUser.Configure(UserState.Normal)
+            _fsm.Configure(UserState.Normal)
                 .Permit(UserCommand.ChangeProfile, UserState.Normal);
-
-            _fsmUserSecurity = new StateMachine<UserState, UserSecurityCommand>();
-            _fsmUserSecurity.Configure(UserState.Initial)
-                .Permit(UserSecurityCommand.CreateUserSecurity, UserState.Initial);
-            _fsmUserSecurity.Configure(UserState.Inactive)
-                .Permit(UserSecurityCommand.CreateUserSecurity, UserState.Inactive)
-                .Permit(UserSecurityCommand.VerifyPassword, UserState.Inactive)
-                .Permit(UserSecurityCommand.RequestActivateToken, UserState.Inactive)
-                .Permit(UserSecurityCommand.ActivateUser, UserState.Normal)
-                .Permit(UserSecurityCommand.ChangePassword, UserState.Inactive)
-                .Permit(UserSecurityCommand.Destory, UserState.Destroyed);
-            _fsmUserSecurity.Configure(UserState.Normal)
-                .Permit(UserSecurityCommand.VerifyPassword, UserState.Normal)
-                .Permit(UserSecurityCommand.RequestResetPasswordToken, UserState.Normal)
-                .Permit(UserSecurityCommand.VerifyResetPasswordToken, UserState.Normal)
-                .Permit(UserSecurityCommand.CancelResetPasswordToken, UserState.Normal)
-                .Permit(UserSecurityCommand.ResetPassword, UserState.Normal)
-                .Permit(UserSecurityCommand.ChangePassword, UserState.Normal)
-                .Permit(UserSecurityCommand.Block, UserState.Blocked)
-                .Permit(UserSecurityCommand.Destory, UserState.Destroyed);
-            _fsmUserSecurity.Configure(UserState.Blocked)
-                .Permit(UserSecurityCommand.Destory, UserState.Destroyed)
-                .Permit(UserSecurityCommand.Restore, UserState.Normal);
         }
 
         public bool EnsoureState(UserCommand action)
         {
-            return _fsmUser.Instance(this.State).CanFire(action);
+            return _fsm.Instance(this.State).CanFire(action);
         }
 
-        public void EnsoureAndUpdateState(UserCommandBase action)
+        public void EnsoureAndUpdateState(object action)
         {
-            var instance = _fsmUser.Instance(this.State);
-            if (!instance.Fire(action.Type))
+            var command = (UserCommand)Enum.Parse(typeof(UserCommand), action.GetType().Name, true);
+
+            var instance = _fsm.Instance(this.State);
+            if (!instance.Fire(command))
             {
                 throw new BusinessException(BusinessStatusCode.Forbidden, "Invalid user state.");
             }
             this.State = instance.State;
-            this.UpdateBy = action.CreateBy;
-            this.UpdateAt = action.CreateAt;
-        }
-
-        public bool EnsoureState(UserSecurityCommand action)
-        {
-            return _fsmUserSecurity.Instance(this.State).CanFire(action);
-        }
-
-        public void EnsoureAndUpdateState(UserSecurityCommandBase action)
-        {
-            var instance = _fsmUserSecurity.Instance(this.State);
-            if (!instance.Fire(action.Type))
-            {
-                throw new BusinessException(BusinessStatusCode.Forbidden, "Invalid user state.");
-            }
-            this.State = instance.State;
-            this.UpdateBy = action.CreateBy;
-            this.UpdateAt = action.CreateAt;
         }
 
         public static User Create(CreateUser command)

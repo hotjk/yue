@@ -20,6 +20,30 @@ namespace Yue.Users.Repository.Write
         private static readonly string[] _userUpdateColumns = new string[] {
 "Email", "Name", "State", "UpdateBy", "UpdateAt" };
 
+        public User Get(int userId)
+        {
+            using (IDbConnection connection = OpenConnection())
+            {
+                var user = connection.Query<User>(
+                     string.Format(@"SELECT {0} FROM `users` WHERE `UserId` = @UserId;",
+                     SqlHelper.Columns(_userColumns)),
+                     new { UserId = userId }).SingleOrDefault();
+                return user;
+            }
+        }
+
+        public User UserByEmail(string email)
+        {
+            using (IDbConnection connection = OpenConnection())
+            {
+                var user = connection.Query<User>(
+                     string.Format(@"SELECT {0} FROM `users` WHERE `Email` = @Email;",
+                     SqlHelper.Columns(_userColumns)),
+                     new { Email = email }).SingleOrDefault();
+                return user;
+            }
+        }
+
         public User GetForUpdate(int userId)
         {
             using (IDbConnection connection = OpenConnection())

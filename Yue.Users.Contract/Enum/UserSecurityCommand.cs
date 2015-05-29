@@ -10,7 +10,7 @@ namespace Yue.Users.Contract
     {
         CreateUserSecurity = 0,
         RequestActivateToken = 1,
-        ActivateUser = 2,
+        ResetActivateToken = 2,
         VerifyPassword = 3,
         RequestResetPasswordToken = 10,
         VerifyResetPasswordToken = 11,

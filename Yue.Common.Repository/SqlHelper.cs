@@ -25,7 +25,7 @@ namespace Yue.Common.Repository
             return columns.Aggregate(
                 new StringBuilder(),
                 (sb, s) => sb.AppendFormat(sb.Length == 0 ? "{0}{1}{2}.{0}{3}{2}" : "{4}{0}{1}{2}.{0}{3}{2}", 
-                    table, OpenQuote, s, CloseQuote, Seperator),
+                    OpenQuote, table, CloseQuote, s, Seperator),
                 sb => sb.ToString());
         }
         public static string ColumnsWithAlias(string table, IEnumerable<string> columns)
@@ -33,7 +33,7 @@ namespace Yue.Common.Repository
             return columns.Aggregate(
                 new StringBuilder(),
                 (sb, s) => sb.AppendFormat(sb.Length == 0 ? "{0}{1}{2}.{0}{3}{2} AS {1}{3}" : "{4}{0}{1}{2}.{0}{3}{2} AS {1}{3}",
-                    table, OpenQuote, s, CloseQuote, Seperator),
+                    OpenQuote, table, CloseQuote, s, Seperator),
                 sb => sb.ToString());
         }
         public static string Params(IEnumerable<string> columns)

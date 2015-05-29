@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Yue.Users.Contract;
-using Yue.Users.Model.Commands;
+using Yue.Users.Contract.Commands;
 
 namespace Yue.Users.Repository.Model
 {
@@ -13,14 +13,15 @@ namespace Yue.Users.Repository.Model
     {
         static UserSecurityLogPM()
         {
-            Mapper.CreateMap<Activate, UserSecurityLogPM>();
-            Mapper.CreateMap<CancelResetPasswordToken, UserSecurityLogPM>();
-            Mapper.CreateMap<ChangePassword, UserSecurityLogPM>();
-            Mapper.CreateMap<CreateUserSecurity, UserSecurityLogPM>();
-            Mapper.CreateMap<RequestActivateToken, UserSecurityLogPM>();
-            Mapper.CreateMap<RequestResetPasswordToken, UserSecurityLogPM>();
-            Mapper.CreateMap<ResetPassword, UserSecurityLogPM>();
-            Mapper.CreateMap<VerifyResetPasswordToken, UserSecurityLogPM>();
+            var ns = typeof(UserSecurityCommandBase).Namespace;
+            foreach (string name in Enum.GetNames(typeof(UserSecurityCommand)))
+            {
+                Type source = typeof(UserSecurityCommandBase).Assembly.GetType(ns + "." + name);
+                if(source == null) continue;
+                // Assumed that UserSecurityCommandBase and concrete class in the same directory. 
+                Mapper.CreateMap(source, typeof(UserSecurityLogPM))
+                    .ForMember("Type", opt => opt.Ignore());
+            }
         }
 
         public int UserId { get; private set; }
@@ -33,6 +34,7 @@ namespace Yue.Users.Repository.Model
         public static UserSecurityLogPM ToPM(UserSecurityCommandBase m)
         {
             var pm = Mapper.Map<UserSecurityLogPM>(m);
+            pm.Type = (UserSecurityCommand)Enum.Parse(typeof(UserSecurityCommand), m.GetType().Name, true);
             return pm;
         }
     }

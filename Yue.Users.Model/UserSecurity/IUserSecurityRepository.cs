@@ -9,5 +9,6 @@ namespace Yue.Users.Model
     public interface IUserSecurityRepository
     {
         UserSecurity Get(int userId);
+        UserSecurity UserSecurityByEmail(string email);
     }
 }

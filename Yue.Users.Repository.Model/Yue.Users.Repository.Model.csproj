@@ -56,6 +56,10 @@
       <Project>{82f70b71-71ab-49b1-9e3f-5197abbfd1aa}</Project>
       <Name>ACE.Contracts</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Yue.Users.ContractFS\Yue.Users.ContractFS.fsproj">
+      <Project>{e095bab3-bf66-4042-aa4e-78d0d406136a}</Project>
+      <Name>Yue.Users.ContractFS</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Yue.Users.Contract\Yue.Users.Contract.csproj">
       <Project>{1e0e1aa1-4bd1-4c21-84f5-2778ece3b580}</Project>
       <Name>Yue.Users.Contract</Name>

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Yue.Users.Model.Commands;
+using Yue.Users.Contract.Commands;
 
 namespace Yue.Users.Model.Write
 {

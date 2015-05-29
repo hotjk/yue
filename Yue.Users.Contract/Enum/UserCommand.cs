@@ -8,7 +8,8 @@ namespace Yue.Users.Contract
 {
     public enum UserCommand
     {
-        Create = 0,
+        CreateUser = 0,
+        ActivateUser = 1,
         ChangeProfile = 10,
     }
 }

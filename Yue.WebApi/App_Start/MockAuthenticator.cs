@@ -17,9 +17,9 @@ namespace Yue.WebApi
             _userId = userId;
         }
 
-        public CookieHeaderValue GetCookieTicket(User user)
+        public CookieHeaderValue GetCookieTicket(string content)
         {
-            var cookie = new CookieTicket(user.UserId.ToString());
+            var cookie = new CookieTicket(content);
             CookieHeaderValue cookieValue = new CookieHeaderValue(CookieTicketConfig.CookieName, "Just Mock");
             cookieValue.HttpOnly = true;
             cookieValue.Secure = CookieTicketConfig.RequireSSL;

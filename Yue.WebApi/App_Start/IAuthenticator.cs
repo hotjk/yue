@@ -11,7 +11,7 @@ namespace Yue.WebApi
     public interface IAuthenticator
     {
         ICookieTicketConfig CookieTicketConfig { get; }
-        CookieHeaderValue GetCookieTicket(User user);
+        CookieHeaderValue GetCookieTicket(string content);
         bool ValidateCookieTicket(CookieState cookie, out CookieTicket ticket, out CookieHeaderValue renewCookie);
     }
 }

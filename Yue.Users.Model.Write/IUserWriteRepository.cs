@@ -8,6 +8,8 @@ namespace Yue.Users.Model.Write
 {
     public interface IUserWriteRepository
     {
+        User Get(int userId);
+        User UserByEmail(string email);
         User GetForUpdate(int userId);
         bool Add(User user);
         bool Update(User user);

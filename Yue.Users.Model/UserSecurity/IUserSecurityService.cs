@@ -10,5 +10,7 @@ namespace Yue.Users.Model
     {
         string PasswordHash(int userId, string password);
         bool VerifyPassword(int userId, string password);
+        UserSecurity Get(int userId);
+        UserSecurity UserSecurityByEmail(string email);
     }
 }

@@ -27,5 +27,15 @@ namespace Yue.Users.Model
             bool match = Grit.Utility.Security.PasswordHash.ValidatePassword(string.Format("{0} {1}", userId, password), userSecurity.PasswordHash);
             return match;
         }
+
+        public UserSecurity Get(int userId)
+        {
+            return _repository.Get(userId);
+        }
+
+        public UserSecurity UserSecurityByEmail(string email)
+        {
+            return _repository.UserSecurityByEmail(email);
+        }
     }
 }

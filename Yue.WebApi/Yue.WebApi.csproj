@@ -202,7 +202,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\ApiAuthorizeController.cs" />
     <Compile Include="Controllers\BookingController.cs" />
-    <Compile Include="Controllers\PasswordController.cs" />
+    <Compile Include="Controllers\SecurityController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

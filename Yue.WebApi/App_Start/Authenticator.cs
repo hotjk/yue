@@ -15,9 +15,9 @@ namespace Yue.WebApi
             CookieTicketConfig = cookieTicketConfig;
         }
 
-        public CookieHeaderValue GetCookieTicket(User user)
+        public CookieHeaderValue GetCookieTicket(string content)
         {
-            var cookie = new CookieTicket(user.UserId.ToString());
+            var cookie = new CookieTicket(content);
             using (var protector = new EncryptSignManager(
                 CookieTicketConfig.EncryptionKey,
                 CookieTicketConfig.EncryptionIV,
