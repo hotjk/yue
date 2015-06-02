@@ -8,7 +8,7 @@ using Yue.Bookings.Contract;
 using Yue.Bookings.Model;
 using Yue.Common.Repository;
 using Dapper;
-using Yue.Bookings.Model.Write;
+using Yue.Bookings.Handler;
 using Yue.Bookings.Repository.Model;
 using Yue.Bookings.Contract.Commands;
 

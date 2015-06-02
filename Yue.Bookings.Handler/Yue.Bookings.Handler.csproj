@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{D9C3D164-B6AE-46C7-909B-649C3B78A8E4}</ProjectGuid>
+    <ProjectGuid>{CEFBF04D-913E-4E0D-8103-17114BBD02FB}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Yue.Users.Model.Write</RootNamespace>
-    <AssemblyName>Yue.Users.Model.Write</AssemblyName>
+    <RootNamespace>Yue.Bookings.Handler</RootNamespace>
+    <AssemblyName>Yue.Bookings.Handler</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -30,6 +30,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper">
+      <HintPath>..\packages\AutoMapper.3.3.1\lib\net40\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="AutoMapper.Net4">
+      <HintPath>..\packages\AutoMapper.3.3.1\lib\net40\AutoMapper.Net4.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -39,10 +45,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IUserSecurityWriteRepository.cs" />
-    <Compile Include="IUserWriteRepository.cs" />
-    <Compile Include="UserSecurityHandler.cs" />
-    <Compile Include="UserHandler.cs" />
+    <Compile Include="BookingHandler.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IBookingWriteRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -50,24 +56,28 @@
       <Project>{82f70b71-71ab-49b1-9e3f-5197abbfd1aa}</Project>
       <Name>ACE.Contracts</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Yue.Bookings.ContractFS\Yue.Bookings.ContractFS.fsproj">
+      <Project>{f790a30b-68b2-40d2-bd33-3499078ec2ea}</Project>
+      <Name>Yue.Bookings.ContractFS</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Yue.Bookings.Contract\Yue.Bookings.Contract.csproj">
+      <Project>{c904450f-f057-4f44-b7a0-e7227ccb3869}</Project>
+      <Name>Yue.Bookings.Contract</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Yue.Bookings.Model\Yue.Bookings.Model.csproj">
+      <Project>{f9c983ee-2e26-4b5e-8ce4-b3bcc7074ce2}</Project>
+      <Name>Yue.Bookings.Model</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Yue.Common.Contract\Yue.Common.Contract.csproj">
       <Project>{ef8dd186-9fbf-4069-9654-1cffe049d12c}</Project>
       <Name>Yue.Common.Contract</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Yue.Users.ContractFS\Yue.Users.ContractFS.fsproj">
-      <Project>{e095bab3-bf66-4042-aa4e-78d0d406136a}</Project>
-      <Name>Yue.Users.ContractFS</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Yue.Users.Contract\Yue.Users.Contract.csproj">
-      <Project>{1e0e1aa1-4bd1-4c21-84f5-2778ece3b580}</Project>
-      <Name>Yue.Users.Contract</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Yue.Users.Model\Yue.Users.Model.csproj">
-      <Project>{cb72e1fb-035d-4bf4-8492-4897869ec2eb}</Project>
-      <Name>Yue.Users.Model</Name>
-    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets" Condition="Exists('..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

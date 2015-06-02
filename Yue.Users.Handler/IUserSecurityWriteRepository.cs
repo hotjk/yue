@@ -4,8 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Yue.Users.Contract.Commands;
+using Yue.Users.Model;
 
-namespace Yue.Users.Model.Write
+namespace Yue.Users.Handler
 {
     public interface IUserSecurityWriteRepository
     {

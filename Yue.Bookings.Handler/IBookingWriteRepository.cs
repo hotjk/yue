@@ -4,8 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Yue.Bookings.Contract.Commands;
+using Yue.Bookings.Model;
 
-namespace Yue.Bookings.Model.Write
+namespace Yue.Bookings.Handler
 {
     public interface IBookingWriteRepository
     {

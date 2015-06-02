@@ -70,9 +70,9 @@
       <Project>{1e0e1aa1-4bd1-4c21-84f5-2778ece3b580}</Project>
       <Name>Yue.Users.Contract</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Yue.Users.Model.Write\Yue.Users.Model.Write.csproj">
+    <ProjectReference Include="..\Yue.Users.Handler\Yue.Users.Handler.csproj">
       <Project>{d9c3d164-b6ae-46c7-909b-649c3b78a8e4}</Project>
-      <Name>Yue.Users.Model.Write</Name>
+      <Name>Yue.Users.Handler</Name>
     </ProjectReference>
     <ProjectReference Include="..\Yue.Users.Model\Yue.Users.Model.csproj">
       <Project>{cb72e1fb-035d-4bf4-8492-4897869ec2eb}</Project>

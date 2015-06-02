@@ -9,8 +9,9 @@ using Yue.Common.Contract;
 using Yue.Users.Contract;
 using Yue.Users.Contract.Commands;
 using Yue.Users.Contract.Events;
+using Yue.Users.Model;
 
-namespace Yue.Users.Model.Write
+namespace Yue.Users.Handler
 {
     public class UserSecurityHandler :
         ICommandHandler<CreateUserSecurity>,

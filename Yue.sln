@@ -17,7 +17,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yue.Common.Contract", "Yue.
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libraries", "Libraries", "{2E1CF9DD-177F-4F81-BE3B-2DB154462231}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yue.Bookings.Model.Write", "Yue.Bookings.Model.Write\Yue.Bookings.Model.Write.csproj", "{CEFBF04D-913E-4E0D-8103-17114BBD02FB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yue.Bookings.Handler", "Yue.Bookings.Handler\Yue.Bookings.Handler.csproj", "{CEFBF04D-913E-4E0D-8103-17114BBD02FB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACE.Contracts", "..\ace\ACE.Contracts\ACE.Contracts.csproj", "{82F70B71-71AB-49B1-9E3F-5197ABBFD1AA}"
 EndProject
@@ -61,7 +61,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Write", "Write", "{83EA36E6
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yue.Users.Application", "Yue.Users.Application\Yue.Users.Application.csproj", "{78E5DA98-D805-49FF-997E-512BD61134C3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yue.Users.Model.Write", "Yue.Users.Model.Write\Yue.Users.Model.Write.csproj", "{D9C3D164-B6AE-46C7-909B-649C3B78A8E4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yue.Users.Handler", "Yue.Users.Handler\Yue.Users.Handler.csproj", "{D9C3D164-B6AE-46C7-909B-649C3B78A8E4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Grit.Utility", "..\grit\Grit.Utility\Grit.Utility.csproj", "{BD3AD860-D5A7-4FBD-91A0-BDF20236E5A8}"
 EndProject

@@ -9,7 +9,7 @@ using System.Configuration;
 using EasyNetQ.Loggers;
 using Grit.Sequence;
 using Grit.Sequence.Repository.MySql;
-using Yue.Users.Model.Write;
+using Yue.Users.Handler;
 using Yue.Users.Repository.Write;
 using Yue.Common.Log;
 using Yue.Users.Repository;
@@ -43,12 +43,12 @@ namespace Yue.Users.MicroServices
             Container.Bind<ICommandHandlerFactory>().To<CommandHandlerFactory>()
                 .InSingletonScope()
                 .WithConstructorArgument(Constants.ParamCommandAssmblies, new string[] { "Yue.Users.ContractFS" })
-                .WithConstructorArgument(Constants.ParamHandlerAssmblies, new string[] { "Yue.Users.Model.Write" });
+                .WithConstructorArgument(Constants.ParamHandlerAssmblies, new string[] { "Yue.Users.Handler" });
             Container.Bind<ICommandBus>().To<CommandBus>().InSingletonScope();
             Container.Bind<IEventHandlerFactory>().To<EventHandlerFactory>()
                 .InSingletonScope()
                 .WithConstructorArgument(Constants.ParamEventAssmblies, new string[] { "Yue.Users.ContractFS" })
-                .WithConstructorArgument(Constants.ParamHandlerAssmblies, new string[] { "Yue.Users.Model.Write" });
+                .WithConstructorArgument(Constants.ParamHandlerAssmblies, new string[] { "Yue.Users.Handler" });
             // EventBus must be thread scope, published events will be saved in thread EventBus._events, until Flush/Clear.
             Container.Bind<IEventBus>().To<EventBus>().InThreadScope();
             Container.Bind<IActionHandlerFactory>().To<ActionHandlerFactory>()

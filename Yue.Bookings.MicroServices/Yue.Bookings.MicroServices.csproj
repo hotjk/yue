@@ -100,9 +100,9 @@
       <Project>{c904450f-f057-4f44-b7a0-e7227ccb3869}</Project>
       <Name>Yue.Bookings.Contract</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Yue.Bookings.Model.Write\Yue.Bookings.Model.Write.csproj">
+    <ProjectReference Include="..\Yue.Bookings.Handler\Yue.Bookings.Handler.csproj">
       <Project>{cefbf04d-913e-4e0d-8103-17114bbd02fb}</Project>
-      <Name>Yue.Bookings.Model.Write</Name>
+      <Name>Yue.Bookings.Handler</Name>
     </ProjectReference>
     <ProjectReference Include="..\Yue.Bookings.Repository.Model\Yue.Bookings.Repository.Model.csproj">
       <Project>{3053de0f-8e0c-448e-b2b2-689596353dcb}</Project>

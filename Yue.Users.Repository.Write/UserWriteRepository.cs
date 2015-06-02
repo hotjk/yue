@@ -6,8 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Yue.Common.Repository;
 using Yue.Users.Model;
-using Yue.Users.Model.Write;
 using Dapper;
+using Yue.Users.Handler;
 
 namespace Yue.Users.Repository.Write
 {

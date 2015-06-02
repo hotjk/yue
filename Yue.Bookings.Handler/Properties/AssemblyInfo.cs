@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Yue.Users.Model.Write")]
+[assembly: AssemblyTitle("Yue.Bookings.Handler")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Yue.Users.Model.Write")]
+[assembly: AssemblyProduct("Yue.Bookings.Handler")]
 [assembly: AssemblyCopyright("Copyright ©  2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("f0a98e2f-2a2a-4432-8eec-ffb65c65ecc3")]
+[assembly: Guid("522b70dc-5dd4-4887-b2de-2b68d8d9c5c5")]
 
 // Version information for an assembly consists of the following four values:
 //

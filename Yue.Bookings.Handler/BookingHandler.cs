@@ -8,9 +8,10 @@ using System.Threading.Tasks;
 using Yue.Bookings.Contract;
 using Yue.Bookings.Contract.Commands;
 using Yue.Bookings.Contract.Events;
+using Yue.Bookings.Model;
 using Yue.Common.Contract;
 
-namespace Yue.Bookings.Model.Write
+namespace Yue.Bookings.Handler
 {
     public class BookingHandler : 
         ICommandHandler<SubscribeResource>,
