@@ -17,6 +17,7 @@ using Yue.Users.Contract.Actions;
 using Yue.Users.Contract.Events;
 using Yue.Users.Model;
 using Yue.Users.View.Model;
+using Yue.WebApi.Models;
 
 /*
  * Get
@@ -35,8 +36,12 @@ namespace Yue.WebApi.Controllers
 
         [HttpGet]
         [Route("")]
-        public IHttpActionResult Get()
+        public IHttpActionResult Get([FromUri]TestModel test)
         {
+            if (!ModelState.IsValid)
+            {
+                return Ok(ModelState);
+            }
             return Ok();
         }
     }

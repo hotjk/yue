@@ -9,6 +9,8 @@ using System.Web.Routing;
 using Autofac;
 using Autofac.Integration.WebApi;
 using System.Reflection;
+using FluentValidation.WebApi;
+using Yue.WebApi.Validators;
 
 namespace Yue.WebApi
 {
@@ -33,6 +35,11 @@ namespace Yue.WebApi
             config.DependencyResolver = new AutofacWebApiDependencyResolver(container);
 
             AreaRegistration.RegisterAllAreas();
+
+            // fluent validation
+            DataAnnotationsModelValidatorProvider.AddImplicitRequiredAttributeForValueTypes = false;
+            GlobalConfiguration.Configuration.Services.Add(typeof(System.Web.Http.Validation.ModelValidatorProvider), new FluentValidationModelValidatorProvider(new ValidatorFactory()));
+
             GlobalConfiguration.Configure(WebApiConfig.Register);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);

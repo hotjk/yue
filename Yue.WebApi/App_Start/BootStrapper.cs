@@ -13,6 +13,8 @@ using Yue.Users.Model;
 using Yue.Users.Repository;
 using Autofac;
 using EasyNetQ.Loggers;
+using FluentValidation;
+using System.Reflection;
 
 namespace Yue.WebApi
 {
@@ -35,6 +37,7 @@ namespace Yue.WebApi
             _builder = new ContainerBuilder();
             BindFrameworkObjects();
             BindBusinessObjects();
+            BindValidators();
             _builder.Update(Container);
         }
 
@@ -81,6 +84,12 @@ namespace Yue.WebApi
             _builder.RegisterType<UserSecurityRepository>().As<IUserSecurityRepository>().SingleInstance()
                .WithParameter("option", sqlOptionUser);
             _builder.RegisterType<UserSecurityService>().As<IUserSecurityService>().SingleInstance();
+        }
+
+        private static void BindValidators()
+        {
+            AssemblyScanner.FindValidatorsInAssembly(Assembly.GetExecutingAssembly())
+               .ForEach(x => _builder.RegisterType(x.ValidatorType).SingleInstance());
         }
 
         public static void Dispose()
