@@ -8,6 +8,8 @@ namespace Yue.Resources.Model
 {
     public class Resource
     {
-
+        public int ResourceId { get; private set; }
+        public string Name { get; private set; }
+        public int? OrganizationId { get; private set; }
     }
 }

@@ -6,6 +6,9 @@ using System.Web.Http;
 using System.Web.Http.Dispatcher;
 using System.Web.Mvc;
 using System.Web.Routing;
+using Autofac;
+using Autofac.Integration.WebApi;
+using System.Reflection;
 
 namespace Yue.WebApi
 {
@@ -18,14 +21,19 @@ namespace Yue.WebApi
             log4net.Config.XmlConfigurator.Configure();
 
             BootStrapper.BootStrap();
-            var resolver = new NinjectDependencyResolver { Kernel = BootStrapper.Container };
-            DependencyResolver.SetResolver(resolver);
+            var container = BootStrapper.Container;
+
+            var builder = new ContainerBuilder();
+            var config = GlobalConfiguration.Configuration;
+
+            builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
+            builder.RegisterWebApiFilterProvider(config);
+
+            builder.Update(container);
+            config.DependencyResolver = new AutofacWebApiDependencyResolver(container);
 
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);
-            GlobalConfiguration.Configuration.Services.Replace(typeof(IHttpControllerActivator),
-                new NinjectServiceActivator(GlobalConfiguration.Configuration, BootStrapper.Container));
-
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
         }

@@ -78,6 +78,8 @@ namespace Yue.Bookings.Model
             booking.TimeSlot = action.TimeSlot;
             booking.CreateBy = action.CreateBy;
             booking.CreateAt = action.CreateAt;
+            booking.UpdateAt = action.CreateAt;
+            booking.UpdateBy = action.CreateBy;
             return booking;
         }
 

@@ -27,16 +27,16 @@ using Yue.Users.View.Model;
  * curl --data "email=zhongwx@gmail.com&password=pwd" "http://localhost:64777/api/security/actions/login" -i
  * 
  * Sign Out
- * curl -X POST --data "" "http://localhost:64777/api/security/signout" -i
+ * curl -X POST --data "" "http://localhost:64777/api/security/actions/signout" -i
  * 
  * Request Activate Code
- * curl -X POST "http://localhost:64777/api/security/actions/activate" -i --cookie ".auth=dAN8etO20uU7DSCsLRStv1oSPMV0pt1xxhJhceYPTmvGVUhKs5ovqTAlgwz8g3FfDGyvGlqz7CuYV%252BE7bLQlog%253D%253D;"
+ * curl -X POST "http://localhost:64777/api/security/actions/activate_token" -i --cookie "Zhtm7CUaqWSJyj0RjgG62zSV1%252FH2Gu7K%252BpQH41iY3VfaurWjdTd1uMq5MKMIZROiHjgfS8df7plC8Hnn%252BYw78w%253D%253D;"
  * 
  * Activate
  * curl -X POST --data "user=33&token=5f162f8d-009e-4d3a-8f6c-21b99deb1550" "http://localhost:64777/api/security/actions/activate" -i
  * 
  * Change Password
- * curl -X POST --data "password=pwd&newPassword=pwd1" "http://localhost:64777/api/security/actions/change_password" -i --cookie ".auth=oebk2ctBVEwo4gC4AoYRArfBGR0nmN7PyB4KdVZLXKCRxsDKJCCaJ7nBi77IBHRWj7ycGvk6yCqbTRFlMbw36w%253D%253D;"
+ * curl -X POST --data "password=pwd&newPassword=pwd1" "http://localhost:64777/api/security/actions/change" -i --cookie ".auth=J2Sl253N4dqXM7E3juSHvJaRZXbRG8D6KDyq7FoVhSZuCIQFSxIdxEnIHSWK%252BgNEAQvC9jqMyohLhU4b%252F6m1MQ%253D%253D;"
  * 
  * Request Reset Password Token
  * curl -X POST --data "email=zhongwx@gmail.com" "http://localhost:64777/api/security/actions/token" -i 

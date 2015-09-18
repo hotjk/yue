@@ -2,7 +2,6 @@
 using Grit.Sequence;
 using Grit.Sequence.Repository.MySql;
 using Grit.Utility.Authentication;
-using Ninject;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -12,71 +11,76 @@ using Yue.Bookings.Model;
 using Yue.Bookings.Repository;
 using Yue.Users.Model;
 using Yue.Users.Repository;
+using Autofac;
+using EasyNetQ.Loggers;
 
 namespace Yue.WebApi
 {
     public class BootStrapper
     {
-        public static Ninject.IKernel Container { get; private set; }
+        public static Autofac.IContainer Container { get; private set; }
         public static EasyNetQ.IBus EasyNetQBus { get; private set; }
+
+        private static ContainerBuilder _builder;
 
         public static void BootStrap()
         {
-            Container = new StandardKernel();
+            var adapter = new EasyNetQ.DI.AutofacAdapter(new ContainerBuilder());
+            Container = adapter.Container;
 
-            EasyNetQ.RabbitHutch.SetContainerFactory(() => { return new EasyNetQ.DI.NinjectAdapter(Container); });
+            EasyNetQ.RabbitHutch.SetContainerFactory(() => { return adapter; });
             EasyNetQBus = EasyNetQ.RabbitHutch.CreateBus(ConfigurationManager.ConnectionStrings["RabbitMq"].ConnectionString,
-                x => x.Register<EasyNetQ.IEasyNetQLogger, EasyNetQ.Loggers.NullLogger>());
+                x => x.Register<EasyNetQ.IEasyNetQLogger, NullLogger>());
 
+            _builder = new ContainerBuilder();
             BindFrameworkObjects();
             BindBusinessObjects();
+            _builder.Update(Container);
         }
 
         private static void BindFrameworkObjects()
         {
-            Container.Settings.AllowNullInjection = true;
-            Container.Bind<ACE.Loggers.IBusLogger>().To<Log4NetBusLogger>().InSingletonScope();
+            _builder.RegisterType<Log4NetBusLogger>().As<ACE.Loggers.IBusLogger>().SingleInstance();
 
-            // EventBus must be thread scope, published events will be saved in thread EventBus._events, until Flush/Clear.
-            Container.Bind<IEventBus>().To<EventBus>().InThreadScope();
-            
-            // ActionBus must be thread scope, single thread bind to use single anonymous RabbitMQ queue for reply.
-            Container.Bind<IActionBus>().To<ActionBus>().InThreadScope();
+            _builder.RegisterType<EventBus>().As<IEventBus>().InstancePerLifetimeScope();
+            _builder.RegisterType<ActionBus>().As<IActionBus>().InstancePerLifetimeScope();
+            _builder.RegisterInstance<CookieTicketConfig>(CookieTicketConfig.Default()).As<ICookieTicketConfig>().SingleInstance();
+            _builder.RegisterType<Authenticator>().As<IAuthenticator>().SingleInstance();
 
-            Container.Bind<ICookieTicketConfig>().ToConstant(CookieTicketConfig.Default());
-            Container.Bind<IAuthenticator>().To<Authenticator>().InSingletonScope();
-            //Container.Bind<IAuthenticator>().To<MockAuthenticator>().InSingletonScope().WithConstructorArgument("userId", 33);
+            //_builder.RegisterType<MockAuthenticator>().As<IAuthenticator>().SingleInstance().WithParameter("userId", 33);
         }
 
         private static void BindBusinessObjects()
         {
-            Container.Bind<ISequenceRepository>().To<SequenceRepository>().InSingletonScope()
-                .WithConstructorArgument("option", 
-                new Grit.Sequence.Repository.MySql.SqlOption { 
+            _builder.RegisterType<SequenceRepository>().As<ISequenceRepository>().SingleInstance()
+                .WithParameter("option", new Grit.Sequence.Repository.MySql.SqlOption { 
                     ConnectionString = ConfigurationManager.ConnectionStrings["Sequence"].ConnectionString });
-            Container.Bind<ISequenceService>().To<SequenceService>().InSingletonScope();
+            _builder.RegisterType<SequenceService>().As<ISequenceService>().SingleInstance();
 
-            Yue.Common.Repository.SqlOption sqlOptionBooking = 
-                new Common.Repository.SqlOption { 
-                    ConnectionString = ConfigurationManager.ConnectionStrings["Bookings"].ConnectionString };
 
-            Container.Bind<IBookingRepository>().To<BookingRepository>().InSingletonScope()
-                .WithConstructorArgument("option", sqlOptionBooking);
-            Container.Bind<IBookingService>().To<BookingService>().InSingletonScope();
+            Yue.Common.Repository.SqlOption sqlOptionBooking =
+                new Common.Repository.SqlOption
+                {
+                    ConnectionString = ConfigurationManager.ConnectionStrings["Bookings"].ConnectionString
+                };
 
+            _builder.RegisterType<BookingRepository>().As<IBookingRepository>().SingleInstance()
+                .WithParameter("option", sqlOptionBooking);
+            _builder.RegisterType<BookingService>().As<IBookingService>().SingleInstance();
+            
             Yue.Common.Repository.SqlOption sqlOptionUser =
                 new Common.Repository.SqlOption
                 {
                     ConnectionString = ConfigurationManager.ConnectionStrings["Users"].ConnectionString
                 };
 
-            Container.Bind<IUserRepository>().To<UserRepository>().InSingletonScope()
-                .WithConstructorArgument("option", sqlOptionUser);
-            Container.Bind<IUserService>().To<UserService>().InSingletonScope();
+            _builder.RegisterType<UserRepository>().As<IUserRepository>().SingleInstance()
+                .WithParameter("option", sqlOptionUser);
+            _builder.RegisterType<UserService>().As<IUserService>().SingleInstance();
 
-            Container.Bind<IUserSecurityRepository>().To<UserSecurityRepository>().InSingletonScope()
-                .WithConstructorArgument("option", sqlOptionUser);
-            Container.Bind<IUserSecurityService>().To<UserSecurityService>().InSingletonScope();
+            _builder.RegisterType<UserSecurityRepository>().As<IUserSecurityRepository>().SingleInstance()
+               .WithParameter("option", sqlOptionUser);
+            _builder.RegisterType<UserSecurityService>().As<IUserSecurityService>().SingleInstance();
         }
 
         public static void Dispose()

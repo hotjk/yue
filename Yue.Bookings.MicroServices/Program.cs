@@ -15,7 +15,7 @@ namespace Yue.Bookings.MicroServices
             log4net.Config.XmlConfigurator.Configure();
             BootStrapper.BootStrap();
 
-            BootStrapper.ActionBus.SubscribeInParallel<BookingActionBase>(10);
+            BootStrapper.ActionStation.SubscribeInParallel<BookingActionBase>(10);
 
             Console.WriteLine("Ctrl-C to exit");
             Console.CancelKeyPress += (source, cancelKeyPressArgs) =>
