@@ -48,9 +48,9 @@ namespace Yue.WebApi
             _builder.RegisterType<EventBus>().As<IEventBus>().InstancePerLifetimeScope();
             _builder.RegisterType<ActionBus>().As<IActionBus>().InstancePerLifetimeScope();
             _builder.RegisterInstance<CookieTicketConfig>(CookieTicketConfig.Default()).As<ICookieTicketConfig>().SingleInstance();
-            _builder.RegisterType<Authenticator>().As<IAuthenticator>().SingleInstance();
+            //_builder.RegisterType<Authenticator>().As<IAuthenticator>().SingleInstance();
 
-            //_builder.RegisterType<MockAuthenticator>().As<IAuthenticator>().SingleInstance().WithParameter("userId", 33);
+            _builder.RegisterType<MockAuthenticator>().As<IAuthenticator>().SingleInstance().WithParameter("userId", 74);
         }
 
         private static void BindBusinessObjects()
