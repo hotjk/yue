@@ -25,25 +25,28 @@ curl "http://localhost:64777/api/bookings?user=0&from=2015-01-01T01:01:01&to=201
 namespace Yue.WebApi.Controllers
 {
     [RoutePrefix("api/bookings")]
-    public class BookingController : ApiController
+    public class BookingController : ApiAuthorizeController
     {
         private IActionBus _actionBus;
         private ISequenceService _sequenceService;
         private IBookingService _bookingService;
 
-        public BookingController(IActionBus actionBus,
-            ISequenceService sequenceService,
-            IBookingService bookingService)
+        public BookingController(
+            IAuthenticator authenticator,
+            IActionBus actionBus,
+            IEventBus eventBus,
+            IBookingService bookingService,
+            ISequenceService sequenceService) 
+            : base(authenticator, actionBus)
         {
             _actionBus = actionBus;
             _sequenceService = sequenceService;
             _bookingService = bookingService;
         }
 
-        private const int userId = 0;
-
         [HttpGet]
         [Route("{id}")]
+        [ApiAuthorize]
         public IHttpActionResult Get(int id, bool activity=false)
         {
             Booking booking = _bookingService.Get(id, activity);
@@ -52,6 +55,7 @@ namespace Yue.WebApi.Controllers
 
         [HttpGet]
         [Route("")]
+        [ApiAuthorize]
         public IHttpActionResult BookingsByResource(DateTime from, DateTime to, int resource)
         {
             var bookings = _bookingService.BookingsByResource(new TimeSlot(from, to), resource);
@@ -60,6 +64,7 @@ namespace Yue.WebApi.Controllers
 
         [HttpGet]
         [Route("")]
+        [ApiAuthorize]
         public IHttpActionResult BookingsByUser(DateTime from, DateTime to, int user)
         {
             var bookings = _bookingService.BookingsByUser(new TimeSlot(from, to), user);
@@ -68,6 +73,7 @@ namespace Yue.WebApi.Controllers
 
         [HttpPost]
         [Route("")]
+        [ApiAuthorize]
         public async Task<IHttpActionResult> SubscribeResource([FromBody]SubscribeResourceVM vm)
         {
             SubscribeResource action = new SubscribeResource(
@@ -77,7 +83,7 @@ namespace Yue.WebApi.Controllers
                 vm.Message,
                  new TimeSlot(vm.From, vm.To),
                 DateTime.Now,
-                userId);
+                UserId.Value);
             ActionResponse actionResponse = await _actionBus.SendAsync<BookingActionBase, SubscribeResource>(action);
 
             var booking = _bookingService.Get(action.BookingId);
@@ -88,6 +94,7 @@ namespace Yue.WebApi.Controllers
 
         [HttpDelete]
         [Route("{id}")]
+        [ApiAuthorize]
         public async Task<IHttpActionResult> CancelSubscriotion(int id, [FromBody]LeaveAMessageVM vm)
         {
             Booking booking = _bookingService.Get(id);
@@ -107,13 +114,14 @@ namespace Yue.WebApi.Controllers
                         booking.BookingId,
                         vm == null ? null : vm.Message,
                         DateTime.Now,
-                        userId);
+                        UserId.Value);
             ActionResponse actionResponse = await _actionBus.SendAsync<BookingActionBase, CancelSubscriotion>(cs);
             return Ok(ActionResponseVM.ToVM(actionResponse));
         }
 
         [HttpPatch]
         [Route("{id}/actions/confirm")]
+        [ApiAuthorize]
         public async Task<IHttpActionResult> ConfirmSubscription(int id, [FromBody]LeaveAMessageVM vm)
         {
             Booking booking = _bookingService.Get(id);
@@ -133,13 +141,14 @@ namespace Yue.WebApi.Controllers
                     booking.BookingId,
                     vm == null ? null : vm.Message,
                     DateTime.Now,
-                    userId);
+                    UserId.Value);
             ActionResponse actionResponse = await _actionBus.SendAsync<BookingActionBase, ConfirmSubscription>(cs);
             return Ok(ActionResponseVM.ToVM(actionResponse));
         }
 
         [HttpPatch]
         [Route("{id}/actions/message")]
+        [ApiAuthorize]
         public async Task<IHttpActionResult> LeaveAMessage(int id, [FromBody]LeaveAMessageVM vm)
         {
             Booking booking = _bookingService.Get(id);
@@ -158,13 +167,14 @@ namespace Yue.WebApi.Controllers
                     booking.BookingId,
                     vm.Message,
                     DateTime.Now,
-                    userId);
+                    UserId.Value);
             ActionResponse actionResponse = await _actionBus.SendAsync<BookingActionBase, LeaveAMessage>(cs);
             return Ok(ActionResponseVM.ToVM(actionResponse));
         }
 
         [HttpPatch]
         [Route("{id}/actions/time")]
+        [ApiAuthorize]
         public async Task<IHttpActionResult> ChangeTime(int id, [FromBody]ChangeTimeVM vm)
         {
             Booking booking = _bookingService.Get(id);
@@ -185,7 +195,7 @@ namespace Yue.WebApi.Controllers
                     vm == null ? null : vm.Message,
                     new TimeSlot(vm.From, vm.To),
                     DateTime.Now,
-                    userId);
+                    UserId.Value);
             ActionResponse actionResponse = await _actionBus.SendAsync<BookingActionBase, ChangeTime>(cs);
             return Ok(ActionResponseVM.ToVM(actionResponse));
         }

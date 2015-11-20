@@ -15,8 +15,8 @@ namespace Yue.WebApi.Test
         private RestClient client;
         private string email;
         private string password;
-        private string authCookieName = ".auth";
-        private string authCookieValue;
+        public const string authCookieName = ".auth";
+        public string authCookieValue { get; private set; }
 
         [TestInitialize]
         public void Initialize()

@@ -13,10 +13,18 @@ namespace Yue.WebApi.Test
     {
         private RestClient client;
         private BookingVM bookingVM;
+        private SecurityTest securityTest;
+
+        private const int TestResourceId = 2;
+        private const int TestUserId = 0;
 
         [TestInitialize]
         public void Initialize()
         {
+            securityTest = new SecurityTest();
+            securityTest.Initialize();
+            securityTest.RegisterLoginActivate();
+
             client = new RestClient("http://localhost/Yue.WebApi/");
             Booking();
         }
@@ -27,7 +35,8 @@ namespace Yue.WebApi.Test
             request.AddParameter("message", "Hello");
             request.AddParameter("from", DateTime.Now.ToString("o"));
             request.AddParameter("to", DateTime.Now.AddMinutes(30).ToString("o"));
-            request.AddParameter("resource", 2);
+            request.AddParameter("resource", TestResourceId);
+            request.AddCookie(SecurityTest.authCookieName, securityTest.authCookieValue);
             request.Method = Method.POST;
             IRestResponse response = client.Execute(request);
             Assert.IsTrue(response.StatusCode == HttpStatusCode.Created);
@@ -41,6 +50,7 @@ namespace Yue.WebApi.Test
         {
             var request = new RestRequest("api/bookings/" + bookingVM.BookingId);
             request.AddParameter("activity", true);
+            request.AddCookie(SecurityTest.authCookieName, securityTest.authCookieValue);
             request.Method = Method.GET;
             IRestResponse response = client.Execute(request);
             Assert.IsTrue(response.StatusCode == HttpStatusCode.OK);
@@ -52,6 +62,7 @@ namespace Yue.WebApi.Test
         public void Confirm()
         {
             var request = new RestRequest("api/bookings/" + bookingVM.BookingId + "/actions/confirm");
+            request.AddCookie(SecurityTest.authCookieName, securityTest.authCookieValue);
             request.Method = Method.PATCH;
             IRestResponse response = client.Execute(request);
             Assert.IsTrue(response.StatusCode == HttpStatusCode.OK);
@@ -64,6 +75,7 @@ namespace Yue.WebApi.Test
         {
             var request = new RestRequest("api/bookings/" + bookingVM.BookingId + "/actions/message");
             request.AddParameter("message", "Good Job!");
+            request.AddCookie(SecurityTest.authCookieName, securityTest.authCookieValue);
             request.Method = Method.PATCH;
             IRestResponse response = client.Execute(request);
             Assert.IsTrue(response.StatusCode == HttpStatusCode.OK);
@@ -78,6 +90,7 @@ namespace Yue.WebApi.Test
             request.AddParameter("message", "Change Time");
             request.AddParameter("from", DateTime.Now.ToString("o"));
             request.AddParameter("to", DateTime.Now.AddMinutes(30).ToString("o"));
+            request.AddCookie(SecurityTest.authCookieName, securityTest.authCookieValue);
             request.Method = Method.PATCH;
             IRestResponse response = client.Execute(request);
             Assert.IsTrue(response.StatusCode == HttpStatusCode.OK);
@@ -89,9 +102,10 @@ namespace Yue.WebApi.Test
         public void BookingsByResource()
         {
             var request = new RestRequest("api/bookings/" + bookingVM.BookingId);
-            request.AddParameter("resource", 1);
+            request.AddParameter("resource", TestResourceId);
             request.AddParameter("from", DateTime.Now.AddMonths(-1));
             request.AddParameter("to", DateTime.Now.AddMonths(1));
+            request.AddCookie(SecurityTest.authCookieName, securityTest.authCookieValue);
             request.Method = Method.GET;
             IRestResponse response = client.Execute(request);
             Assert.IsTrue(response.StatusCode == HttpStatusCode.OK);
@@ -103,9 +117,10 @@ namespace Yue.WebApi.Test
         public void BookingsByUser()
         {
             var request = new RestRequest("api/bookings/" + bookingVM.BookingId);
-            request.AddParameter("user", 0);
+            request.AddParameter("user", TestUserId);
             request.AddParameter("from", DateTime.Now.AddMonths(-1));
             request.AddParameter("to", DateTime.Now.AddMonths(1));
+            request.AddCookie(SecurityTest.authCookieName, securityTest.authCookieValue);
             request.Method = Method.GET;
             IRestResponse response = client.Execute(request);
             Assert.IsTrue(response.StatusCode == HttpStatusCode.OK);
@@ -117,6 +132,7 @@ namespace Yue.WebApi.Test
         public void Delete()
         {
             var request = new RestRequest("api/bookings/" + bookingVM.BookingId);
+            request.AddCookie(SecurityTest.authCookieName, securityTest.authCookieValue);
             request.Method = Method.DELETE;
             IRestResponse response = client.Execute(request);
             var content = response.Content;
