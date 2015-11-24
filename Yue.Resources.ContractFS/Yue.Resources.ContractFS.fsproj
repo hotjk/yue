@@ -10,7 +10,7 @@
     <RootNamespace>Yue.Resources.ContractFS</RootNamespace>
     <AssemblyName>Yue.Resources.ContractFS</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
-    <TargetFSharpCoreVersion>4.3.1.0</TargetFSharpCoreVersion>
+    <TargetFSharpCoreVersion>4.4.0.0</TargetFSharpCoreVersion>
     <Name>Yue.Resources.ContractFS</Name>
     <TargetFrameworkProfile />
   </PropertyGroup>

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Yue.Resources.Contract
+namespace Yue.Members.Contract
 {
     public enum MemberGroup
     {

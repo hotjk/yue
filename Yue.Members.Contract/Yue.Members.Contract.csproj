@@ -1,14 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{9B97E44C-AEEE-4205-AB45-4F6A69666EFC}</ProjectGuid>
+    <ProjectGuid>{42AC490C-4B86-42BD-B414-B54A5CB41154}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Yue.Resources.Model</RootNamespace>
-    <AssemblyName>Yue.Resources.Model</AssemblyName>
+    <RootNamespace>Yue.Members.Contract</RootNamespace>
+    <AssemblyName>Yue.Members.Contract</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -36,26 +36,12 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Org\Org.cs" />
+    <Compile Include="MemberGroup.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Resource\Resource.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\ace\ACE.Contracts\ACE.Contracts.csproj">
-      <Project>{82f70b71-71ab-49b1-9e3f-5197abbfd1aa}</Project>
-      <Name>ACE.Contracts</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Yue.Resources.ContractFS\Yue.Resources.ContractFS.fsproj">
-      <Project>{b5ec00b0-9578-4e1d-b496-c7a02b392077}</Project>
-      <Name>Yue.Resources.ContractFS</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Yue.Resources.Contract\Yue.Resources.Contract.csproj">
-      <Project>{708c6fe6-f572-4c2f-b0a4-8c8396361786}</Project>
-      <Name>Yue.Resources.Contract</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

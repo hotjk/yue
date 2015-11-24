@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Yue.Resources.Contract;
+using Yue.Members.Contract;
 
-namespace Yue.Resources.Model
+namespace Yue.Members.Model
 {
     public class Member
     {
@@ -16,8 +16,6 @@ namespace Yue.Resources.Model
 
         public int CreateBy { get; private set; }
         public DateTime CreateAt { get; private set; }
-        public int UpdateBy { get; private set; }
-        public DateTime UpdateAt { get; private set; }
 
         public static Member Create(AddMember action)
         {
@@ -29,8 +27,6 @@ namespace Yue.Resources.Model
             member.MemberGroup = action.MemberGroup;
             member.CreateBy = action.CreateBy;
             member.CreateAt = action.CreateAt;
-            member.UpdateBy = action.CreateBy;
-            member.UpdateAt = action.CreateAt;
             return member;
         }
     }

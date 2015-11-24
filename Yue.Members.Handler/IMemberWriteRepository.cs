@@ -3,14 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Yue.Resources.Model;
+using Yue.Members.Contract;
+using Yue.Members.Model;
 
-namespace Yue.Resources.Handler
+namespace Yue.Members.Handler
 {
     public interface IMemberWriteRepository
     {
-        Member Get(int memberId);
+        Member GetForUpdate(int memberId);
         bool Add(Member member);
         bool Remove(Member member);
+        bool AddAction(MemberCommandBase action);
     }
 }

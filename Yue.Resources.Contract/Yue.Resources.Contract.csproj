@@ -39,9 +39,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Enum\MemberGroup.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Enum\ResourcesState.cs">
       <SubType>Code</SubType>
     </Compile>

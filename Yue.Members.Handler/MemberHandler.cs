@@ -6,10 +6,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Yue.Common.Contract;
-using Yue.Resources.Contract;
-using Yue.Resources.Model;
+using Yue.Members.Contract;
+using Yue.Members.Model;
 
-namespace Yue.Resources.Handler
+namespace Yue.Members.Handler
 {
     public class MemberHandler :
         ICommandHandler<AddMember>,
@@ -26,7 +26,7 @@ namespace Yue.Resources.Handler
 
         public void Execute(AddMember command)
         {
-            Member member = _repository.Get(command.MemberId);
+            Member member = _repository.GetForUpdate(command.MemberId);
             if (member != null)
             {
                 throw new BusinessException(BusinessStatusCode.Conflict, "Member already existed.");
@@ -37,7 +37,7 @@ namespace Yue.Resources.Handler
 
         public void Execute(RemoveMember command)
         {
-            Member member = _repository.Get(command.MemberId);
+            Member member = _repository.GetForUpdate(command.MemberId);
             if(member == null)
             {
                 throw new BusinessException(BusinessStatusCode.NotFound, "Member not found.");
