@@ -69,8 +69,10 @@ namespace Yue.Bookings.Model
 
         public static Booking Create(SubscribeResource action)
         {
-            Booking booking = new Booking();
-            booking.State = BookingState.Initial;
+            Booking booking = new Booking
+            {
+                State = BookingState.Initial
+            };
 
             booking.EnsoureAndUpdateState(action);
             booking.BookingId = action.BookingId;
@@ -85,7 +87,7 @@ namespace Yue.Bookings.Model
 
         public void ChangeTime(TimeSlot timeSlot)
         {
-            this.TimeSlot = TimeSlot;
+            this.TimeSlot = timeSlot;
         }
     }
 }

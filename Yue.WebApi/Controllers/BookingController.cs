@@ -13,7 +13,7 @@ using Yue.Bookings.Model;
 using Yue.Bookings.View.Model;
 using Yue.Common.Contract;
 /*
-curl --data "message=hello&from=2015-01-01T01:01:01&to=2015-01-01T02:01:01&resource=1" "http://localhost:64777/api/bookings"
+curl --data "message=hello&from=2015-01-01T01:01:01&to=2015-01-01T02:01:01&resource=1" "http://localhost:64777/api/bookings" -i --cookie ".auth=oM..."
 curl "http://localhost:64777/api/bookings/43?activity=true"
 curl -X PATCH --data "message=hello" "http://localhost:64777/api/bookings/43/actions/confirm"
 curl -X PATCH --data "message=hello" "http://localhost:64777/api/bookings/43/actions/message"

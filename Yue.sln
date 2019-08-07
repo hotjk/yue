@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29201.188
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Bookings", "Bookings", "{4BB4E507-F12B-4512-BC12-A8B0A557B43D}"
 EndProject
@@ -114,6 +114,11 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yue.Members.Repository", "Yue.Members.Repository\Yue.Members.Repository.csproj", "{AE5331E5-503C-4AC1-894D-725AC03E4A34}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yue.Members.Repository.Write", "Yue.Members.Repository.Write\Yue.Members.Repository.Write.csproj", "{FE787705-D62B-4E6D-85E3-66ED758E3F44}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F2651248-4E38-41DD-9F23-F4B1B68F7849}"
+	ProjectSection(SolutionItems) = preProject
+		db.sql = db.sql
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -339,5 +344,8 @@ Global
 		{27055C22-C1AC-4B59-99F5-E6606B73EE57} = {13EBE620-9FA7-43BB-B40C-30ED79929991}
 		{AE5331E5-503C-4AC1-894D-725AC03E4A34} = {6FAD1879-6590-41DF-987E-F10EFF378C54}
 		{FE787705-D62B-4E6D-85E3-66ED758E3F44} = {13EBE620-9FA7-43BB-B40C-30ED79929991}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {EC891808-1DCB-41E0-9A0D-253539703616}
 	EndGlobalSection
 EndGlobal

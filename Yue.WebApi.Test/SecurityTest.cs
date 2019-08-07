@@ -21,7 +21,7 @@ namespace Yue.WebApi.Test
         [TestInitialize]
         public void Initialize()
         {
-            client = new RestClient("http://localhost/Yue.WebApi/");
+            client = new RestClient("http://localhost:64777/");
             Register();
         }
 

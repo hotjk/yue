@@ -25,7 +25,7 @@ namespace Yue.WebApi.Test
             securityTest.Initialize();
             securityTest.RegisterLoginActivate();
 
-            client = new RestClient("http://localhost/Yue.WebApi/");
+            client = new RestClient("http://localhost:64777/");
             Booking();
         }
 

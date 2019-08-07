@@ -30,7 +30,7 @@ using Yue.Users.View.Model;
  * curl -X POST --data "" "http://localhost:64777/api/security/actions/signout" -i
  * 
  * Request Activate Code
- * curl -X POST "http://localhost:64777/api/security/actions/activate_token" -i --cookie "Zhtm7CUaqWSJyj0RjgG62zSV1%252FH2Gu7K%252BpQH41iY3VfaurWjdTd1uMq5MKMIZROiHjgfS8df7plC8Hnn%252BYw78w%253D%253D;"
+ * curl -X POST "http://localhost:64777/api/security/actions/activate_token" --data -i --cookie ".auth=Zhtm7CUaqWSJyj0RjgG62zSV1%252FH2Gu7K%252BpQH41iY3VfaurWjdTd1uMq5MKMIZROiHjgfS8df7plC8Hnn%252BYw78w%253D%253D;"
  * 
  * Activate
  * curl -X POST --data "user=33&token=5f162f8d-009e-4d3a-8f6c-21b99deb1550" "http://localhost:64777/api/security/actions/activate" -i
@@ -148,11 +148,7 @@ namespace Yue.WebApi.Controllers
         [Route("actions/activate")]
         public async Task<IHttpActionResult> Activite(ActivateVM vm)
         {
-            var userSecruity = _userSecurityService.Get(UserId.Value);
-            if (!userSecruity.EnsoureState(Users.Contract.UserSecurityCommand.RequestActivateToken))
-            {
-                return Conflict();
-            }
+            var userSecruity = _userSecurityService.Get(vm.User);
             if (!userSecruity.EnsoureState(Users.Contract.UserSecurityCommand.RequestActivateToken))
             {
                 return Conflict();
